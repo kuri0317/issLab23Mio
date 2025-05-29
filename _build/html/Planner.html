@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Planner &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87712ff3" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="VrobotLLMoves24" href="VrobotLLMoves24.html" />
+    <link rel="prev" title="BasicRobot24" href="BasicRobot24.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="VrobotLLMoves24.html" title="VrobotLLMoves24"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="BasicRobot24.html" title="BasicRobot24"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Planner</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="planner">
+<h1>Planner<a class="headerlink" href="#planner" title="Link to this heading">¶</a></h1>
+<p>La parte proattiva di un robot consiste spesso nella esecuzione di una sequenza di movimenti che portano il robot
+in un posizione voluta dello spazio di lavoro.</p>
+<p>La sequenza di movimenti può venire ‘cablata’ nel codice di controllo del robot o può essere
+costruita dinamicamente, per tenere conto dello stato del robot e dell’ambiente circostante.</p>
+<p>Un modo per costruire dinamicamente una sequenza di mosse con cui il robot può muoversi dalla posizione
+corrente <strong>r</strong> a un’altra posizione (libera) sulla mappa, consiste
+nell’utilizzo di un pianificatore (si veda <a class="reference external" href="https://en.wikipedia.org/wiki/Motion_planning">Motion_planning</a> e  <a class="reference external" href="./_static/LabPlanner.html">Planning</a>) .</p>
+<section id="planaima">
+<h2>PlanAima<a class="headerlink" href="#planaima" title="Link to this heading">¶</a></h2>
+<p>Il POJO <a class="reference external" href="../../../../src/main/resources/map/PlanAima.java">PlanAima.java</a> usa <a class="reference internal" href="RoomMap.html#robotmapper"><span class="std std-ref">RobotMapper</span></a> e la libreria <span class="slide3">aima.core</span> per realizzare operazioni
+che costruiscono, data una mappa, un perorso (<em>path</em>)  da un punto A a un punto B della stanza.</p>
+</section>
+<section id="impostazione-2025-di-un-planner">
+<h2>Impostazione 2025 di un planner<a class="headerlink" href="#impostazione-2025-di-un-planner" title="Link to this heading">¶</a></h2>
+<p>Un planner può essere costruito partendo da una implementazione dell’<a class="reference external" href="https://it.wikipedia.org/wiki/Algoritmo_A*">Algoritmo_A*</a> come quella riportata in
+<a class="reference external" href="../../../../unibomapbuild25/src/main/java/planner/AStarPathfinding.java">AStarPathfinding.java</a> che produce una lista di mosse con <a class="reference internal" href="VirtualRobotUsage25.html#il-linguaggio-aril"><span class="std std-ref">Il linguaggio aril</span></a>, data una mappa, un nodo
+di partenza e un nodo di arrivo.</p>
+<section id="planner2025">
+<h3>Planner2025<a class="headerlink" href="#planner2025" title="Link to this heading">¶</a></h3>
+<p><span class="worktodo">WORKTODO: Da A* a micro-service</span>: realizzare un micro-servizio discoverable, di nome <span class="remark">Planner2025</span>,
+che risponde alla richiesta createPath che:</p>
+<ul class="simple">
+<li><p>riceve in input  una mappa (con ostacoli), la specifica di un nodo
+di partenza <code class="docutils literal notranslate"><span class="pre">S</span></code>, la specifica di  un nodo di arrivo <code class="docutils literal notranslate"><span class="pre">T</span></code> e la direzione di partenza di un DDR robot in <code class="docutils literal notranslate"><span class="pre">S</span></code>,</p></li>
+<li><p>in caso di successo, restituisce una stringa che rappresenta la sequenza dio mosse
+(in <a class="reference internal" href="#plan-in-forma-verbosa-compatta"><span class="std std-ref">forma compatta</span></a>) che il DDR robot deve
+compiere per muoversi da <code class="docutils literal notranslate"><span class="pre">S</span></code> a <code class="docutils literal notranslate"><span class="pre">T</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section id="uso-del-planner-unibo">
+<h2>Uso del planner unibo<a class="headerlink" href="#uso-del-planner-unibo" title="Link to this heading">¶</a></h2>
+<p>Diamo qui qualche informazione sul Planner fornito  in <code class="docutils literal notranslate"><span class="pre">unibo.planner23-1.0.jar</span></code> e costruito nel
+<span class="slide3">progetto unibo.planner23</span>  <a class="reference external" href="../../../../unibo.planner23">unibo.planner23</a></p>
+<p>Il robot (virtuale o reale) viene considerato un oggetto inscrivibile in un cerchio di diametro <code class="docutils literal notranslate"><span class="pre">D</span></code>.</p>
+<p>Muovere il robot con mossa <code class="docutils literal notranslate"><span class="pre">step(T)</span></code> con tempo <code class="docutils literal notranslate"><span class="pre">T</span></code> tale da spostare il robot (con velocità prefissata)
+di uno spazio <code class="docutils literal notranslate"><span class="pre">D</span></code>, permette di costruire una mappa della stanza formata da celle quadrate <code class="docutils literal notranslate"><span class="pre">DxD</span></code>.
+Ad esempio:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">5</span>  <span class="mi">6</span>  <span class="mi">7</span>  <span class="n">x</span>
+<span class="mi">0</span> <span class="o">|</span><span class="n">r</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="mi">1</span> <span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="mi">2</span> <span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="mi">3</span> <span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="mi">4</span> <span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="mi">5</span>  <span class="o">|</span><span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span>
+<span class="n">y</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>0</strong> denota una cella mai percorsa</p></li>
+<li><p><strong>1</strong> denota una cella librera</p></li>
+<li><p><strong>X</strong> denota una cella occupata da un ostacolo</p></li>
+<li><p><strong>r</strong> denota la posizione corrente del robot</p></li>
+</ul>
+<section id="id1">
+<h3>Planner23Util<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p>Il progetto   <a class="reference external" href="../../../../unibo.planner23">unibo.planner23</a>,  fornisce la classe  <a class="reference external" href="../../../../unibo.planner23/src/unibo/planner23/Planner23Util.java">Planner23Util</a> che realizza
+le operazioni-base descritte in <a class="reference external" href="./_static/LabPlanner.html">Planning</a> e varie altre utlità.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Codice della mappa</p></td>
+<td><p><a class="reference external" href="../../../../unibo.planner23/src/unibo/planner23/model/RoomMap.java">RoomMap</a></p></td>
+</tr>
+</tbody>
+</table>
+<section id="plan-in-forma-verbosa-compatta">
+<h4>Plan in forma verbosa/compatta<a class="headerlink" href="#plan-in-forma-verbosa-compatta" title="Link to this heading">¶</a></h4>
+<p>La sequenza di mosse che definisce un piano può essere espressa in  <strong>forma verbosa</strong> (ad esempio <code class="docutils literal notranslate"><span class="pre">[w,</span> <span class="pre">w,</span> <span class="pre">l,</span> <span class="pre">w,</span> <span class="pre">w]</span></code>) oppure
+in <strong>forma compatta</strong>  (ad esempio <code class="docutils literal notranslate"><span class="pre">wwlww</span></code>).</p>
+</section>
+</section>
+<section id="operazioni-per-la-pianificazione">
+<h3>Operazioni per la pianificazione<a class="headerlink" href="#operazioni-per-la-pianificazione" title="Link to this heading">¶</a></h3>
+<p>Tra le operazioni offerte dal <a class="reference internal" href="#planner">Planner</a>  del progetto  <a class="reference external" href="../../../../unibo.planner23">unibo.planner23</a>   vi sono le seguenti:</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="slide3">void setGoal( Integer x, Integer y)</span></p></td>
+<td><p>Fissa le coordinate (in unità robotiche) della posizione (cella) da raggiungere (<em>target</em>).</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="slide3">List&lt;Action&gt; doPlan()</span></p></td>
+<td><p>Restituisce una sequenza di mosse (<em>plan</em>) per muovere il robot dalla sua posizione corrente al <em>target</em>.
+La rappresentazione in forma di <code class="docutils literal notranslate"><span class="pre">String</span></code> di questa sequenza produce la <em>forma verbosa</em> del plan).</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide3">String doPlanCompact()</span></p></td>
+<td><p>Restituisce una  <code class="docutils literal notranslate"><span class="pre">String</span></code> che rappresenta, in <em>forma compatta</em>, il plan da seguire per raggiungere il <em>target</em>.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="slide3">String planCompacted(String Plan)</span></p></td>
+<td><p>Restituisce la <em>forma compatta</em>  della rappresentazione testuale verbosa di un plan.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide3">void doPathOnMap(String planrep)</span></p></td>
+<td><p>Muove il robot nella mappa, in accordo alla rappresentazione testuale planrep (in forma <em>verbosa</em> o <em>compatta</em>).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="planner23util-tutte-le-operazioni">
+<h3>Planner23Util: tutte le operazioni<a class="headerlink" href="#planner23util-tutte-le-operazioni" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">initAI</span><span class="p">()</span>
+<span class="n">void</span> <span class="n">setRobotState</span><span class="p">(</span><span class="n">String</span> <span class="n">xs</span><span class="p">,</span> <span class="n">String</span> <span class="n">ys</span><span class="p">,</span> <span class="n">String</span> <span class="n">d</span><span class="p">)</span>
+<span class="n">void</span> <span class="n">void</span> <span class="n">setGoal</span><span class="p">(</span> <span class="n">Integer</span> <span class="n">x</span><span class="p">,</span> <span class="n">Integer</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Action</span><span class="o">&gt;</span> <span class="n">doPlan</span><span class="p">()</span> <span class="n">throws</span> <span class="ne">Exception</span>
+<span class="n">String</span> <span class="n">planCompacted</span><span class="p">(</span><span class="n">String</span> <span class="n">Plan</span><span class="p">)</span>
+<span class="n">String</span> <span class="n">doPlanCompact</span><span class="p">()</span> <span class="n">throws</span> <span class="ne">Exception</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Action</span><span class="o">&gt;</span> <span class="n">planForGoal</span><span class="p">(</span><span class="n">String</span> <span class="n">x</span><span class="p">,</span><span class="n">String</span> <span class="n">y</span><span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Action</span><span class="o">&gt;</span> <span class="n">planForNextDirty</span><span class="p">(</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span>
+<span class="n">String</span> <span class="n">planForNextDirtyCompact</span><span class="p">(</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span>
+<span class="n">void</span> <span class="n">showCurrentRobotState</span><span class="p">()</span>
+<span class="n">doPathOnMap</span><span class="p">(</span><span class="n">String</span> <span class="n">planrep</span><span class="p">)</span>
+<span class="o">---------------------------------</span>
+<span class="n">Pair</span><span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">get_curPos</span><span class="p">()</span>
+<span class="n">Integer</span> <span class="n">getPosX</span><span class="p">()</span>
+<span class="n">Integer</span> <span class="n">getPosY</span><span class="p">()</span>
+<span class="n">RobotState</span><span class="o">.</span><span class="n">Direction</span> <span class="n">getDir</span><span class="p">()</span>
+<span class="n">String</span> <span class="n">getDirection</span><span class="p">()</span>
+<span class="n">String</span> <span class="n">setTheDirection</span><span class="p">(</span><span class="n">String</span> <span class="nb">dir</span><span class="p">)</span> <span class="o">//</span><span class="nb">dir</span><span class="o">=</span><span class="n">up</span><span class="o">|</span><span class="n">left</span><span class="o">|</span><span class="n">right</span><span class="o">|</span><span class="n">down</span>
+<span class="n">boolean</span> <span class="n">atHome</span><span class="p">()</span>
+ <span class="n">boolean</span> <span class="n">atPos</span><span class="p">(</span>  <span class="n">Integer</span> <span class="n">x</span><span class="p">,</span> <span class="n">Integer</span> <span class="n">y</span> <span class="p">)</span>
+<span class="n">String</span> <span class="n">robotPosInfo</span><span class="p">()</span>
+<span class="n">String</span> <span class="n">robotOnMap</span><span class="p">()</span>
+
+<span class="o">-----------------------------------</span>
+<span class="n">Integer</span> <span class="n">getMapDimX</span><span class="p">(</span> <span class="p">)</span>
+<span class="n">Integer</span> <span class="n">getMapDimY</span><span class="p">(</span> <span class="p">)</span>
+<span class="n">boolean</span> <span class="n">mapIsEmpty</span><span class="p">()</span>
+<span class="n">void</span> <span class="n">showMap</span><span class="p">()</span>
+<span class="n">String</span> <span class="n">getMap</span><span class="p">()</span>
+<span class="n">String</span> <span class="n">getMapOneLine</span><span class="p">()</span>
+<span class="n">Pair</span><span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">getMapDims</span><span class="p">()</span>
+<span class="n">void</span> <span class="n">loadRoomMap</span><span class="p">(</span> <span class="n">String</span> <span class="n">fname</span> <span class="p">)</span>
+<span class="n">void</span> <span class="n">saveRoomMap</span><span class="p">(</span>  <span class="n">String</span> <span class="n">fname</span>  <span class="p">)</span> <span class="n">throws</span> <span class="n">IOException</span>
+
+<span class="n">void</span> <span class="n">moveRobotInTheMap</span><span class="p">()</span>
+<span class="n">void</span> <span class="n">doMove</span><span class="p">(</span><span class="n">String</span> <span class="n">move</span><span class="p">)</span>  <span class="o">//</span><span class="n">move</span><span class="o">=</span><span class="n">w</span><span class="o">|</span><span class="n">s</span><span class="o">|</span><span class="n">a</span><span class="o">|</span><span class="n">l</span><span class="o">|</span><span class="n">d</span><span class="o">|</span><span class="n">r</span><span class="o">|</span><span class="n">rightDir</span><span class="o">|</span><span class="n">leftDir</span><span class="o">|</span><span class="n">upDir</span><span class="o">|</span><span class="n">downDir</span>
+<span class="n">void</span>  <span class="n">setPositionOnMap</span><span class="p">(</span> <span class="p">)</span>
+<span class="n">void</span> <span class="n">updateMap</span><span class="p">(</span> <span class="n">String</span> <span class="n">move</span> <span class="p">,</span> <span class="n">String</span> <span class="n">msg</span> <span class="p">)</span>
+<span class="n">void</span>  <span class="n">updateMapObstacleOnCurrentDirection</span><span class="p">(</span> <span class="p">)</span>
+
+<span class="n">void</span> <span class="n">setObstacleUp</span><span class="p">()</span>
+<span class="n">void</span> <span class="n">setObstacleDown</span><span class="p">()</span>
+<span class="n">void</span> <span class="n">setObstacleLeft</span><span class="p">()</span>
+ <span class="n">void</span> <span class="n">setObstacleRight</span><span class="p">()</span>
+<span class="n">void</span> <span class="n">setObstacleWall</span><span class="p">(</span> <span class="n">RobotState</span><span class="o">.</span><span class="n">Direction</span> <span class="nb">dir</span><span class="p">,</span> <span class="n">Integer</span> <span class="n">x</span> <span class="p">,</span> <span class="n">Integer</span> <span class="n">y</span> <span class="p">)</span>
+<span class="n">void</span> <span class="n">setWallDown</span><span class="p">(</span> <span class="nb">int</span> <span class="n">dimMapx</span><span class="p">,</span> <span class="nb">int</span> <span class="n">y</span>  <span class="p">)</span>
+<span class="n">void</span> <span class="n">setWallRight</span><span class="p">(</span> <span class="nb">int</span> <span class="n">dimMapy</span><span class="p">,</span> <span class="nb">int</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">void</span> <span class="n">wallFound</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>MainPlannerdemo.java<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<p>Il programma <a class="reference external" href="../../../../planusage24/src/main/java/MainPlannerDemo.java">MainPlannerdemo.java</a> cotrustisce una <span class="slide2">‘mappa puramente mentale’</span> di una stanza senza ostacoli fissi
+e <span class="slide2">‘muove mentalmente’</span> il robot nella posizione <code class="docutils literal notranslate"><span class="pre">(2,3)</span></code>.</p>
+</section>
+</section>
+<section id="robot-che-crea-una-mappa-con-ostacoli">
+<h2>Robot che crea una mappa con ostacoli<a class="headerlink" href="#robot-che-crea-una-mappa-con-ostacoli" title="Link to this heading">¶</a></h2>
+<p><span class="slide3">progetto planusage24</span>  <a class="reference external" href="../../../../planusage24">planusage24</a></p>
+<section id="id3">
+<h3>mapobstaclesvrqak.qak<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<p>Il modello <a class="reference external" href="../../../../planusage24/src/mapobstaclesvrqak.qaktt">mapobstaclesvrqak.qak</a> ha come scopo
+la costruzione di una mappa della stanza con ostacoli fissi.
+Esso utilizza:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="Vrqak24.html#vrqak24"><span class="std std-ref">Vrqak24</span></a> per comunicare con il virtual robot</p></li>
+<li><p><a class="reference external" href="../../../../unibo.planner23/src/unibo/planner23/Planner23Util.java">Planner23Util</a> per agiornare la mappa</p></li>
+</ul>
+<p>Il modello parte dalla <span class="slide2">assunzione</span> che il <strong>bordo superiore della stanza sia privo di ostacoli</strong> e procede
+esplorando lungo linee verticali, procedendo da <em>wallUp</em> a <em>wallDown</em>.</p>
+<p>Quando incontra un ostacolo, il robot si gira di <code class="docutils literal notranslate"><span class="pre">180°</span></code> e torna nella posizione iniziale HOME,
+per prosguire poi ad esplorare la colonna più a destra.</p>
+<p>Il procedimento termina quando il robot non è più in grado di esplorare una colonna a destra.</p>
+</section>
+<section id="id4">
+<h3>mapobstaclesrobot.qak<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>Il modello <a class="reference external" href="../../../../planusage24/src/mapobstaclesrobot.qaktt">mapobstaclesrobot.qak</a> ha come scopo
+la ostruzione di una mappa della stanza con ostacoli fissi.
+Esso utilizza:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="BasicRobot24.html#basicrobot24"><span class="std std-ref">BasicRobot24</span></a> per comunicare con il virtual robot</p></li>
+<li><p><a class="reference external" href="../../../../unibo.planner23/src/unibo/planner23/Planner23Util.java">Planner23Util</a> per la impostazione di una strategia di movimento del robot che mira ad eseguire piani
+(sequenze di mosse) il cui goal è raggiungere una cella al di fuori della stanza.</p></li>
+</ul>
+<p>Quando incontra un ostacolo, il robot esegue un piano per tornare  nella posizione iniziale HOME.</p>
+<p>Poichè un tale piano deve esistere (in base alla mappa costruita fino a quel momento) e deve essere eseguibile con successo
+(in quanto non vi sono ostacoli mobili),</p>
+<ul class="simple">
+<li><p>la <span class="slide2">fase di ritorno in HOME</span> è <span class="slide1">sfruttata per riallineare</span> lo stato effettivo del robot
+quello previsto dalla mappa.</p></li>
+</ul>
+<p>Il procedimento termina quando il planner non è più in grado di trovare un piano per raggiungere una cella
+al di fuori della stanza. La mappa costruita fino a quel momento potrebbe contenere anora celle non esplorate,
+cha vanno esplorate in una fase successiva.</p>
+<section id="visualizzare-la-mappa">
+<h4>Visualizzare la mappa<a class="headerlink" href="#visualizzare-la-mappa" title="Link to this heading">¶</a></h4>
+<p><span class="worktodo">TODO: visualizzare la mappa</span>: fare in modo che il valore corrente della mappa sia osservabile su un dispositivo di output
+o, preferibilmente, su una pagina web.</p>
+</section>
+</section>
+</section>
+<section id="aggiunta-pro-docker">
+<h2>Aggiunta (pro docker)<a class="headerlink" href="#aggiunta-pro-docker" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">healthcheck</span><span class="p">:</span>
+  <span class="n">test</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;CMD&quot;</span><span class="p">,</span> <span class="s2">&quot;curl&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8090/health&quot;</span><span class="p">]</span>
+  <span class="n">interval</span><span class="p">:</span> <span class="mi">10</span><span class="n">s</span>
+  <span class="n">timeout</span><span class="p">:</span> <span class="mi">5</span><span class="n">s</span>
+  <span class="n">retries</span><span class="p">:</span> <span class="mi">3</span>
+
+
+<span class="n">depends_on</span><span class="p">:</span>
+  <span class="n">wenv</span><span class="p">:</span>
+     <span class="n">condition</span><span class="p">:</span> <span class="n">service_healthy</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Planner</a><ul>
+<li><a class="reference internal" href="#planaima">PlanAima</a></li>
+<li><a class="reference internal" href="#impostazione-2025-di-un-planner">Impostazione 2025 di un planner</a><ul>
+<li><a class="reference internal" href="#planner2025">Planner2025</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#uso-del-planner-unibo">Uso del planner unibo</a><ul>
+<li><a class="reference internal" href="#id1">Planner23Util</a><ul>
+<li><a class="reference internal" href="#plan-in-forma-verbosa-compatta">Plan in forma verbosa/compatta</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#operazioni-per-la-pianificazione">Operazioni per la pianificazione</a></li>
+<li><a class="reference internal" href="#planner23util-tutte-le-operazioni">Planner23Util: tutte le operazioni</a></li>
+<li><a class="reference internal" href="#id2">MainPlannerdemo.java</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#robot-che-crea-una-mappa-con-ostacoli">Robot che crea una mappa con ostacoli</a><ul>
+<li><a class="reference internal" href="#id3">mapobstaclesvrqak.qak</a></li>
+<li><a class="reference internal" href="#id4">mapobstaclesrobot.qak</a><ul>
+<li><a class="reference internal" href="#visualizzare-la-mappa">Visualizzare la mappa</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aggiunta-pro-docker">Aggiunta (pro docker)</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="BasicRobot24.html"
+                          title="previous chapter">BasicRobot24</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="VrobotLLMoves24.html"
+                          title="next chapter">VrobotLLMoves24</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Planner.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="VrobotLLMoves24.html" title="VrobotLLMoves24"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="BasicRobot24.html" title="BasicRobot24"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Planner</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

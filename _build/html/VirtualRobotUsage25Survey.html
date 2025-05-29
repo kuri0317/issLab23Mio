@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>VirtualRobotUsage25Survey &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="BoundaryWalk24" href="BoundaryWalk24.html" />
+    <link rel="prev" title="VirtualRobotUsage25" href="VirtualRobotUsage25.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="BoundaryWalk24.html" title="BoundaryWalk24"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="VirtualRobotUsage25.html" title="VirtualRobotUsage25"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">VirtualRobotUsage25Survey</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="virtualrobotusage25survey">
+<h1>VirtualRobotUsage25Survey<a class="headerlink" href="#virtualrobotusage25survey" title="Permalink to this heading">¶</a></h1>
+<p>Fonti:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="VirtualRobot23.html#virtualrobot23"><span class="std std-ref">VirtualRobot23</span></a></p></li>
+<li><p><a class="reference internal" href="BasicRobot24.html#basicrobot24"><span class="std std-ref">BasicRobot24</span></a></p></li>
+<li><p><span class="xref std std-ref">VirtualRobotUsage24</span> (anno scorso)</p></li>
+</ul>
+<p><em>Vorrei avere un sommario dei livelli software relativi all’uso dei DDRrobot, partendo dal virtualrobot e finendo al basicrobot.
+Prego anche di  evidenziare le caratteristiche dei linguaggi di comando  per  vari livelli di robot descritti</em></p>
+<p>Basandosi sulle fonti fornite, possiamo delineare i livelli software relativi all’uso dei robot DDR, partendo dal robot virtuale fino al concetto di basicrobot, e analizzare le caratteristiche dei linguaggi di comando a ciascun livello.</p>
+<p>Ecco un riassunto dei livelli e dei linguaggi di comando descritti:</p>
+<ol class="arabic">
+<li><p><strong>Livello più Basso: Il Robot Specifico (es. VirtualRobot23)</strong></p>
+<ul>
+<li><p>A questo livello si trovano le implementazioni specifiche dei robot, siano essi virtuali o reali. La fonte si concentra in particolare sul <strong>VirtualRobot23</strong>, un ambiente virtuale (WEnv) che simula un robot DDR.</p></li>
+<li><p>Questo robot virtuale è considerato un oggetto inscrivibile in un cerchio di raggio R. Esegue mosse semplificate come muoversi avanti/indietro, fermarsi, ruotare di 90° a destra/sinistra.</p></li>
+<li><p>L’interazione diretta con il VirtualRobot23 avviene inviando stringhe che esprimono comandi di movimento. Questo può essere fatto tramite messaggi <strong>HTTP POST</strong> (interazione sincrona) sulla porta 8090 o messaggi <strong>Websocket</strong> (interazione asincrona) sulla porta 8091. Il VirtualRobot23 invia anche messaggi di stato ai client connessi via Websocket.</p></li>
+<li><p><strong>Linguaggio di comando</strong>: Il linguaggio utilizzato per comunicare direttamente
+con il VirtualRobot23 è chiamato <span class="slide3">Linguaggio cril</span> (<strong>concrete-robot interaction language</strong>).
+Il <strong>cril</strong> consiste in <strong>stringhe JSON</strong> con una sintassi definita:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`{&quot;robotmove&quot;:&quot;CMDMOVE&quot;, &quot;time&quot;:T}`.
+</pre></div>
+</div>
+<p>I valori per <cite>CMDMOVE</cite> includono
+<code class="docutils literal notranslate"><span class="pre">&quot;turnLeft&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;turnRight&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;moveForward&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;moveBackward&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;alarm&quot;</span></code>.</p>
+</li>
+<li><p>Esempi di <strong>comandi cril</strong> inviati via HTTP POST includono</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`{&quot;robotmove&quot;:&quot;moveForward&quot;, &quot;time&quot;:&quot;1300&quot;}` o `{&quot;robotmove&quot;:&quot;alarm&quot;, &quot;time&quot;:&quot;10&quot;}`.
+</pre></div>
+</div>
+<p>La risposta sincrona è anch’essa in formato JSON, indicando l’esito del movimento.</p>
+</li>
+<li><p>Il VirtualRobot23 <span class="remark">può emettere informazioni sull’ambiente</span>, come dati dai sonar
+o notifiche di collisione, sotto forma di <span class="slide2">messaggi di stato JSON</span> inviati via Websocket.</p></li>
+</ul>
+</li>
+<li><p><strong>Livello Intermedio: Supporti Specifici e Adattatori</strong></p>
+<ul>
+<li><p>Tra il livello del robot specifico e il livello astratto del basicrobot, esistono componenti software che gestiscono i dettagli tecnologici specifici di ciascun tipo di robot.</p></li>
+<li><p>La utility class <code class="docutils literal notranslate"><span class="pre">robotSupport.kt</span></code> si occupa di questi dettagli utilizzando supporti
+diversi per ciascun tipo:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">virtualrobotSupport</span></code> per VirtualRobot,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nanoSupport`/`motors</span></code> per NanoRobot,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mbotSupport</span></code> per Mbot.</p></li>
+</ul>
+</li>
+<li><p>Per il VirtualRobot23, fonti separate menzionano componenti come <code class="docutils literal notranslate"><span class="pre">VrobotLLMoves24.java</span></code>
+(un POJO di supporto) e il <span class="slide2">servizio</span> <code class="docutils literal notranslate"><span class="pre">vrqak24.qak</span></code>. Questi agiscono come adattatori
+o servizi che permettono a componenti di livello superiore (come gli <em>actorqak</em>
+o il futuro <em>basicrobot</em>) di interagire con il VirtualRobot23.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">VrobotLLMoves24</span></code> è descritto come un adapter che converte comandi di movimento di livello
+superiore in comandi per il robot (probabilmente <strong>cril</strong>) e trasforma i messaggi di stato
+in eventi applicativi.</p></li>
+<li><p>Il <span class="slide2">servizio</span>  <a class="reference internal" href="Vrqak24.html#vrqak24"><span class="std std-ref">Vrqak24</span></a>  è presentato come punto di partenza per la realizzazione
+di un servizio più esteso, il <cite>basicrobot</cite>, che includerà anche la gestione
+di robot fisici.</p>
+<p>I comandi hanno la forma (si veda <a class="reference internal" href="Vrqak24.html#vrqak24"><span class="std std-ref">Vrqak24</span></a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Dispatch</span> <span class="n">move</span><span class="p">:</span><span class="n">move</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="n">Request</span> <span class="n">cmd</span><span class="p">:</span><span class="n">cmd</span><span class="p">(</span><span class="n">MOVE</span><span class="p">,</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><span class="slide3">Il linguaggio aril</span> (<strong>Abstract Robot Interaction Lanaguage</strong>)</p>
+<p>Poichè l’uso di un robot virtuale è solo un passo intermedio verso un robot fisico,
+che potrebbe avere un linguaggio di comando diverso, può essere opportuno introdurre un linguaggio di
+comando ‘technology-independent’, che denominiamo linguaggio aril (Abstract Robot Interaction Lanaguage)
+con cui esprimere i comandi-base di spostamento con la sintassi che segue:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Dispatch</span> <span class="n">cmd</span> <span class="p">:</span> <span class="n">cmd</span><span class="p">(</span> <span class="n">MOVE</span> <span class="p">)</span> <span class="s2">&quot;aril MOVE=w | s | l | r | h | p&quot;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<div></div></blockquote>
+<ol class="arabic" start="3">
+<li><p><strong>Livello Superiore: Il Servizio BasicRobot24</strong></p>
+<ul>
+<li><p>Il <strong>BasicRobot24</strong> è un componente software progettato per eseguire comandi di spostamento di un robot DDR in modo indipendente dalla tecnologia specifica (virtuale o reale). Fornisce un modello eseguibile (<cite>basicrobotqak</cite>) che include diversi componenti (attori) come <cite>basicrobot</cite>, <cite>planexec</cite>, <cite>robotpos</cite>, <cite>engager</cite>.</p></li>
+<li><p>Il componente principale <cite>basicrobot</cite> è visto dall’esterno come un servizio che realizza un insieme di funzionalità. Queste funzionalità includono l’esecuzione di richieste di ingaggio (<cite>engage</cite>), comandi elementari di movimento (<cite>cmd</cite>), step (<cite>step</cite>), sequenze di movimento/piani (<cite>doplan</cite>), e posizionamento (<cite>moverobot</cite>).</p></li>
+<li><p>Queste funzionalità sono accessibili attraverso un set di <strong>messaggi</strong> definiti. Questi messaggi rappresentano il <strong>linguaggio di comando</strong> a questo livello di astrazione. I messaggi sono di diversi tipi: <cite>Dispatch</cite> (fire-and-forget), <cite>Request</cite> (richiesta con risposta attesa), <cite>Reply</cite> (risposta a una Request), e <cite>Event</cite> (informazione emessa dal robot o dall’ambiente).</p></li>
+<li><dl>
+<dt><strong>Caratteristiche del linguaggio di comando (Messaggi):</strong></dt><dd><ul>
+<li><p><strong>Comandi Elementari</strong>: <code class="docutils literal notranslate"><span class="pre">Dispatch</span> <span class="pre">cmd:cmd(MOVE)</span></code>, dove <cite>MOVE</cite> può essere <cite>w</cite> (avanti), <cite>s</cite> (indietro), <cite>d</cite> (destra), <cite>a</cite> (sinistra), <cite>r</cite> (rotazione destra), <cite>l</cite> (rotazione sinistra), <cite>h</cite> (stop/halt). Questi sono comandi semplici inviati senza attesa di risposta esplicita dal basicrobot.</p></li>
+<li><p><strong>Step</strong>: <code class="docutils literal notranslate"><span class="pre">Request</span> <span class="pre">step:step(TIME)</span></code>. Richiede l’avanzamento per un tempo specificato. Richiede una risposta (<cite>stepdone</cite> o <cite>stepfailed</cite>).</p></li>
+<li><p><strong>Esecuzione Piani</strong>: <code class="docutils literal notranslate"><span class="pre">Request</span> <span class="pre">doplan:doplan(PLAN,</span> <span class="pre">STEPTIME)</span></code>
+oppure <code class="docutils literal notranslate"><span class="pre">doplan(PLAN,</span> <span class="pre">OWNER,</span> <span class="pre">STEPTIME)</span></code>.</p>
+<p><cite>PLAN</cite> è una sequenza di mosse (es. <code class="docutils literal notranslate"><span class="pre">[w,</span> <span class="pre">w,</span> <span class="pre">l,</span> <span class="pre">w,</span> <span class="pre">w]</span></code> o <code class="docutils literal notranslate"><span class="pre">wwlww</span></code>). Gestito dal componente <cite>planexec</cite>. Richiede una risposta (<cite>doplandone</cite> o <cite>doplanfailed</cite>).</p>
+</li>
+<li><p><strong>Posizionamento</strong>: <code class="docutils literal notranslate"><span class="pre">Request</span> <span class="pre">moverobot:moverobot(TARGETX,</span> <span class="pre">TARGETY)</span></code>. Richiesta per raggiungere una cella target sulla mappa. Gestito dal componente <cite>robotpos</cite>. Richiede una risposta (<cite>moverobotok</cite> o <cite>moverobotfailed</cite>).</p></li>
+<li><p><strong>Ingaggio/Disingaggio</strong>: <code class="docutils literal notranslate"><span class="pre">Request</span> <span class="pre">engage:engage(CALLER)</span></code> e <code class="docutils literal notranslate"><span class="pre">Dispatch</span> <span class="pre">disengage:disengage(ARG)</span></code>.
+Il robot esegue le funzioni di movimento solo dopo essere stato ingaggiato. Le risposte per l’ingaggio sono <cite>engagedone</cite> o <cite>engagerefused</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Questo livello astratto delega le operazioni più complesse (piani, posizionamento) ad altri componenti interni, che a loro volta utilizzeranno i supporti specifici di livello inferiore per interagire con il robot fisico o virtuale sottostante.</p></li>
+<li><p>Il BasicRobot24 fornisce un’interfaccia standardizzata tramite messaggi, nascondendo all’applicazione chiamante i dettagli specifici dell’implementazione del robot (come l’uso di cril per il VirtualRobot o le chiamate di basso livello per il NanoRobot).</p></li>
+</ul>
+</li>
+</ol>
+<p>In sintesi, si passa da un livello di interazione diretta con un robot specifico utilizzando
+un linguaggio concreto e dipendente dalla tecnologia (come <strong>cril</strong> per il VirtualRobot23),
+a un livello superiore astratto (il <strong>BasicRobot24</strong>) che offre funzionalità standardizzate
+accessibili tramite un set definito di <strong>messaggi/richieste/dispatch</strong> indipendenti dalla tecnologia specifica sottostante. I livelli intermedi e i supporti specifici (come <cite>virtualrobotSupport</cite>, <cite>VrobotLLMoves24</cite>, <cite>vrqak24</cite>, <cite>nanoSupport</cite>) gestiscono la traduzione tra i messaggi del BasicRobot24 e i comandi specifici del robot effettivo.</p>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="VirtualRobotUsage25.html"
+                          title="previous chapter">VirtualRobotUsage25</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="BoundaryWalk24.html"
+                          title="next chapter">BoundaryWalk24</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/VirtualRobotUsage25Survey.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="BoundaryWalk24.html" title="BoundaryWalk24"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="VirtualRobotUsage25.html" title="VirtualRobotUsage25"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">VirtualRobotUsage25Survey</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

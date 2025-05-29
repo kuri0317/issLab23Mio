@@ -1,0 +1,461 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>RaspberryCode2025 &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SituatedActors" href="SituatedActors.html" />
+    <link rel="prev" title="RaspApplCode24" href="RaspApplCode24.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="SituatedActors.html" title="SituatedActors"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="RaspApplCode24.html" title="RaspApplCode24"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RaspberryCode2025</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="raspberrycode2025">
+<h1>RaspberryCode2025<a class="headerlink" href="#raspberrycode2025" title="Permalink to this heading">¶</a></h1>
+<p><span class="slide3">Progetto rasp2025</span></p>
+<section id="rasp2025">
+<h2>rasp2025<a class="headerlink" href="#rasp2025" title="Permalink to this heading">¶</a></h2>
+<section id="rasp2025ledalone">
+<h3>rasp2025ledalone<a class="headerlink" href="#rasp2025ledalone" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../rasp2025/src/rasp2025ledalone.qaktt">rasp2025ledalone.qak</a></p></td>
+<td><p>Un actor che gestisce i Dispatch <code class="docutils literal notranslate"><span class="pre">turnOn</span></code> e <code class="docutils literal notranslate"><span class="pre">turnOff</span></code> per accendere/spegnere il Led usando Python
+ed emettendo  <span class="remark">tutti i diversi tipi di eventi</span> esprimibili nel <a class="reference internal" href="QakActors25Linguaggio.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a>.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="../../../../rasp2025/src/main/java/CallerRaspactorTcp.java">CallerRaspactorTcp.java</a>: programma chiamaante via TCP</p></li>
+<li><p><a class="reference external" href="../../../../rasp2025/src/main/java/CallerRaspactorMqtt.java">CallerRaspactorMqtt.java</a>: programma chiamaante via MQTT, con osservazione di eventi</p></li>
+<li><p><a class="reference external" href="../../../../rasp2025/src/main/java/CallerRaspactorCoap.java">CallerRaspactorCoap.java</a>: programma chiamaante via CoAP, con osservazione di eventi</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="installazioni-2025">
+<h2>Installazioni 2025<a class="headerlink" href="#installazioni-2025" title="Permalink to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Installazione Java 17 con OS=bookworm</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">full</span><span class="o">-</span><span class="n">upgrade</span>
+
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">temurin</span><span class="o">-</span><span class="mi">17</span><span class="o">-</span><span class="n">jre</span>   <span class="o">//</span><span class="n">no</span> <span class="n">jadk</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic">
+<li><p>Controllo apertura porta <code class="docutils literal notranslate"><span class="pre">1883</span></code> su Windows</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/mosquitoPortIn.png"><img alt="_images/mosquitoPortIn.png" class="align-center" src="_images/mosquitoPortIn.png" style="width: 50%;" /></a>
+</div></blockquote>
+</li>
+</ol>
+<blockquote>
+<div><p>Guardare in properites</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">netstat</span> <span class="o">-</span><span class="n">ano</span> <span class="o">|</span> <span class="n">findstr</span> <span class="p">:</span><span class="mi">1883</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+<ol class="arabic">
+<li><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">dhcpcd</span><span class="o">.</span><span class="n">conf</span>
+
+  <span class="n">static</span> <span class="n">domain_name_servers</span><span class="o">=</span><span class="mf">8.8.8.8</span> <span class="mf">8.8.4.4</span>
+
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">dhcpcd</span>
+</pre></div>
+</div>
+</li>
+<li><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gradlew</span> <span class="n">disZip</span>
+<span class="n">unzip</span> <span class="n">su</span> <span class="n">Raspberry</span>
+<span class="n">copia</span> <span class="n">di</span> <span class="n">python</span> <span class="ow">in</span> <span class="nb">bin</span>
+<span class="n">esecuzione</span> <span class="ow">in</span> <span class="nb">bin</span> <span class="n">di</span> <span class="o">./</span><span class="n">rasp2025</span>
+</pre></div>
+</div>
+</li>
+<li><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="n">rasp2025</span><span class="o">.</span><span class="n">pl</span>
+
+<span class="o">//</span><span class="n">modifico</span> <span class="n">il</span> <span class="n">sistema</span> <span class="n">su</span> <span class="n">Raspberry</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p><span class="slide3">Progetto cellOnRasp</span></p>
+</section>
+<section id="cellonrasp">
+<h2>cellOnRasp<a class="headerlink" href="#cellonrasp" title="Permalink to this heading">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../cellOnRasp/src/cellonrasp.qaktt">cellonrasp.qak</a></p></td>
+<td><p>Attore che realizza la cella di nome <code class="docutils literal notranslate"><span class="pre">cell_1_1</span></code> avvalendosi dei seguenti supporti:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="../../../../cellOnRasp/src/main/java/OutInCellOnRasp.java">OutInCellOnRasp.java</a>:</p></li>
+<li><p><a class="reference external" href="../../../../cellOnRasp/src/main/java/CellCmdTranslator.java">CellCmdTranslator</a>:</p></li>
+</ul>
+<p>L’actor <code class="docutils literal notranslate"><span class="pre">cell_1_1</span></code> completa il (sotto)sistema definito in <a class="reference external" href="../../../../conwaycellsqaknaive/src/conwaycellsncoreog3only.qaktt">conwaycellsncoreog3only.qak</a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../conwaycellsqaknaive/src/conwaycellsncoreog3only.qaktt">conwaycellsncoreog3only.qak</a></p></td>
+<td><p>Sottosistema che  crea dinamicamente su PC le celle <code class="docutils literal notranslate"><span class="pre">cell_0_0</span></code>, <code class="docutils literal notranslate"><span class="pre">cell_0_1</span></code>, <code class="docutils literal notranslate"><span class="pre">cell_1_0</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../cellOnRasp/src/conway/GridSupport25.kt">GridSupport25.kt</a></p></td>
+<td><p>Object Kotlin che definisce funzioni di utilità, tra cui</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">readGridConfig</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">subscribeToNeighborsMqtt</span></code></p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../conwaycellsqaknaive/src/main/java/CallerMqtt.java">CallerMqtt.java</a></p></td>
+<td><p>Programma Java che invia comandi GUI-like via MQTT sulla topic <code class="docutils literal notranslate"><span class="pre">lifein</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<section id="cellonrasp-system-architecture">
+<h3>cellOnRasp system Architecture<a class="headerlink" href="#cellonrasp-system-architecture" title="Permalink to this heading">¶</a></h3>
+<a class="reference internal image-reference" href="_images/cell_1_1OnRasp.jpg"><img alt="_images/cell_1_1OnRasp.jpg" class="align-center" src="_images/cell_1_1OnRasp.jpg" style="width: 90%;" /></a>
+</section>
+<section id="cellonrasp-punti-salienti">
+<h3>cellOnRasp Punti salienti<a class="headerlink" href="#cellonrasp-punti-salienti" title="Permalink to this heading">¶</a></h3>
+<p>In entrambi i sotto-sistemi <a class="reference external" href="../../../../conwaycellsqaknaive/src/conwaycellsncoreog3only.qaktt">conwaycellsncoreog3only.qak</a> e <a class="reference external" href="../../../../cellOnRasp/src/cellonrasp.qaktt">cellonrasp.qak</a>:</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="blue">mqttBroker “192.168.x.y” : 1883 eventTopic “lifein”</span></p></td>
+<td><p>Dichiarazione che induce la <a class="reference internal" href="QakActors25Intro.html#qak-infrastructure"><span class="std std-ref">Qak infrastructure</span></a> a creare una connessione MQTT con il broker. Inoltre,
+ogni attore:</p>
+<ul class="simple">
+<li><p>fa (in modo nascosto) una <strong>subscribe</strong>  sulla topic <code class="docutils literal notranslate"><span class="pre">&quot;lifein&quot;</span></code>. La <a class="reference internal" href="QakActors25Intro.html#qak-infrastructure"><span class="std std-ref">Qak infrastructure</span></a>
+inserisce gli eventi pubblicati su questa topic nella coda dell’attore</p></li>
+<li><p>può pubblicare (con <span class="slide3">emit</span>) eventi  sulla topic <code class="docutils literal notranslate"><span class="pre">&quot;lifein&quot;</span></code>. Questi eventi possono essere
+percepiti anche dall’attore che li emette</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">kernel_rawmsg : kernel_rawmsg(ARG)</span></p></td>
+<td><p>L’<a class="reference internal" href="QakActors25Implementazione.html#evento-kernel-rawmsg"><span class="std std-ref">evento kernel_rawmsg</span></a> viene emesso dalla <a class="reference internal" href="QakActors25Intro.html#qak-infrastructure"><span class="std std-ref">Qak infrastructure</span></a> quando
+il metodo di callback MQTT <a class="reference internal" href="MQTTConnection.html#mqttconnectioncallbackforreceive"><span class="std std-ref">messageArrived</span></a>
+riceve una stringa che non  corrisponde
+a un oggetto di tipo <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">IApplMessage</span></a>.</p>
+<p>Il componente che percepisce questo evento può convertire la
+stringa <code class="docutils literal notranslate"><span class="pre">ARG</span></code> in un messaggio qak. Nel nostro caso,
+i componenti possono usare usare la <span class="remark">utility</span> <a class="reference external" href="../../../../cellOnRasp/src/main/java/CellCmdTranslator.java">CellCmdTranslator</a>.</p>
+<ul class="simple">
+<li><p>Nel componente <a class="reference external" href="../../../../conwaycellsqaknaive/src/conwaycellsncoreog3only.qaktt">conwaycellsncoreog3only.qak</a>, la cella <strong>gestisce direttamente</strong> questo evento usando
+la prinitiva <span class="slide3">whenInterruptEvent</span> (si veda <a class="reference internal" href="QakActors25Demo.html#demointerrupt-qak"><span class="std std-ref">demointerrupt.qak</span></a>).</p></li>
+<li><p>Nel componente <a class="reference external" href="../../../../cellOnRasp/src/cellonrasp.qaktt">cellonrasp.qak</a>,  questo evento viene
+<strong>gestito da un ulteriore attore</strong> <span class="slide3">perceiver</span>, che si occupa di usare la utility <a class="reference external" href="../../../../cellOnRasp/src/main/java/CellCmdTranslator.java">CellCmdTranslator</a>
+per inviare messaggi qak alla cella <code class="docutils literal notranslate"><span class="pre">cell_1_1</span></code>.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">event alarm : alarm(X)</span></p></td>
+<td><p>Evento di test per verificare la propagazione degli eventi via MQTT.</p></td>
+</tr>
+</tbody>
+</table>
+<p>In <a class="reference external" href="../../../../conwaycellsqaknaive/src/conwaycellsncoreog3only.qaktt">conwaycellsncoreog3only.qak</a>:</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="blue">Context ctxcellonrasp ip [host=”…” port=8075]</span></p></td>
+<td><p>Dichiarazione necessaria solo se si voglioni propagare eventi su un attore del sistema che non usa MQTT.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">ExternalQActor cell_1_1 context ctxcellonrasp</span></p></td>
+<td><p>Dichiarazione necessaria solo se si vuole inviare informazione in modo esplicito alla cella
+di nome <code class="docutils literal notranslate"><span class="pre">cell_1_1</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<p><span class="slide3">Video</span>: <a class="reference external" href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=7ee997af-dc3a-4867-934f-b2c80099bc6f">cellOnRasp2025</a></p>
+</section>
+</section>
+<section id="cellsdistributed">
+<h2>cellsdistributed<a class="headerlink" href="#cellsdistributed" title="Permalink to this heading">¶</a></h2>
+<p>La sperimentazione del sistema costruito usando <code class="docutils literal notranslate"><span class="pre">N</span></code> computer fisici, su ciacuno dei quali attivare una cella
+è previsto avvenga in <em>Lab2</em>, grazie alla presenza di <code class="docutils literal notranslate"><span class="pre">N</span></code> studenti, ciascuno con il suo PC su cui
+attivare una cella, in uno di due modi:</p>
+<ul class="simple">
+<li><p>eseguendo il programma in locale</p></li>
+<li><p>attivando un container con l’immagine Docker della cella</p></li>
+</ul>
+<section id="progetto-conwaycellsqak">
+<h3>Progetto conwaycellsqak<a class="headerlink" href="#progetto-conwaycellsqak" title="Permalink to this heading">¶</a></h3>
+<p>Nel <span class="slide3">Progetto conwaycellsqak</span>, una cella viene descritta in <a class="reference internal" href="QakActors25Linguaggio.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a> nel modello
+<a class="reference external" href="../../../../conwaycellsqak/src/conwaycellsApril.qak">conwaycellsqak.qak</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/*</span>
+<span class="o">*</span> <span class="o">==========================================================================</span>
+<span class="o">*</span> <span class="n">Codice</span> <span class="n">di</span> <span class="n">una</span> <span class="n">cella</span>
+<span class="o">*</span>
+<span class="o">*</span>  <span class="n">WARNING</span><span class="p">:</span> <span class="n">mqttBroker</span> <span class="s2">&quot;....&quot;</span>
+<span class="o">*</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">nasce</span> <span class="n">con</span> <span class="n">nome</span> <span class="n">random</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">richiede</span> <span class="n">al</span> <span class="n">gamemaster</span> <span class="p">(</span><span class="n">discovered</span><span class="p">)</span> <span class="n">di</span> <span class="n">partecipare</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">riceve</span> <span class="n">il</span> <span class="n">nome</span> <span class="n">di</span> <span class="n">gioco</span> <span class="p">(</span> <span class="n">cell</span><span class="o">-</span><span class="n">x</span><span class="o">-</span><span class="n">y</span> <span class="p">)</span> <span class="n">e</span> <span class="n">lo</span> <span class="n">rende</span> <span class="n">noto</span> <span class="n">al</span> <span class="n">perceiver</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">cambia</span> <span class="n">il</span> <span class="n">suo</span> <span class="n">nome</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">dice</span> <span class="n">al</span>  <span class="n">gamemaster</span> <span class="n">di</span> <span class="n">essere</span> <span class="n">pronta</span> <span class="p">(</span><span class="n">dispatch</span> <span class="n">cellcreateed</span><span class="p">)</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">attende</span> <span class="n">l</span><span class="s1">&#39;evento allcellready (emesso dal gamemaster)</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">si</span> <span class="n">sottoscrive</span> <span class="n">alle</span> <span class="n">topic</span> <span class="n">che</span> <span class="n">corrispondeono</span> <span class="n">ai</span> <span class="n">nome</span> <span class="n">delle</span> <span class="n">celle</span> <span class="n">vicine</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">attende</span> <span class="n">il</span> <span class="n">dispatch</span> <span class="n">changeCellState</span> <span class="p">(</span><span class="n">fase</span> <span class="n">di</span> <span class="n">inizializzazione</span><span class="p">)</span>
+<span class="o">*</span>   <span class="n">o</span> <span class="n">l</span><span class="s1">&#39;evento startthegame (emesso da un controller NON dal gamemaster)</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">quando</span> <span class="n">riceve</span> <span class="n">startthegame</span> <span class="n">entra</span> <span class="n">negli</span> <span class="n">STATI</span> <span class="n">DEL</span> <span class="n">GIOCO</span> <span class="p">(</span><span class="n">Epoch</span><span class="p">)</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">attende</span> <span class="n">l</span><span class="s1">&#39;evento synch (emsso dal gamemaster che orchestra)</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">gestisce</span> <span class="ow">in</span> <span class="n">modo</span> <span class="n">opportuno</span> <span class="n">gli</span> <span class="n">eventi</span> <span class="n">clearcell</span><span class="p">,</span> <span class="n">stopthecell</span>
+<span class="o">*</span>
+<span class="o">*</span> <span class="n">Notiamo</span> <span class="n">che</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">la</span> <span class="n">eventTopic</span> <span class="s1">&#39;lifein&#39;</span> <span class="n">è</span> <span class="n">comune</span> <span class="n">a</span> <span class="n">tutte</span> <span class="n">le</span> <span class="n">celle</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">ogni</span> <span class="n">cella</span> <span class="n">fa</span> <span class="ow">in</span> <span class="n">modo</span> <span class="n">automatico</span> <span class="n">una</span> <span class="n">subscribe</span> <span class="n">su</span> <span class="s1">&#39;lifein&#39;</span>
+<span class="o">*</span> <span class="o">==========================================================================</span>
+<span class="o">*/</span>
+</pre></div>
+</div>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conwaycellsqakarch.png"><img alt="_images/conwaycellsqakarch.png" class="align-center" src="_images/conwaycellsqakarch.png" style="width: 70%;" /></a>
+</td>
+<td><ul class="simple">
+<li><p>ogni cella viene realizzata come un attore che opera come <a class="reference internal" href="#cellonrasp"><span class="std std-ref">cellOnRasp</span></a>, con la differenza
+che:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>segnala al coordinatore del gioco <a class="reference internal" href="#progetto-conwaymasterqak"><span class="std std-ref">conwaymasterqak</span></a> di avere teminato
+una Epoch (stato <strong>elabstatephase</strong>)</p></li>
+<li><p>attende di percepire l’<span class="slide3">evento synch</span> prima di iniziare una nuova Epoch</p></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Non disponendo (come accade normalmente) di <code class="docutils literal notranslate"><span class="pre">N</span></code> nodi computazionali (ed <code class="docutils literal notranslate"><span class="pre">N</span></code> operatori umani)
+le celle sono attivabili in altri modi:</p>
+<ul class="simple">
+<li><p>eseguendo su un singolo PC un file bat come <a class="reference external" href="../../../../conwaycellsqak//activatecells_9nodock.bat">activatecells_9.bat</a></p></li>
+<li><p>eseguendo su un singolo PC un file yml come <a href="#id1"><span class="problematic" id="id2">`</span></a><a class="reference external" href="../../../../conwaycellsqak//docker-compose-cells9.yml">docker-compose-cells9.yml</a></p></li>
+</ul>
+</section>
+<section id="progetto-conwaymasterqak">
+<h3>Progetto conwaymasterqak<a class="headerlink" href="#progetto-conwaymasterqak" title="Permalink to this heading">¶</a></h3>
+<p>Nel <span class="slide3">Progetto conwaymasterqak</span>, il coordinatore del gioco viene descritto in <a class="reference internal" href="QakActors25Linguaggio.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a> nel modello
+<a class="reference external" href="../../../../conwaymasterqak/src/conwaymaster.qak">conwaymaster.qak</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/*</span>
+<span class="o">*</span> <span class="o">==========================================================================</span>
+<span class="o">*</span> <span class="n">gamemaster</span>
+<span class="o">*</span>
+<span class="o">*</span> <span class="n">WARNING</span><span class="p">:</span> <span class="n">mqttBroker</span> <span class="s2">&quot;....&quot;</span>
+<span class="o">*</span>
+<span class="o">*</span> <span class="n">ORCHESTRATORE</span> <span class="p">(</span><span class="n">non</span> <span class="n">controllore</span> <span class="k">del</span> <span class="n">gioco</span><span class="p">)</span>
+<span class="o">*</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">si</span> <span class="n">registra</span> <span class="n">il</span> <span class="n">EUREKA</span> <span class="n">con</span> <span class="n">nome</span> <span class="n">ctxmaster</span>
+<span class="o">*</span>   <span class="n">usando</span> <span class="n">al</span> <span class="n">classe</span> <span class="n">di</span> <span class="n">configurazione</span> <span class="n">EurekaServiceConfig</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">legge</span> <span class="n">il</span> <span class="n">numero</span> <span class="p">(</span><span class="n">NR</span><span class="p">,</span><span class="n">NC</span><span class="p">)</span> <span class="n">delle</span> <span class="n">celle</span> <span class="n">dal</span> <span class="n">file</span> <span class="n">gridconfig</span><span class="o">.</span><span class="n">json</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">attende</span> <span class="n">NALLCells</span><span class="o">=</span><span class="n">NR</span><span class="o">*</span><span class="n">NC</span> <span class="n">richieste</span> <span class="n">addtogame</span> <span class="n">e</span> <span class="n">quando</span> <span class="n">sono</span> <span class="n">arrivate</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">attende</span> <span class="n">NALLCells</span> <span class="n">dispatch</span> <span class="n">cellcreated</span> <span class="n">e</span> <span class="n">quando</span> <span class="n">sono</span> <span class="n">arrivati</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">entra</span> <span class="n">nella</span> <span class="n">FASE</span> <span class="n">DI</span> <span class="n">ORCHESTRAZIONE</span>
+<span class="o">*</span>   <span class="o">-</span> <span class="n">emit</span> <span class="n">allcellready</span>
+<span class="o">*</span>   <span class="o">-</span> <span class="n">attende</span> <span class="n">NALLCells</span> <span class="n">dispatch</span> <span class="n">cellready</span> <span class="p">(</span><span class="n">fine</span> <span class="n">EPOCH</span> <span class="n">di</span> <span class="n">cella</span><span class="p">)</span>
+<span class="o">*</span>   <span class="o">-</span> <span class="n">quando</span> <span class="n">arrivati</span> <span class="n">emit</span> <span class="n">synch</span> <span class="p">(</span><span class="n">segnale</span> <span class="n">di</span> <span class="n">orchestrazione</span><span class="p">)</span>
+<span class="o">*</span>
+<span class="o">*</span> <span class="n">Notiamo</span> <span class="n">che</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">gli</span> <span class="n">eventi</span> <span class="n">vengono</span> <span class="n">pubblicati</span> <span class="n">sulla</span> <span class="n">topic</span> <span class="s1">&#39;lifein&#39;</span>
+<span class="o">*</span> <span class="o">-</span> <span class="n">il</span> <span class="n">gamemaster</span> <span class="n">NON</span> <span class="n">PERCEPISCE</span> <span class="n">messaggi</span> <span class="n">di</span> <span class="n">controllo</span>
+<span class="o">*</span> <span class="o">==========================================================================</span>
+<span class="o">*/</span>
+</pre></div>
+</div>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conwaymasterqakarch.png"><img alt="_images/conwaymasterqakarch.png" class="align-center" src="_images/conwaymasterqakarch.png" style="width: 70%;" /></a>
+</td>
+<td><ul class="simple">
+<li><p>Accetta la richiesta di una cella di entrare nel gioco e le risponde con il nome che la
+cella deve assumere per partecipare al gioco</p></li>
+<li><p>Funge da orchstratore del gioco, emettendo un <span class="slide3">evento synch</span> quando tutte le celle hanno
+comunicato di avere terminato una Epoch</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="esecuzione-di-cellsdistributed-su-pc">
+<h2>Esecuzione di cellsdistributed su PC<a class="headerlink" href="#esecuzione-di-cellsdistributed-su-pc" title="Permalink to this heading">¶</a></h2>
+<p>Qui si riporta un esempio di <span class="remark">sistema a 9 celle</span> che si potrebbe sperimentare in Lab2.</p>
+<ol class="arabic simple">
+<li><p>Attivare <span class="blue">mosquitto</span>  sul proprio PC</p></li>
+<li><p>Attivare <span class="blue">Eureka</span>  sul proprio PC (si veda <a class="reference internal" href="UsingEureka.html#atiivare-eureka"><span class="std std-ref">Atiivare Eureka</span></a>)</p></li>
+<li><p>Attivare <span class="blue">conwayguialone</span>  sul proprio PC (anche in modo MIRROR ONLY)</p></li>
+<li><p>Controllare <span class="blue">gridConfig.json</span> nel progetto <strong>conwaymasterqak</strong></p></li>
+<li><p>Attivare <span class="blue">conwaymasterqak</span></p></li>
+<li><p>Notare il codice in: <em>mqttConnconwaycellsqak/src/main/java/OutInCellGui.java</em></p></li>
+<li><p>Fare la distribuzione (<span class="blue">gradlew distZip</span>) del progetto <strong>conwaycellsqak</strong> e fare unzip
+nella <span class="slide3">directory deployed</span> del progetto</p></li>
+<li><p>Attivare <span class="blue">activatecells_9nodock.bat</span> per creare <code class="docutils literal notranslate"><span class="pre">9</span></code> celle</p></li>
+<li><p>Attivare <span class="blue">CallerMqtt.java</span> nel progetto <strong>conwaycellsqak</strong></p></li>
+</ol>
+<p>In una fase di sperimentazione inizale si potrebbe impostare un <strong>sistema a 3 celle</strong>
+(<em>cell-0-0, cell-0-1, cell-0-2</em>),
+impostando il file  <span class="blue">gridConfig.json</span> nel progetto <strong>conwaymasterqak</strong> come segue:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;rowsNum&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;colsNum&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;cellsize&quot;</span><span class="p">:</span><span class="mi">45</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="progetto-conwaycellaloneqak">
+<h2>Progetto conwaycellaloneqak<a class="headerlink" href="#progetto-conwaycellaloneqak" title="Permalink to this heading">¶</a></h2>
+<p>Il modello <a class="reference external" href="../../../../conwaycellaloneqak/src/conwaycellalone.qak">conwaycellalone.qak</a> del progetto <a class="reference external" href="../../../../conwaycellaloneqak">conwaycellaloneqak</a> realizza un cella su RaspberryPi</p>
+<p>Attenziona ai files che seguono:</p>
+<ul class="simple">
+<li><p>attivazione dei microservizi di supporto alle applicazioni iss25: <a class="reference external" href="../../../../conwaycellaloneqak/iss2025yamls/iss2025.yml">iss2025.yml</a></p></li>
+<li><p><span class="blue">main.java.EurekaServiceConfig.javan</span>: necessario per la registrazione dei servizi</p></li>
+<li><p><span class="blue">main.resources.eureka-client.propertiesn</span>: necessario per il discovery dei servizi (contesti)
+da parte del codice della <a class="reference internal" href="QakActors25Intro.html#qak-infrastructure"><span class="std std-ref">Qak infrastructure</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">RaspberryCode2025</a><ul>
+<li><a class="reference internal" href="#rasp2025">rasp2025</a><ul>
+<li><a class="reference internal" href="#rasp2025ledalone">rasp2025ledalone</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installazioni-2025">Installazioni 2025</a></li>
+<li><a class="reference internal" href="#cellonrasp">cellOnRasp</a><ul>
+<li><a class="reference internal" href="#cellonrasp-system-architecture">cellOnRasp system Architecture</a></li>
+<li><a class="reference internal" href="#cellonrasp-punti-salienti">cellOnRasp Punti salienti</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cellsdistributed">cellsdistributed</a><ul>
+<li><a class="reference internal" href="#progetto-conwaycellsqak">Progetto conwaycellsqak</a></li>
+<li><a class="reference internal" href="#progetto-conwaymasterqak">Progetto conwaymasterqak</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#esecuzione-di-cellsdistributed-su-pc">Esecuzione di cellsdistributed su PC</a></li>
+<li><a class="reference internal" href="#progetto-conwaycellaloneqak">Progetto conwaycellaloneqak</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="RaspApplCode24.html"
+                          title="previous chapter">RaspApplCode24</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="SituatedActors.html"
+                          title="next chapter">SituatedActors</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/RaspberryCode2025.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="SituatedActors.html" title="SituatedActors"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="RaspApplCode24.html" title="RaspApplCode24"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RaspberryCode2025</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

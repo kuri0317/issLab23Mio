@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>UsingELK &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87712ff3" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cargosystem25" href="cargosystem25.html" />
+    <link rel="prev" title="Microservizi" href="Microservizi.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="cargosystem25.html" title="cargosystem25"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Microservizi.html" title="Microservizi"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">UsingELK</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="usingelk">
+<h1>UsingELK<a class="headerlink" href="#usingelk" title="Link to this heading">¶</a></h1>
+<section id="stack-elk">
+<h2>Stack ELK<a class="headerlink" href="#stack-elk" title="Link to this heading">¶</a></h2>
+<p>Lo <span class="slide2">stack ELK</span> (<span class="blue">Elasticsearch</span>, <span class="blue">Logstash</span>, <span class="blue">Kibana</span>)
+soddisfa un’esigenza nello spazio di analisi dei dati di log nei sistemi distribuiti.</p>
+<a class="reference internal image-reference" href="_images/ELKArch.jpg"><img alt="_images/ELKArch.jpg" class="align-center" src="_images/ELKArch.jpg" style="width: 60%;" />
+</a>
+<ul class="simple">
+<li><p><span class="remark">Beats</span>: agenti che permettono il collect e l’invio dei dati verso lo stack Elastic.</p></li>
+<li><p><span class="remark">Logstash</span>: strumento open source che permette di raccogliere dati da una varietà di origini, trasformarli e inviarli alla destinazione desiderata.</p></li>
+<li><p><span class="remark">Elasticsearch</span>: motore di ricerca e analisi dei dati distribuito RESTful , basato su Apache Lucene che opera con documenti JSON senza schema. Dal 21 gennaio 2021 Elastic NV lo rende disponibile con la Licenza (non open source) Elastic o SSPL.</p></li>
+<li><p><span class="remark">Kibana</span>: strumento di visualizzazione ed esplorazione dei dati utilizzato per analisi dei dati, dei registri e serie temporali, monitoraggio delle applicazioni e casi d’uso di intelligenza operativa</p></li>
+</ul>
+<p>L’uso dello stack ELK offre diversi vantaggi cruciali nella costruzione di architetture a microservizi:</p>
+<ul class="simple">
+<li><p><span class="brown">Centralizzazione dei Log</span>: In un’architettura distribuita come quella dei microservizi, ogni servizio genera i propri log.
+ELK permette di <strong>aggregare</strong> tutti questi log in un’unica piattaforma centralizzata (<span class="blue">Elasticsearch</span>),
+semplificando enormemente il monitoraggio e la risoluzione dei problemi.
+Non è più necessario accedere a singoli server per analizzare i log.</p></li>
+<li><p><span class="brown">Ricerca e Analisi Potenti</span>: <span class="blue">Elasticsearch</span> offre capacità di ricerca full-text veloci e sofisticate sui log aggregati.
+Questo consente agli sviluppatori e agli operatori di filtrare, interrogare e analizzare grandi volumi di log
+in modo efficiente per identificare errori, pattern di comportamento, problemi di performance e altro ancora.</p></li>
+<li><p><span class="brown">Visualizzazione Intuitiva</span>: <span class="blue">Kibana</span> fornisce una potente interfaccia utente per visualizzare i dati contenuti
+in <em>Elasticsearch</em>. È possibile creare dashboard personalizzati con grafici, tabelle e mappe per monitorare lo stato dei servizi,
+tracciare metriche chiave, identificare anomalie e ottenere una comprensione olistica del sistema.</p></li>
+<li><p><span class="brown">Troubleshooting Efficace</span>: La combinazione di ricerca potente e visualizzazione chiara facilita notevolmente il debugging
+e la risoluzione dei problemi in ambienti microservizi complessi.
+È possibile tracciare le richieste utente attraverso più servizi, identificare la causa radice degli errori
+e monitorare l’impatto delle modifiche.</p></li>
+<li><p><span class="brown">Monitoraggio in Tempo Reale</span>: ELK permette di monitorare i log in tempo reale, fornendo visibilità immediata sullo stato
+e sul comportamento dei microservizi. Questo è fondamentale per rilevare tempestivamente eventuali problemi
+e intervenire prima che impattino sugli utenti.</p></li>
+<li><p><span class="brown">Scalabilità</span>: Tutti i componenti dello stack ELK sono progettati per essere <strong>scalabili orizzontalmente</strong>,
+il che è fondamentale in architetture a microservizi che possono crescere e scalare dinamicamente.</p></li>
+<li><p><span class="brown">Flessibilità e Personalizzazione</span>: ELK è altamente configurabile ed estendibile.
+<span class="blue">Logstash</span> permette di raccogliere e trasformare dati da diverse fonti e in vari formati,
+mentre <span class="blue">Kibana</span> offre ampie opzioni di personalizzazione per la creazione di visualizzazioni specifiche
+per le esigenze del team.</p></li>
+<li><p><span class="brown">Osservabilità</span>: ELK contribuisce in modo significativo all’ottenimento di una maggiore <strong>osservabilità</strong>
+del sistema a microservizi, fornendo insight non solo sui log ma anche, potenzialmente integrato con altri strumenti,
+su metriche e tracing.</p></li>
+</ul>
+</section>
+<section id="introduzione-all-uso-dello-stack-elk">
+<h2>Introduzione all’uso dello stack ELK<a class="headerlink" href="#introduzione-all-uso-dello-stack-elk" title="Link to this heading">¶</a></h2>
+<p>Sono stati prodotti alcuni video che introducono all’uso dello stack ELK con riferimento
+a un sistema applicativo che intende fornire servizi CRUD di prodotti da trasportare in un cargo.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="blue">Cargoproduct</span></p></td>
+<td><p><a class="reference external" href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=d3598b13-35a6-4732-9924-b1e800f3eec0">https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=d3598b13-35a6-4732-9924-b1e800f3eec0</a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Intrduzione all’uso di ELK</span></p></td>
+<td><p><a class="reference external" href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=31e7d7e8-89da-46da-838e-b1f200e81058">https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=31e7d7e8-89da-46da-838e-b1f200e81058</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">Esempi di uso di Kibana</span></p></td>
+<td><p><a class="reference external" href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=d0a56e0d-5193-47da-809e-b1f800e857ed">https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=d0a56e0d-5193-47da-809e-b1f800e857ed</a></p></td>
+</tr>
+</tbody>
+</table>
+<section id="progetto-cargoproduct">
+<h3>Progetto cargoproduct<a class="headerlink" href="#progetto-cargoproduct" title="Link to this heading">¶</a></h3>
+<p>Il progetto <span class="slide3">cargoproduct</span> realizza il core-business applicativo con un insieme di classi Java.</p>
+<p>L’architettura del sistema è stata sviluppata nel modo che segue:</p>
+<ol class="arabic">
+<li><p>Definizione di una <span class="slide2">:classe di dominio</span> <a class="reference external" href="../../../../cargoproduct/src/main/java/domain/Product.java">Product.java</a> che descrive le proprietà dei prodotti da trasportare:</p></li>
+<li><p>Definizione di una <span class="slide2">:classe di dominio</span> <a class="reference external" href="../../../../cargoproduct/src/main/java/domain/ProductServiceLogic.java">ProductServiceLogic.java</a> che descrive la logica di un servizio di gestione
+dei prodotti. Questa classe:</p>
+<ul>
+<li><p>realizza il contratto tipico di un servizio che realizza le operazioni
+CRUD (<strong>Create, Read, Update, Delete</strong>) sui prodotti: <a class="reference internal" href="#cargoproduct-interfaces"><span class="std std-ref">ICrudOps.java</span></a>.</p></li>
+<li><p>IPOTIZZA che il contratto <span class="xref std std-ref">IStorage.javacargoproduct interfaces&gt;</span> debba essere rispettato dall’entità
+che si occupa di memorizzare i prodotti.</p></li>
+<li><p>si avvale anche di supporti per la memorizzazione dei prodotti (Storage) cui accede tramite adapter,
+allo scopo di evitare dipendenze dirette.</p>
+<p><a class="reference external" href="../../../../cargoproduct/src/main/java/storage/StorageVolatile.java">StorageVolatile.java</a></p>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="cargoproduct-interfaces">
+<h3>cargoproduct interfaces<a class="headerlink" href="#cargoproduct-interfaces" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>ICrudOps.java</strong></p></td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">domain</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="n">public</span> <span class="n">interface</span> <span class="n">ICrudOps</span> <span class="p">{</span>
+    <span class="o">//</span><span class="n">CRUD</span> <span class="n">operations</span>
+    <span class="n">public</span> <span class="n">boolean</span> <span class="n">isProductPresent</span><span class="p">(</span><span class="n">Product</span> <span class="n">p</span><span class="p">);</span>
+    <span class="n">public</span> <span class="n">Product</span> <span class="n">createProduct</span><span class="p">(</span><span class="n">Product</span> <span class="n">body</span><span class="p">);</span>
+    <span class="n">public</span> <span class="n">Product</span> <span class="n">getProduct</span><span class="p">(</span><span class="n">String</span> <span class="n">productId</span><span class="p">);</span>
+    <span class="n">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">getAllProducts</span><span class="p">();</span>
+    <span class="n">public</span> <span class="n">Product</span> <span class="n">getProduct</span><span class="p">(</span><span class="nb">int</span> <span class="n">productId</span><span class="p">);</span>
+    <span class="n">public</span> <span class="n">boolean</span> <span class="n">deleteProduct</span><span class="p">(</span><span class="n">String</span> <span class="n">productId</span><span class="p">);</span>
+    <span class="n">public</span> <span class="n">boolean</span> <span class="n">deleteProduct</span><span class="p">(</span><span class="nb">int</span> <span class="n">productId</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>IStorage.java</strong></p></td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">domain</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="n">public</span> <span class="n">interface</span> <span class="n">IStorage</span> <span class="p">{</span>
+
+    <span class="n">public</span> <span class="n">void</span> <span class="n">createItem</span><span class="p">(</span><span class="nb">int</span> <span class="nb">id</span><span class="p">,</span> <span class="n">String</span> <span class="n">jsonRep</span><span class="p">);</span>
+    <span class="n">public</span> <span class="n">String</span> <span class="n">getItem</span><span class="p">(</span> <span class="nb">int</span> <span class="nb">id</span> <span class="p">);</span>
+    <span class="n">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">getAllItems</span><span class="p">();</span>
+    <span class="n">public</span> <span class="n">boolean</span> <span class="n">deleteItem</span><span class="p">(</span> <span class="nb">int</span> <span class="nb">id</span> <span class="p">);</span>
+    <span class="n">public</span> <span class="nb">int</span> <span class="n">getItemNum</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<a class="reference internal image-reference" href="_images/ProductServiceLogicUML.jpg"><img alt="_images/ProductServiceLogicUML.jpg" class="align-center" src="_images/ProductServiceLogicUML.jpg" style="width: 95%;" />
+</a>
+<p>La logica applicativa si avvale del sistema ELK per i log.</p>
+<a class="reference internal image-reference" href="_images/ProductServiceELKContainer.jpg"><img alt="_images/ProductServiceELKContainer.jpg" class="align-center" src="_images/ProductServiceELKContainer.jpg" style="width: 60%;" />
+</a>
+</section>
+<section id="progetto-cargoserviceqak">
+<h3>Progetto cargoserviceQak<a class="headerlink" href="#progetto-cargoserviceqak" title="Link to this heading">¶</a></h3>
+<p>Il progetto  <span class="slide3">cargoserviceQak</span>  realizza un (micro-servizio)
+con logica applicativa data da <a class="reference external" href="../../../../cargoproduct/src/main/java/domain/ProductServiceLogic.java">ProductServiceLogic.java</a>.</p>
+<p>Il servizio è definito da un <span class="slide2">modello di dominio</span> <a class="reference external" href="../../../../cargoserviceQak/src/cargoservice.qak">cargoservice.qak</a> che messaggi:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">System</span>  <span class="n">cargoservice</span>
+<span class="n">mqttBroker</span> <span class="s2">&quot;localhost&quot;</span> <span class="p">:</span> <span class="mi">1883</span> <span class="n">eventTopic</span> <span class="s2">&quot;cargoevents&quot;</span>     <span class="o">//</span><span class="n">mosquitto</span> <span class="n">se</span> <span class="ow">in</span> <span class="n">docker</span>
+
+<span class="n">Request</span> <span class="n">createProduct</span> <span class="p">:</span> <span class="n">product</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>    <span class="o">//</span><span class="n">String</span> <span class="n">JSON</span> <span class="s1">&#39;{&quot;productId&quot;:31,&quot;name&quot;:&quot;p31&quot;,&quot;weight&quot;:311}&#39;</span>
+<span class="n">Reply</span>   <span class="n">createdProduct</span><span class="p">:</span> <span class="n">productid</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span> <span class="k">for</span> <span class="n">createProduct</span>   <span class="o">//</span><span class="n">String</span> <span class="n">JSON</span>
+
+<span class="n">Request</span> <span class="n">deleteProduct</span>  <span class="p">:</span> <span class="n">product</span><span class="p">(</span> <span class="n">ID</span> <span class="p">)</span>
+<span class="n">Reply</span>   <span class="n">deletedProduct</span> <span class="p">:</span> <span class="n">product</span><span class="p">(</span><span class="n">String</span><span class="p">)</span> <span class="k">for</span> <span class="n">deleteProduct</span>
+
+<span class="n">Request</span> <span class="n">getProduct</span> <span class="p">:</span> <span class="n">product</span><span class="p">(</span> <span class="n">ID</span> <span class="p">)</span>
+<span class="n">Reply</span>   <span class="n">getProductAnswer</span><span class="p">:</span> <span class="n">product</span><span class="p">(</span> <span class="n">JSonString</span> <span class="p">)</span> <span class="k">for</span> <span class="n">getProduct</span>
+
+<span class="n">Request</span> <span class="n">getAllProducts</span> <span class="p">:</span> <span class="n">dummy</span><span class="p">(</span> <span class="n">ID</span> <span class="p">)</span>
+<span class="n">Reply</span>   <span class="n">getAllProductsAnswer</span><span class="p">:</span> <span class="n">products</span><span class="p">(</span>  <span class="n">String</span> <span class="p">)</span> <span class="k">for</span> <span class="n">getAllProducts</span>
+
+<span class="n">Dispatch</span> <span class="n">cargoinfo</span> <span class="p">:</span> <span class="n">cargoinfo</span><span class="p">(</span> <span class="n">INFO</span> <span class="p">)</span>
+<span class="n">Event</span>   <span class="n">cargoevent</span> <span class="p">:</span> <span class="n">cargoevent</span><span class="p">(</span> <span class="n">INFO</span> <span class="p">)</span>
+<span class="n">Event</span>   <span class="n">alarm</span>      <span class="p">:</span> <span class="n">alarm</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">//</span><span class="k">for</span> <span class="n">basicrobot</span>
+</pre></div>
+</div>
+<p>Il microservizio si avvale di un borker MQTT</p>
+<ul class="simple">
+<li><p>ProductServiceCallerMqtt.java</p></li>
+<li><p>ProductServiceAsynchCallerJsonTcp.java</p></li>
+</ul>
+<p>Video: <a class="reference external" href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=31e7d7e8-89da-46da-838e-b1f200e81058">https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=31e7d7e8-89da-46da-838e-b1f200e81058</a></p>
+</section>
+<section id="attivazione-dle-sistema-elk">
+<h3>Attivazione dle sistema ELK<a class="headerlink" href="#attivazione-dle-sistema-elk" title="Link to this heading">¶</a></h3>
+<p>L’attivazione del sistema ELK avviene all’iterno di un container docker, organizzato come descritto nel file docker-compose.yml</p>
+<p>E’ importante avere cura che i vari componenti facciano riferimento ad una stessa versione.</p>
+</section>
+<section id="librerie-per-elk">
+<h3>Librerie per ELK<a class="headerlink" href="#librerie-per-elk" title="Link to this heading">¶</a></h3>
+<p>Il file build.gradle deve includere le seguenti librerie:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dependencies</span> <span class="p">{</span>
+    <span class="o">//</span><span class="n">implementation</span> <span class="s1">&#39;org.slf4j:slf4j-api:1.7.30&#39;</span>  <span class="o">//</span><span class="n">SOLO</span> <span class="n">INTERFACE</span>
+    <span class="n">implementation</span> <span class="s1">&#39;ch.qos.logback:logback-classic:1.2.11&#39;</span>
+    <span class="n">implementation</span><span class="p">(</span><span class="s2">&quot;net.logstash.logback:logstash-logback-encoder:7.3&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>E’ importante usare versioni compatibili delle ultime due librerie.</p>
+</section>
+<section id="logback-xml">
+<h3>logback.xml<a class="headerlink" href="#logback-xml" title="Link to this heading">¶</a></h3>
+<p>Il file logback.xml introduce una specifica che indica che i log vengono inviati anche a Logstash tramite un appender che usa TCP.
+&lt;appender name=”logstash” class=”net.logstash.logback.appender.LogstashTcpSocketAppender”&gt;</p>
+<blockquote>
+<div><p>&lt;destination&gt;localhost:5044&lt;/destination&gt;
+&lt;encoder class=”net.logstash.logback.encoder.LogstashEncoder”/&gt;</p>
+</div></blockquote>
+<p>&lt;/appender&gt;</p>
+</section>
+<section id="logstash-conf">
+<h3>logstash.conf<a class="headerlink" href="#logstash-conf" title="Link to this heading">¶</a></h3>
+<p>In base a quanto specificato in <a class="reference internal" href="#logback-xml"><span class="std std-ref">logback.xml</span></a>, <em>Logstash</em> è stato configurato nel file <strong>logstash.conf</strong>, come segue:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">input</span> <span class="p">{</span>
+    <span class="n">tcp</span> <span class="p">{</span>
+        <span class="n">port</span>  <span class="o">=&gt;</span> <span class="mi">5044</span>
+        <span class="n">codec</span> <span class="o">=&gt;</span> <span class="n">json</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">output</span> <span class="p">{</span>
+
+    <span class="n">elasticsearch</span> <span class="p">{</span>
+        <span class="n">hosts</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">&quot;http://elasticsearch:9200&quot;</span><span class="p">]</span>
+        <span class="n">index</span>  <span class="o">=&gt;</span> <span class="s2">&quot;cell-&quot;</span>
+    <span class="p">}</span>
+    <span class="n">stdout</span> <span class="p">{</span>
+        <span class="n">codec</span> <span class="o">=&gt;</span> <span class="n">rubydebug</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>parte di input: ascolta sulla porta 5044</p></li>
+<li><p>parte di output: invia i log a Elasticsearch via http sulla porta 9200 specificando l’indice: cell-.</p></li>
+<li><p>l tag (opzionale) stdout introduce l’uso di un debugger</p></li>
+</ul>
+<blockquote>
+<div><p>I log processati da Logstash, sono inviati in Elasticsearch, che li memorizza in documenti JSON all’interno dell’indice “cell-”</p>
+</div></blockquote>
+</section>
+</section>
+<section id="interazioni-con-elastichsearch-via-curl">
+<h2>Interazioni con Elastichsearch via curl<a class="headerlink" href="#interazioni-con-elastichsearch-via-curl" title="Link to this heading">¶</a></h2>
+<section id="ricerca-di-log">
+<h3>Ricerca di log<a class="headerlink" href="#ricerca-di-log" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">XGET</span> <span class="s2">&quot;http://localhost:9200/cell-*/_search&quot;</span> <span class="o">-</span><span class="n">H</span> <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="o">-</span><span class="n">d</span><span class="s1">&#39;</span>
+<span class="p">{</span>
+  <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;match_all&quot;</span><span class="p">:</span> <span class="p">{}</span>
+  <span class="p">}</span>
+<span class="p">}</span><span class="s1">&#39;</span>
+
+<span class="n">curl</span> <span class="o">-</span><span class="n">XGET</span> <span class="s2">&quot;http://localhost:9200/cell-*/_search&quot;</span> <span class="o">-</span><span class="n">H</span> <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="o">-</span><span class="n">d</span><span class="s1">&#39;</span>
+<span class="p">{</span>
+  <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;match&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;logger_name&quot;</span><span class="p">:</span><span class="s2">&quot;gamemaster_actor&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="eliminazione-di-tutti-i-log">
+<h3>Eliminazione di tutti i log<a class="headerlink" href="#eliminazione-di-tutti-i-log" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="s2">&quot;http://localhost:9200/cell-*/_delete_by_query&quot;</span> <span class="o">-</span><span class="n">H</span> <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="o">-</span><span class="n">d</span><span class="s1">&#39;</span>
+<span class="p">{</span>
+  <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;match_all&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+<span class="p">}</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="aggiunta-di-log">
+<h3>Aggiunta di log<a class="headerlink" href="#aggiunta-di-log" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="s2">&quot;http://localhost:9200/cargo-logs-/_doc/1&quot;</span> <span class="o">-</span><span class="n">H</span> <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="o">-</span><span class="n">d</span><span class="s1">&#39;</span>
+<span class="p">{</span>
+  <span class="s2">&quot;productId&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+  <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="mi">250</span><span class="p">,</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;p50&quot;</span>
+<span class="p">}</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">UsingELK</a><ul>
+<li><a class="reference internal" href="#stack-elk">Stack ELK</a></li>
+<li><a class="reference internal" href="#introduzione-all-uso-dello-stack-elk">Introduzione all’uso dello stack ELK</a><ul>
+<li><a class="reference internal" href="#progetto-cargoproduct">Progetto cargoproduct</a></li>
+<li><a class="reference internal" href="#cargoproduct-interfaces">cargoproduct interfaces</a></li>
+<li><a class="reference internal" href="#progetto-cargoserviceqak">Progetto cargoserviceQak</a></li>
+<li><a class="reference internal" href="#attivazione-dle-sistema-elk">Attivazione dle sistema ELK</a></li>
+<li><a class="reference internal" href="#librerie-per-elk">Librerie per ELK</a></li>
+<li><a class="reference internal" href="#logback-xml">logback.xml</a></li>
+<li><a class="reference internal" href="#logstash-conf">logstash.conf</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#interazioni-con-elastichsearch-via-curl">Interazioni con Elastichsearch via curl</a><ul>
+<li><a class="reference internal" href="#ricerca-di-log">Ricerca di log</a></li>
+<li><a class="reference internal" href="#eliminazione-di-tutti-i-log">Eliminazione di tutti i log</a></li>
+<li><a class="reference internal" href="#aggiunta-di-log">Aggiunta di log</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="Microservizi.html"
+                          title="previous chapter">Microservizi</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="cargosystem25.html"
+                          title="next chapter">cargosystem25</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/UsingELK.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="cargosystem25.html" title="cargosystem25"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Microservizi.html" title="Microservizi"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">UsingELK</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

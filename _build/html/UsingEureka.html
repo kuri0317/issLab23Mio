@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>UsingEureka &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Viarengo-Hinton" href="Viarengo-Hinton.html" />
+    <link rel="prev" title="cargosystem25" href="cargosystem25.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Viarengo-Hinton.html" title="Viarengo-Hinton"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cargosystem25.html" title="cargosystem25"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">UsingEureka</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="usingeureka">
+<h1>UsingEureka<a class="headerlink" href="#usingeureka" title="Permalink to this heading">¶</a></h1>
+<p>In un’architettura a <a class="reference internal" href="Microservizi.html#microservizi"><span class="std std-ref">Microservizi</span></a>, i servizi spesso devono individuarsi a vicenda.
+Invece di codificare la posizione dei servizi, è possibile utilizzare un meccanismo di individuazione dei servizi,
+per trovarli dinamicamente in base al loro nome.</p>
+<p><a class="reference external" href="https://medium.com/&#64;anjalimishraa17/spring-cloud-eureka-501f3bca13f5">Eureka</a> funge da registro in cui i servizi possono registrarsi e individuare altri servizi registrati.</p>
+<p>I punti salienti del servizio Eureka per il discovery dei microservizi sono:</p>
+<ul class="simple">
+<li><p><span class="blue">Integrazione con Spring Cloud</span>: Eureka è un componente chiave della suite <a class="reference external" href="https://spring.io/projects/spring-cloud-netflix">Spring Cloud Netflix</a> e si integra facilmente con le applicazioni Spring Boot, fornendo astrazioni e configurazioni semplificate.</p></li>
+<li><p><span class="blue">Service Registry Centralizzato</span>: Eureka Server funge da registro centrale in cui le istanze dei microservizi si registrano automaticamente, fornendo informazioni sulla loro posizione (indirizzo IP e porta).</p></li>
+<li><p><span class="blue">Registrazione Automatica</span>: I microservizi si registrano automaticamente con Eureka Server all’avvio e annullano la registrazione all’arresto, riducendo la necessità di configurazione manuale.</p></li>
+<li><p><span class="blue">Service Discovery Dinamico</span>: I client Eureka (altri microservizi) possono interrogare il server per scoprire le posizioni delle istanze di servizio di cui hanno bisogno, consentendo una comunicazione dinamica senza codificare indirizzi IP e porte.</p></li>
+<li><p><span class="blue">Heartbeat e Monitoraggio dello Stato di Salute</span>: I client Eureka inviano regolarmente heartbeat al server per indicare che sono ancora attivi e funzionanti. Il server utilizza questi heartbeat per monitorare lo stato di salute dei servizi registrati e rimuovere dal registro le istanze non funzionanti.</p></li>
+<li><p><span class="blue">Load Balancing</span>: Eureka può aiutare a implementare il bilanciamento del carico tra le diverse istanze di un servizio. I client possono recuperare un elenco di tutte le istanze disponibili di un servizio e quindi utilizzare algoritmi di bilanciamento del carico per distribuire le richieste.</p></li>
+<li><p><span class="blue">Tolleranza agli Errori</span>: Eureka Server è progettato per essere altamente disponibile e può essere distribuito in cluster. Include anche una modalità di “auto-preservazione” che impedisce l’eliminazione massiccia di istanze integre in caso di problemi di rete temporanei tra i client e il server.</p></li>
+<li><p><span class="blue">Dashboard UI</span>: Eureka Server fornisce un’interfaccia utente web che consente di visualizzare lo stato dei servizi registrati e le informazioni sulle istanze.</p></li>
+<li><p><span class="blue">Metadati</span>: Le istanze di servizio possono fornire metadati aggiuntivi al momento della registrazione, che possono essere utilizzati dai client per decisioni di routing o di bilanciamento del carico più intelligenti.</p></li>
+</ul>
+<section id="atiivare-eureka">
+<h2>Atiivare Eureka<a class="headerlink" href="#atiivare-eureka" title="Permalink to this heading">¶</a></h2>
+<p>Si può attivare con <a class="reference external" href="../../../../eurekaDemo2025/yamls/eurekaOnly.yml">eurekaOnly.yml</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">eurekaOnly</span><span class="o">.</span><span class="n">yml</span> <span class="o">-</span><span class="n">p</span> <span class="n">eureka</span> <span class="n">up</span>
+</pre></div>
+</div>
+<section id="eurekaserviceconfig">
+<h3>EurekaServiceConfig<a class="headerlink" href="#eurekaserviceconfig" title="Permalink to this heading">¶</a></h3>
+<p>La libreria com.netflix.discovery fornisce diverse classi di configurazione per le istanze Eureka.</p>
+<ul class="simple">
+<li><p>La interfaccia <span class="blue">EurekaInstanceConfig</span> definisce le proprietà che un’istanza Eureka deve fornire per registrarsi e comunicare con l’Eureka Server</p></li>
+<li><p>La classe <span class="blue">com.netflix.appinfo.MyDataCenterInstanceConfig</span> fornisce implementazioni predefinite
+per alcune di queste
+proprietà, come il nome host e l’indirizzo IP dell’istanza.</p></li>
+</ul>
+</section>
+</section>
+<section id="eurekademo2025">
+<h2>eurekaDemo2025<a class="headerlink" href="#eurekademo2025" title="Permalink to this heading">¶</a></h2>
+<p><span class="slide3">Project eurekaDemo2025</span></p>
+<p>Introduciamo un primo esempio di uso di Eureka in un progetto Java che non usa Spring Boot.
+Il progetto defnisce un servizio Java che si registra su un server Eureka e un altro servizio
+che scopre il primo e lo usa.</p>
+<ul>
+<li><p>Conviene creare una sottoclasse di <strong>MyDataCenterInstanceConfig</strong> e sovrascrivere metodi quali
+getHostName() o getIPAddress() per implementare la logica di risoluzione appropriata
+per nostra infrastruttura.</p>
+<p>In questo esempio, questa sottoclasse è: <a class="reference external" href="../../../../eurekaDemo2025/src/main/java/EurekaServiceConfig.java">EurekaServiceConfig.java</a></p>
+</li>
+</ul>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../eurekaDemo2025/src/main/java/ServiceRegistred.java">ServiceRegistred.java</a></p></td>
+<td><p>Un servizio Java (server TCP) che si registra sul server Eureka con
+il nome <code class="docutils literal notranslate"><span class="pre">ctxeureka</span></code> rimanendo attivo per 10 minuti.</p>
+<p>Da attivare con: <span class="remark">gradlew runRegister</span></p>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../eurekaDemo2025/src/main/java/ServiceUsageSimple.java">ServiceUsageSimple.java</a></p></td>
+<td><p>Un programma che scopre il servizio registrato col nome <code class="docutils literal notranslate"><span class="pre">ctxeureka</span></code> e lo usa.</p>
+<p>Da attivare con: <span class="remark">gradlew runDiscover</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<section id="eureka-con-commutils">
+<h3>Eureka con CommUtils<a class="headerlink" href="#eureka-con-commutils" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="n">static</span> <span class="n">String</span> <span class="n">getMyPublicip</span><span class="p">()</span>
+<span class="n">public</span> <span class="n">static</span> <span class="n">String</span> <span class="n">getServerLocalIp</span><span class="p">()</span>
+<span class="n">public</span> <span class="n">static</span> <span class="n">boolean</span> <span class="n">ckeckEureka</span><span class="p">()</span>
+<span class="n">public</span> <span class="n">static</span> <span class="n">DiscoveryClient</span> <span class="n">createEurekaClient</span><span class="p">(</span> <span class="p">)</span>
+<span class="n">public</span> <span class="n">static</span> <span class="n">DiscoveryClient</span> <span class="n">registerService</span><span class="p">(</span>  <span class="n">EurekaInstanceConfig</span> <span class="n">config</span> <span class="p">)</span>
+<span class="n">public</span> <span class="n">static</span> <span class="n">String</span><span class="p">[]</span> <span class="n">discoverService</span><span class="p">(</span><span class="n">EurekaClient</span> <span class="n">eurekaClient</span><span class="p">,</span> <span class="n">String</span> <span class="n">serviceName</span><span class="p">)</span>
+<span class="n">public</span> <span class="n">static</span> <span class="n">String</span><span class="p">[]</span> <span class="n">discoverService</span><span class="p">(</span> <span class="n">String</span> <span class="n">serviceName</span> <span class="p">)</span>
+<span class="n">public</span> <span class="n">static</span> <span class="n">String</span> <span class="n">getEnvvarValue</span><span class="p">(</span><span class="n">String</span> <span class="n">envvarName</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="un-actorqak-che-si-registra-su-eureka">
+<h2>Un actorqak che si registra su Eureka<a class="headerlink" href="#un-actorqak-che-si-registra-su-eureka" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="../../../../eurekaDemo2025/src/eurekademo2025.qak">eurekademo2025.qak</a></p></li>
+<li><p><a class="reference external" href="../../../../eurekaDemo2025/src/main/java/CallerServiceqakTcp.java">CallerServiceqakTcp.java</a></p></li>
+<li><p><a class="reference external" href="../../../../eurekaDemo2025Usage/src/eurekademo2025Usage.qak">eurekademo2025Usage.qak</a></p></li>
+</ul>
+</section>
+<section id="commutils-per-l-uso-di-eureka">
+<h2>CommUtils per l’uso di Eureka<a class="headerlink" href="#commutils-per-l-uso-di-eureka" title="Permalink to this heading">¶</a></h2>
+<p>La classe <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-utils-commutils"><span class="std std-ref">CommUtils</span></a> fonrice i seguenti metodi <code class="docutils literal notranslate"><span class="pre">static</span></code>
+usando le seguenti classi di libreria:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.netflix.appinfo.EurekaInstanceConfig</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.netflix.discovery.DefaultEurekaClientConfig</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.netflix.discovery.DiscoveryClient</span><span class="p">;</span>
+</pre></div>
+</div>
+<section id="dipendenze-per-eureka">
+<h3>Dipendenze per Eureka<a class="headerlink" href="#dipendenze-per-eureka" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Dipendenza</span> <span class="n">per</span> <span class="n">Eureka</span> <span class="n">Client</span>
+<span class="n">implementation</span> <span class="s1">&#39;com.netflix.eureka:eureka-client:1.10.18&#39;</span>
+<span class="o">//</span><span class="mf">1.10.18</span> <span class="n">compatibile</span> <span class="n">con</span> <span class="n">immagine</span> <span class="n">Spring</span> <span class="n">Cloud</span> <span class="n">Netflix</span> <span class="mf">3.</span><span class="n">x</span>
+
+<span class="o">//</span> <span class="n">Dipendenza</span> <span class="n">per</span> <span class="n">Jersey</span> <span class="n">Client</span> <span class="p">(</span><span class="n">per</span> <span class="n">fare</span> <span class="n">richieste</span> <span class="n">HTTP</span><span class="p">)</span>
+<span class="n">implementation</span> <span class="s1">&#39;com.sun.jersey:jersey-client:1.19.1&#39;</span>
+
+<span class="o">//</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mvnrepository</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">artifact</span><span class="o">/</span><span class="n">com</span><span class="o">.</span><span class="n">netflix</span><span class="o">.</span><span class="n">servo</span><span class="o">/</span><span class="n">servo</span><span class="o">-</span><span class="n">core</span>
+<span class="n">implementation</span> <span class="s1">&#39;com.netflix.servo:servo-core:0.13.2&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="eureka-client-properties">
+<h3>eureka-client.properties<a class="headerlink" href="#eureka-client-properties" title="Permalink to this heading">¶</a></h3>
+<p>Il file deve trovarsi bel claspath del progetto. Di solito lo si inserisce nella directory
+<span class="slide2">main.resources</span> speciifcando, come informazione più importante,
+gli indirizzi IP su cui cercare il servizio Eureka.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eureka</span><span class="o">.</span><span class="n">serviceUrl</span><span class="o">.</span><span class="n">defaultZone</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span><span class="p">,</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.1.132</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span><span class="p">,</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">eureka</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span>
+
+<span class="c1"># Intervallo di rinnovo del lease (cuore pulsante)</span>
+<span class="n">eureka</span><span class="o">.</span><span class="n">leaseRenewalIntervalInSeconds</span><span class="o">=</span><span class="mi">60</span>
+
+<span class="c1"># Intervallo di espirazione del lease</span>
+<span class="n">eureka</span><span class="o">.</span><span class="n">leaseExpirationDurationInSeconds</span><span class="o">=</span><span class="mi">60</span>
+</pre></div>
+</div>
+</section>
+<section id="metodi-per-l-uso-di-eureka">
+<h3>Metodi per l’uso di Eureka<a class="headerlink" href="#metodi-per-l-uso-di-eureka" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="blue">boolean checkEureka()</span></p></td>
+<td><p>restituisce <strong>true</strong> se Eureka è stato trovato</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">DiscoveryClient createEurekaClient( )</span></p></td>
+<td><p>crea un Eureka client con riferimento al file <a class="reference internal" href="#eureka-client-properties"><span class="std std-ref">eureka-client.properties</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">DiscoveryClient createEurekaClient(  instanceConfig)</span></p></td>
+<td><p>crea un client usando le informazioni date  dall’oggetto passato come parametro</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">registerService(  EurekaInstanceConfig instanceConfig)</span></p></td>
+<td><p>registra un servizio descritto dall’oggetto passato come parametro</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">String[] discoverService(String serviceName)</span></p></td>
+<td><p>restistuisce la coppia <code class="docutils literal notranslate"><span class="pre">host:port</span></code> del servizio in un array di due componenti facendo il
+discovery con riferimento al file  <a class="reference internal" href="#eureka-client-properties"><span class="std std-ref">eureka-client.properties</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">String[] discoverService(EurekaClient eurekaClient, String serviceName)</span></p></td>
+<td><p>restistuisce la coppia <code class="docutils literal notranslate"><span class="pre">host:port</span></code> del servizio in un array di due componenti facendo il
+discovery con riferimento al file <a class="reference internal" href="#eureka-client-properties"><span class="std std-ref">eureka-client.properties</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">UsingEureka</a><ul>
+<li><a class="reference internal" href="#atiivare-eureka">Atiivare Eureka</a><ul>
+<li><a class="reference internal" href="#eurekaserviceconfig">EurekaServiceConfig</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#eurekademo2025">eurekaDemo2025</a><ul>
+<li><a class="reference internal" href="#eureka-con-commutils">Eureka con CommUtils</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#un-actorqak-che-si-registra-su-eureka">Un actorqak che si registra su Eureka</a></li>
+<li><a class="reference internal" href="#commutils-per-l-uso-di-eureka">CommUtils per l’uso di Eureka</a><ul>
+<li><a class="reference internal" href="#dipendenze-per-eureka">Dipendenze per Eureka</a></li>
+<li><a class="reference internal" href="#eureka-client-properties">eureka-client.properties</a></li>
+<li><a class="reference internal" href="#metodi-per-l-uso-di-eureka">Metodi per l’uso di Eureka</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="cargosystem25.html"
+                          title="previous chapter">cargosystem25</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="Viarengo-Hinton.html"
+                          title="next chapter">Viarengo-Hinton</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/UsingEureka.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Viarengo-Hinton.html" title="Viarengo-Hinton"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cargosystem25.html" title="cargosystem25"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">UsingEureka</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>VirtualRobotUsage25 &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87712ff3" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="VirtualRobotUsage25Survey" href="VirtualRobotUsage25Survey.html" />
+    <link rel="prev" title="VirtualRobot23" href="VirtualRobot23.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="VirtualRobotUsage25Survey.html" title="VirtualRobotUsage25Survey"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="VirtualRobot23.html" title="VirtualRobot23"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">VirtualRobotUsage25</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="virtualrobotusage25">
+<h1>VirtualRobotUsage25<a class="headerlink" href="#virtualrobotusage25" title="Link to this heading">¶</a></h1>
+<section id="verso-l-uso-del-virtualrobot">
+<h2>Verso l’uso del VirtualRobot<a class="headerlink" href="#verso-l-uso-del-virtualrobot" title="Link to this heading">¶</a></h2>
+<p>Procediamo in modo top-down definendo le interazioni
+<span class="slide2">dal punto di vista del livello applicativo</span>.</p>
+<blockquote>
+<div><table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 60.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="remark">Protocolli</span></p>
+<p>L’applicazione vuole comunicare con il robot senza conoscere i dettagli della comunicazione.</p>
+<p>A tal fine ricordiamo <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">unibo.basicomm23.interfaces.Interaction</span></a>.</p>
+</td>
+<td><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">ProtocolType</span><span class="w"> </span><span class="n">protocol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProtocolType</span><span class="p">.</span><span class="na">ws</span><span class="p">;</span>
+<span class="c1">//ProtocolType protocol = ProtocolType.http;</span>
+<span class="n">Interaction</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span>
+<span class="n">ConnectionFactory</span><span class="p">.</span><span class="na">createClientSupport</span><span class="p">(</span>
+<span class="w">     </span><span class="n">protocol</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;localhost&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;8090/api/move&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Per un esempio si veda: <a class="reference external" href="../../../../virtualrobotusage25/src/main/java/basicusage/TestMovesUsingWs.java">TestMovesUsingWs.java</a>, in cui i comandi sono esprressi in
+<a class="reference internal" href="VirtualRobot23.html#comandi-base-per-il-robot-in-cril"><span class="std std-ref">cril</span></a>.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="remark">Informazioni da WEnv</span></p>
+<p>L’applicazione potrebbe voler ricevere le informazioni di stato
+dovute al robot ( (<a class="reference internal" href="VirtualRobot23.html#messaggio-di-stato"><span class="std std-ref">Messaggio di stato</span></a>)  e da <a class="reference internal" href="VirtualRobot23.html#interazione-asincrona"><span class="std std-ref">WEnv</span></a> in
+forma di eventi</p>
+</td>
+<td><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">Event</span><span class="w"> </span><span class="n">vrinfo</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">vrinfo</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="remark">Comandi di movimento</span></p>
+<p>L’applicazione vorrebbe inviare al robot i comandi di movimento come dispatch</p>
+</td>
+<td><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">Dispatch</span><span class="w"> </span><span class="n">move</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">move</span><span class="p">(</span><span class="n">M</span><span class="p">)</span><span class="w">  </span><span class="s">&quot;M = w|s|a|d!r!l&quot;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="remark">Console</span></p>
+<p>L’applicazione vorrebbe rendere disponibile ad un utente umano  una console per inviare comandi al robot
+e per visualizzare ogni <a class="reference internal" href="VirtualRobot23.html#messaggio-di-stato"><span class="std std-ref">Messaggio di stato</span></a></p>
+</td>
+<td><p>Si veda  <a class="reference external" href="../../../../virtualrobotusage25/src/main/resources/NaiveGui.html">NaiveGui.html</a></p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><span class="slide2">Per avvicinarci ai desideri del livello applicativo</span>:</p>
+<p>All <span class="slide3">parola ‘robot’</span> possono corrispondere diversi tipi di <strong>componenti software</strong> che
+ne realizzano il significato in termni di struttura, interazione e funzionamento.</p>
+<p>Nel seguito, introduciamo i seguenti componenti:</p>
+</section>
+<section id="vrobotllmoves24-robot-come-pojo-a-eventi-qak">
+<h2>VrobotLLMoves24: Robot come POJO a eventi qak<a class="headerlink" href="#vrobotllmoves24-robot-come-pojo-a-eventi-qak" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a></p></td>
+<td><p>un POJO che <strong>può possedere</strong> un <span class="slide3">owner</span> di tipo <a class="reference internal" href="QakActors25Actors.html#qakactors25actors"><span class="std std-ref">ActorBasic</span></a>
+che realizza i comandi di movimento definiti dalla interfaccia <code class="docutils literal notranslate"><span class="pre">IVrobotLLMoves</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="n">interface</span> <span class="n">IVrobotLLMoves</span> <span class="p">{</span>
+  <span class="o">//</span><span class="n">Ispirate</span> <span class="n">da</span> <span class="n">VirtualRobot23</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">turnLeft</span><span class="p">()</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">turnRight</span><span class="p">()</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">forward</span><span class="p">(</span> <span class="nb">int</span> <span class="n">time</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">backward</span><span class="p">(</span> <span class="nb">int</span> <span class="n">time</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">halt</span><span class="p">()</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+
+  <span class="o">//</span><span class="n">Nuove</span> <span class="n">operazioni</span>
+    <span class="n">public</span> <span class="n">boolean</span> <span class="n">step</span><span class="p">(</span><span class="n">long</span> <span class="n">time</span><span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Questo componente:</p>
+<ul class="simple">
+<li><p>converte i comandi di movimento in comandi per il virtual robot in
+espressi con il <a class="reference internal" href="VirtualRobot23.html#comandi-base-per-il-robot-in-cril"><span class="std std-ref">cril</span></a></p></li>
+<li><p>trasforma i <span class="xref std std-ref">messaggi di stato</span> emessi da <span class="xref std std-ref">WEnv:</span> in dispatch ed
+eventi applicativi che possono
+essere percepiti dall’owner, se esiste. In assenza di owner, gli <strong>eventi</strong> emessi
+possono essere percipiti da altri aqttoriqak del sistema, mentre i dispatch non sono
+generati.</p></li>
+<li><p>introduce anche una nuova mossa: <code class="docutils literal notranslate"><span class="pre">step(time:int)</span></code> (si veda <a class="reference internal" href="VrobotLLMoves24.html#step"><span class="std std-ref">step</span></a>)</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="vrobothlmoves24-robot-come-pojo-a-eventiqak-e-stepasynch">
+<h2>VrobotHLMoves24: Robot come POJO a eventiqak e stepAsynch<a class="headerlink" href="#vrobothlmoves24-robot-come-pojo-a-eventiqak-e-stepasynch" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#vrobothlmoves24"><span class="std std-ref">VrobotHLMoves24</span></a></p></td>
+<td><p>un POJO che opera come <a class="reference internal" href="#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a> con le segeunti differenze:</p>
+<ul>
+<li><p>Implementa la interfaccia <code class="docutils literal notranslate"><span class="pre">IVrobotMoves</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="n">interface</span> <span class="n">IVrobotMoves</span> <span class="p">{</span>
+  <span class="o">//</span><span class="n">Ispirate</span> <span class="n">da</span> <span class="n">VirtualRobot23</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">turnLeft</span><span class="p">()</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">turnRight</span><span class="p">()</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">forward</span><span class="p">(</span> <span class="nb">int</span> <span class="n">time</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">backward</span><span class="p">(</span> <span class="nb">int</span> <span class="n">time</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">halt</span><span class="p">()</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+
+  <span class="o">//</span><span class="n">Nuove</span> <span class="n">operazioni</span>
+    <span class="n">public</span> <span class="n">boolean</span> <span class="n">step</span><span class="p">(</span><span class="n">long</span> <span class="n">time</span><span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+  <span class="n">public</span> <span class="n">void</span> <span class="n">stepAsynch</span><span class="p">(</span><span class="nb">int</span> <span class="n">time</span><span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+
+  <span class="o">//</span><span class="n">Aril</span> <span class="p">(</span><span class="n">Abstract</span> <span class="n">Robot</span> <span class="n">Interaction</span> <span class="n">Lanaguage</span><span class="p">)</span>
+  <span class="o">//</span><span class="n">cmd</span><span class="o">=</span><span class="n">w</span> <span class="o">|</span> <span class="n">s</span> <span class="o">|</span> <span class="n">l</span> <span class="o">|</span> <span class="n">r</span> <span class="o">|</span> <span class="n">h</span><span class="s2">&quot;</span>
+  <span class="n">public</span> <span class="n">void</span> <span class="n">move</span><span class="p">(</span><span class="n">String</span> <span class="n">cmd</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>introduce comandi <span class="slide3">move</span> che formano <a class="reference internal" href="#il-linguaggio-aril"><span class="std std-ref">Il linguaggio aril</span></a>
+(<strong>Abstract Robot Interaction Language</strong>)</p></li>
+<li><p>definisce la nuova ‘mossa’ <span class="slide3">stepAsynch</span>  basato sulle seguente specifica logica:
+(si veda l’esempio <a class="reference external" href="../../../../virtualrobotusage25/src/vrusage25B.qaktt">vrusage25B.qak</a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Request</span> <span class="n">step</span>       <span class="p">:</span> <span class="n">step</span><span class="p">(</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">Reply</span> <span class="n">stepdone</span>     <span class="p">:</span> <span class="n">stepdone</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>                 <span class="k">for</span> <span class="n">step</span>
+<span class="n">Reply</span> <span class="n">stepfailed</span>   <span class="p">:</span> <span class="n">stepfailed</span><span class="p">(</span><span class="n">DURATION</span><span class="p">,</span> <span class="n">CAUSE</span><span class="p">)</span> <span class="k">for</span> <span class="n">step</span>
+</pre></div>
+</div>
+<p>Poichè il componente è un POJO, le <span class="slide3">reply</span> sono emesse in forma di <strong>Dispatch</strong>
+inviati all’onwer (se eisie).</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="vrqak-robot-come-microservizio-base">
+<h2>vrqak: Robot come microservizio-base<a class="headerlink" href="#vrqak-robot-come-microservizio-base" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#il-microservizio-vrqak24"><span class="std std-ref">vrqak</span></a></p></td>
+<td><p>un MICROSERVIZIO che:</p>
+<ul class="simple">
+<li><p>permette l’uso remoto del <a class="reference internal" href="VirtualRobot23.html#virtualrobot23"><span class="std std-ref">VirtualRobot23</span></a>
+attraverso invio di messaggi</p></li>
+<li><p>opera come una <span class="remark">risorsa osservabile</span>
+che permette ai clienti di percepire informazioni di stato su robot
+e sull’ambiente in cui il robot opera.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="basicrobot24-robot-come-agente-evoluto">
+<h2>BasicRobot24: Robot come agente evoluto<a class="headerlink" href="#basicrobot24-robot-come-agente-evoluto" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="BasicRobot24.html#basicrobot24"><span class="std std-ref">BasicRobot24</span></a></p></td>
+<td><p>un AGENTE SITUATO che  realizza  un robot che:</p>
+<ul class="simple">
+<li><p>risulta indipendente dalla tecnologia
+con cui è realizzato uno specifico DDR robot (virtuale o reale)
+attraverso l’uso di adapter e di un file di configurazione</p></li>
+<li><p>estende in modo rilevante l’<a class="reference internal" href="BasicRobot24.html#br24-le-funzioni"><span class="std std-ref">insieme di funzioni</span></a>
+che è capace di eseguire, includendo sequenze di movimenti, posizionamenti
+del robot ed esecuzione di piani di movimento mediante un <a class="reference internal" href="Planner.html#planner"><span class="std std-ref">Planner</span></a> interno.</p></li>
+<li><p>richiede la conoscenza di una <a class="reference internal" href="BasicRobot24.html#br24-e-le-mappatura-dell-ambiente"><span class="std std-ref">mappa</span></a>
+dell’area in cui il robot è chiamato a muoversi.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<section id="ai-overview-dei-componenti-robot">
+<h3>AI-Overview dei componenti-robot<a class="headerlink" href="#ai-overview-dei-componenti-robot" title="Link to this heading">¶</a></h3>
+<p>Per un ulteriore sommario (prodotto dalla AI), si veda: <a class="reference internal" href="VirtualRobotUsage25Survey.html#virtualrobotusage25survey"><span class="std std-ref">VirtualRobotUsage25Survey</span></a>.</p>
+</section>
+</section>
+<section id="vrobotllmoves24">
+<h2>VrobotLLMoves24<a class="headerlink" href="#vrobotllmoves24" title="Link to this heading">¶</a></h2>
+<ul>
+<li><p>Definiamo un adapter (<a class="reference internal" href="#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a>) che converta comandi di movimento in comandi per il robot in
+<a class="reference internal" href="VirtualRobot23.html#comandi-base-per-il-robot-in-cril"><span class="std std-ref">cril</span></a>
+e che trasformi i messaggi di stato in eventi applicativi.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/VrobotLLMsgStatocomando24.png"><img alt="_images/VrobotLLMsgStatocomando24.png" class="align-center" src="_images/VrobotLLMsgStatocomando24.png" style="width: 60%;" />
+</a>
+</div></blockquote>
+<p>Questo adapter introduce anche una nuova mossa: <code class="docutils literal notranslate"><span class="pre">step(time:int)</span></code> (si veda <a class="reference internal" href="VrobotLLMoves24.html#step"><span class="std std-ref">step</span></a>)</p>
+</li>
+</ul>
+</section>
+<section id="esempi-di-uso-di-vrobotllmoves24">
+<h2>Esempi di uso di VrobotLLMoves24<a class="headerlink" href="#esempi-di-uso-di-vrobotllmoves24" title="Link to this heading">¶</a></h2>
+<p>Progetto <span class="slide3">virtualrobotusage25</span></p>
+<ul>
+<li><p>Gli esempi sono elencati in ordine crescente di ‘astrazione’.</p></li>
+<li><p><span class="slidekp">KEY-POINT-1</span>: il supporto <a class="reference internal" href="#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a> fornisce metodi per muovere
+il robot usando il linguaggio <a class="reference internal" href="VirtualRobot23.html#comandi-base-per-il-robot-in-cril"><span class="std std-ref">cril</span></a>
+ed <span class="remark">emette informazioni</span> (messaggi ed eventi) nel caso abbia un <em>actorqak</em>  come owner.</p>
+<p>L’<span class="slide2">owner svolge il ruolo di una  “mente”</span> capace di svolgere compiti applicativi
+tenendo conto di ‘dati sensoriali’ provenienti dal robot e dall’ambiente.</p>
+</li>
+<li><p><span class="slidekp">KEY-POINT-2</span>: esempi ‘evoluti’ usano il metodo <span class="slide3">step</span> che
+può rendere più semplice la progrewttazione e la realizzazione di applicazioni.</p></li>
+<li><p><span class="slidekp">KEY-POINT-3</span>: il metodo <span class="slide3">step</span> viene realizzato in modo <strong>sincrono</strong>
+dal supporto <a class="reference internal" href="#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a> e viene realizzato in modo <span class="remark">asincrono</span>
+dal nuovo supporto <a class="reference internal" href="#vrobothlmoves24"><span class="std std-ref">VrobotHLMoves24</span></a> che estende il linguaggio comprensibile al robot
+con <a class="reference internal" href="#il-linguaggio-aril"><span class="std std-ref">Il linguaggio aril</span></a>.</p></li>
+<li><p><span class="slidekp">KEY-POINT-4</span>: gli esempi costituiscono la <span class="slide2">“premessa evolutiva”</span> per la
+defiizione di un micro-servizio (<a class="reference internal" href="#il-microservizio-vrqak24"><span class="std std-ref">Il microservizio vrqak24</span></a>)
+che  permettere l’uso remoto del robot da parte di componenti applicativi
+mediante <a class="reference internal" href="#il-linguaggio-aril"><span class="std std-ref">Il linguaggio aril</span></a>.</p></li>
+</ul>
+<section id="robot-come-agente-che-provoca-eventi">
+<h3>Robot come agente che provoca eventi<a class="headerlink" href="#robot-come-agente-che-provoca-eventi" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../virtualrobotusage25/src/main/java/TestVrrobotLLMoves24.java">TestVrrobotLLMoves24.java</a></p></td>
+<td><p>Un programma Java che usa il supporto senza owner qak.</p>
+<p>Le informazioni emesse dal supporto NON sono visibili a livello applicativo, ma
+possono essere visualizzate ponendo <code class="docutils literal notranslate"><span class="pre">setTrace(true)</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../virtualrobotusage25/src/main/java/basicusage/BoundaryWalkNaiveUsingWs.java">BoundaryWalkNaiveUsingWs.java</a></p></td>
+<td><p>Un programma Java che usa il supporto senza owner qak e muove il robot
+lungo il perimetro (privo di ostacoli) della stanza, inviando un comando <code class="docutils literal notranslate"><span class="pre">forward</span></code>
+di durata tale da garantire l’incontro del robot col muro di front</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../virtualrobotusage25/src/vrusage25_basic.qaktt">vrusage25_basic.qak</a></p></td>
+<td><p>Un attore qak che opera come owner di <a class="reference internal" href="#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a> eseguendo
+mosse-base che provocano l’emissione delle seguenti info:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;endmove&quot;</span><span class="p">:</span><span class="s2">&quot;true&quot;</span><span class="p">,</span><span class="s2">&quot;move&quot;</span><span class="p">:</span><span class="s2">&quot;turnLeft&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s2">&quot;sonarName&quot;</span><span class="p">:</span><span class="s2">&quot;sonar1&quot;</span><span class="p">,</span><span class="s2">&quot;distance&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="s2">&quot;axis&quot;</span><span class="p">:</span><span class="s2">&quot;y&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s2">&quot;collision&quot;</span><span class="p">:</span><span class="s2">&quot;moveForward&quot;</span><span class="p">,</span><span class="s2">&quot;target&quot;</span><span class="p">:</span><span class="s2">&quot;wallRight&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s2">&quot;endmove&quot;</span><span class="p">:</span><span class="s2">&quot;false&quot;</span><span class="p">,</span><span class="s2">&quot;move&quot;</span><span class="p">:</span><span class="s2">&quot;moveForward-collision&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="robot-come-agente-proattivo-reattivo">
+<h3>Robot come agente proattivo-reattivo<a class="headerlink" href="#robot-come-agente-proattivo-reattivo" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../virtualrobotusage25/src/vrusage25A.qaktt">vrusage25A.qak</a></p></td>
+<td><p>Un attore qak che opera come owner di <a class="reference internal" href="#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a>.
+Induce il robot a percorrere il boundary della stanza (SUPPOSTO PRIVO DI OSTACOLI)
+fermandolo per <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">sec</span></code> quando rilevato dal SONAR della stanza</p>
+<p>Le informazioni emesse dal supporto sono  percepite a livello applicativo come:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Dispatch</span> <span class="n">vrinfo</span>  <span class="p">:</span> <span class="n">vrinfo</span><span class="p">(</span><span class="n">MOVE</span><span class="p">,</span><span class="n">T</span><span class="p">)</span>        <span class="s2">&quot;inviato dal supporto dopo mossa ok &quot;</span>
+<span class="n">Dispatch</span> <span class="n">vrinfo</span>  <span class="p">:</span> <span class="n">vrinfo</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">collision</span><span class="p">)</span>   <span class="s2">&quot;inviato dal supporto dopo mossa ko &quot;</span>
+
+<span class="n">Event</span> <span class="n">vrinfo</span>   <span class="p">:</span> <span class="n">vrinfo</span><span class="p">(</span><span class="n">obstacle</span><span class="p">,</span><span class="n">unknown</span><span class="p">)</span>   <span class="s2">&quot;emesso dal supportp dopo collisione&quot;</span>
+<span class="n">Event</span> <span class="n">obstacle</span> <span class="p">:</span> <span class="n">obstacle</span><span class="p">(</span><span class="n">unknown</span><span class="p">)</span>          <span class="s2">&quot;emesso dal supporto dopo mossa ko&quot;</span>
+</pre></div>
+</div>
+<p>L’owner usa il comando  <span class="slide3">step sincrono</span> e invia un <code class="docutils literal notranslate"><span class="pre">autodispatch</span></code> alla
+ricezione del risultato.</p>
+<p><span class="slidekp">OSSERVO CHE</span> la reattività richiede che l’agente non esegua azioni che lo rendono
+insensibile agli eventi. Per questo una mossa <strong>step</strong> a tempo limitato è opportuna.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../virtualrobotusage25/src/vrusage25B.qaktt">vrusage25B.qak</a></p></td>
+<td><p>Un attore qak che opera come <a class="reference external" href="../../../../virtualrobotusage25/src/vrusage25A.qaktt">vrusage25A.qak</a> usando il supporto <a class="reference internal" href="#vrobothlmoves24"><span class="std std-ref">VrobotHLMoves24</span></a>
+ed il comando <span class="slide3">stepAsynch(370)`</span> da questi definito, che implica
+l’invio all’owner di un messaggio di <strong>reply</strong> da parte del supporto.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Request</span> <span class="n">step</span>       <span class="p">:</span> <span class="n">step</span><span class="p">(</span><span class="n">TIME</span><span class="p">)</span>    <span class="o">//</span><span class="n">LOGICAMENTE</span> <span class="n">eseguito</span> <span class="n">da</span> <span class="n">stepAsynch</span>
+<span class="n">Reply</span> <span class="n">stepdone</span>     <span class="p">:</span> <span class="n">stepdone</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>                 <span class="k">for</span> <span class="n">step</span>  <span class="o">//</span><span class="n">emesoo</span> <span class="n">dal</span> <span class="n">supporto</span>
+<span class="n">Reply</span> <span class="n">stepfailed</span>   <span class="p">:</span> <span class="n">stepfailed</span><span class="p">(</span><span class="n">DURATION</span><span class="p">,</span> <span class="n">CAUSE</span><span class="p">)</span> <span class="k">for</span> <span class="n">step</span>  <span class="o">//</span><span class="n">emesoo</span> <span class="n">dal</span> <span class="n">supporto</span>
+</pre></div>
+</div>
+<p><span class="slidekp">OSSERVO CHE</span>
+<strong>stepAsynch</strong> ‘libera’ l’owner dall’onere di generare <code class="docutils literal notranslate"><span class="pre">autodispatch</span></code> al termine di uno <strong>step sincrono</strong>
+e rende l’owner capace di gestire allarmi che sorgono durante la esecuzione di uno <em>step</em>.</p>
+<p>Concettualmente, una invocazione <span class="slide3">stepAsynch(370)`</span> è una <strong>request</strong> al supporto,
+che è obbligato a risondere con una <strong>reply</strong>  all’owner.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="il-microservizio-vrqak24">
+<h3>Il microservizio vrqak24<a class="headerlink" href="#il-microservizio-vrqak24" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p>Definiamo un servizio <a class="reference internal" href="Vrqak24.html#vrqak24"><span class="std std-ref">Vrqak24</span></a> per permettere l’uso remoto del <a class="reference internal" href="VirtualRobot23.html#virtualrobot23"><span class="std std-ref">VirtualRobot23</span></a>.</p>
+<p>Per un esempio, si veda: <a class="reference external" href="../../../../vrqak/src/vrqak24.qak">vrqak24.qak</a> nel <span class="slide3">progetto vrqak24</span>.</p>
+<p>Questo servizio può costituire il punto di partenza per la realizzazione di un servizio più esteso,
+che includa anche la gestione di uno specifico robot fisico.
+(d’ora in poi denominato <span class="remark">basicrobot</span>)</p>
+</li>
+<li><p>Usiamo il <strong>nuovoadapter</strong> (<a class="reference internal" href="#vrobothlmoves24"><span class="std std-ref">VrobotHLMoves24</span></a>)</p></li>
+</ul>
+<p><span class="slidekp">1- OSSERVO CHE</span>: l’analisi e la progettazione del (micro)servizio cominciano
+dalla <span class="slide3">specifica della interazione</span> tramite messaggi. Ad esempio:</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/*!*/ Dispatch move : move(M)
+
+/*2*/ Request step     :step(TIME)
+/*2a*/ Reply stepdone  :stepdone(V)          for step
+/*2b*/ Reply stepfailed:stepfailed(T, CAUSE) for step
+
+/*3*/ Event  sonarval : distance( DISTANCE )
+</pre></div>
+</div>
+</td>
+<td><ol class="arabic simple">
+<li><p>Comando in <a class="reference internal" href="#il-linguaggio-aril"><span class="std std-ref">aril</span></a>: <code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">=</span> <span class="pre">w|s|a|d|p</span></code></p></li>
+<li><p>Comando ASINCRONO con due possibili risposte</p></li>
+<li><p>Evento emesso dal servizio per segnalare che il <code class="docutils literal notranslate"><span class="pre">SONAR</span></code> (di <strong>WEnnv</strong>)
+ha calacolato la distanza di un ostacolo mobile (il robot)</p></li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="slidekp">2- OSSERVO CHE</span>: la specifica dei messaggi di interazione corrisponde alla specifica
+di una <span class="slide3">Interface</span> di un POJO:</p>
+<p><span class="slidekp">3- OSSERVO CHE</span>: in accordo con Alan Kay, possiamo dire che :slide3`Languages are like wings and chains.`</p>
+<p>In effetti,
+il linguaggio Qak <span class="remark">abilita</span> alla costruzione di (modelli di) sistemi distributi (nascondendo dettagli rilevanti come
+la realizzazione delle comunicazioni locali e remote tra attori) mentre <span class="remark">costringe</span> il programmatore a impostare
+il codice come un Aitoma a Stati Finiti. Questa <span class="remark">costrizione è voluta</span> per ‘indirizzare’ lo sviluppatore del software
+a una impostazione ‘pulita’ del codice (e prima ancora dei suoi pensieri …).</p>
+<p><span class="slidekp">4- OSSERVO CHE</span>: la costruzione di un (micro)servizio in linguaggio Qak consente di utilizzare questo componente
+<span class="slide3">anche a livello locale</span>. Si veda come esempio: <a class="reference external" href="../../../../unibomapbuild25/src/mapobstconservice.qaktt">mapobstconservice.qak</a> in <a class="reference internal" href="RoomMap.html#mappa-usando-un-servizio-locale"><span class="std std-ref">RobotMap</span></a></p>
+</section>
+<section id="vrobothlmoves24">
+<h3>VrobotHLMoves24<a class="headerlink" href="#vrobothlmoves24" title="Link to this heading">¶</a></h3>
+<p>Questo adapter opera come <a class="reference internal" href="#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a> con due differenze:</p>
+<blockquote>
+<div><ul>
+<li><p>introduce comandi nel <a class="reference internal" href="#il-linguaggio-aril"><span class="std std-ref">Il linguaggio aril</span></a> (<strong>Abstract Robot Interaction Language</strong>)</p></li>
+<li><p>permette l’invio di un comando <span class="slide3">stepAsynch</span>  basato sulle seguente specifica
+(si veda l’esempio <a class="reference external" href="../../../../virtualrobotusage25/src/vrusage25B.qaktt">vrusage25B.qak</a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Request</span> <span class="n">step</span>       <span class="p">:</span> <span class="n">step</span><span class="p">(</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">Reply</span> <span class="n">stepdone</span>     <span class="p">:</span> <span class="n">stepdone</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>                 <span class="k">for</span> <span class="n">step</span>
+<span class="n">Reply</span> <span class="n">stepfailed</span>   <span class="p">:</span> <span class="n">stepfailed</span><span class="p">(</span><span class="n">DURATION</span><span class="p">,</span> <span class="n">CAUSE</span><span class="p">)</span> <span class="k">for</span> <span class="n">step</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</section>
+<section id="il-linguaggio-aril">
+<h3>Il linguaggio aril<a class="headerlink" href="#il-linguaggio-aril" title="Link to this heading">¶</a></h3>
+<p>Poichè l’uso di un robot virtuale è <strong>solo un passo intermedio</strong> verso un robot fisico,
+che potrebbe avere  un linguaggio di comando diverso,
+può essere opportuno introdurre un linguaggio di comando ‘technology-independent’,
+che  denominiamo <span class="slide3">linguaggio aril</span> (<strong>Abstract Robot Interaction Lanaguage</strong>)
+con cui esprimere i comandi-base di spostamento con la sintassi che segue:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MOVE</span> <span class="o">=</span> <span class="n">w</span> <span class="o">|</span> <span class="n">s</span> <span class="o">|</span> <span class="n">l</span> <span class="o">|</span> <span class="n">a</span> <span class="o">|</span> <span class="n">r</span> <span class="o">|</span> <span class="n">d</span><span class="o">|</span> <span class="n">h</span> <span class="o">|</span> <span class="n">p</span>
+
+<span class="n">w</span> <span class="p">:</span> <span class="n">muove</span> <span class="n">avanti</span> <span class="n">per</span> <span class="mi">2500</span> <span class="n">msec</span>
+<span class="n">s</span><span class="p">:</span> <span class="n">muove</span> <span class="n">indietro</span> <span class="n">per</span> <span class="mi">2500</span> <span class="n">msec</span>
+<span class="n">l</span><span class="p">,</span><span class="n">a</span><span class="p">:</span>  <span class="n">gira</span> <span class="n">a</span> <span class="n">sinistra</span> <span class="n">di</span> <span class="mi">90</span> <span class="n">per</span> <span class="mi">300</span> <span class="n">msec</span>
+<span class="n">r</span><span class="p">,</span><span class="n">d</span><span class="p">:</span>  <span class="n">gira</span> <span class="n">a</span> <span class="n">destra</span> <span class="n">di</span> <span class="mi">90</span> <span class="n">per</span> <span class="mi">300</span> <span class="n">msec</span>
+<span class="n">p</span><span class="p">:</span> <span class="n">step</span> <span class="n">asincrono</span> <span class="n">per</span> <span class="mi">370</span> <span class="n">msec</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="mappa-della-stanza">
+<h2>Mappa della stanza<a class="headerlink" href="#mappa-della-stanza" title="Link to this heading">¶</a></h2>
+<p>Un (micro)servizio relativo al robot potrebbe/dovrebbe incudere anche comandi per</p>
+<ul class="simple">
+<li><p>posizionare il robot in uno specifico punto della stanza</p></li>
+<li><p>muovere il robot da un punto A a un punto B della stanza (liberi da ostacoli)</p></li>
+</ul>
+<p>Un premessa utile al raggiungimento di questi obiettivi è la costruzione di una
+<strong>rappresentazione a livello software della stanza</strong>.</p>
+<p><span class="slidekp">OSSERVO CHE</span> la rappresentazione software di entità “del mondo reale” quali la stanza o il robot
+conduce rapidamente all’idea del <span class="slide3">Gemello digitale</span> (si veda <a class="reference external" href="https://en.wikipedia.org/wiki/Digital_twin">Digital twin</a>).</p>
+<p>Per la costruzione di una mappa, si veda <a class="reference internal" href="RoomMap.html#roommap"><span class="std std-ref">RoomMap</span></a>.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">VirtualRobotUsage25</a><ul>
+<li><a class="reference internal" href="#verso-l-uso-del-virtualrobot">Verso l’uso del VirtualRobot</a></li>
+<li><a class="reference internal" href="#vrobotllmoves24-robot-come-pojo-a-eventi-qak">VrobotLLMoves24: Robot come POJO a eventi qak</a></li>
+<li><a class="reference internal" href="#vrobothlmoves24-robot-come-pojo-a-eventiqak-e-stepasynch">VrobotHLMoves24: Robot come POJO a eventiqak e stepAsynch</a></li>
+<li><a class="reference internal" href="#vrqak-robot-come-microservizio-base">vrqak: Robot come microservizio-base</a></li>
+<li><a class="reference internal" href="#basicrobot24-robot-come-agente-evoluto">BasicRobot24: Robot come agente evoluto</a><ul>
+<li><a class="reference internal" href="#ai-overview-dei-componenti-robot">AI-Overview dei componenti-robot</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#vrobotllmoves24">VrobotLLMoves24</a></li>
+<li><a class="reference internal" href="#esempi-di-uso-di-vrobotllmoves24">Esempi di uso di VrobotLLMoves24</a><ul>
+<li><a class="reference internal" href="#robot-come-agente-che-provoca-eventi">Robot come agente che provoca eventi</a></li>
+<li><a class="reference internal" href="#robot-come-agente-proattivo-reattivo">Robot come agente proattivo-reattivo</a></li>
+<li><a class="reference internal" href="#il-microservizio-vrqak24">Il microservizio vrqak24</a></li>
+<li><a class="reference internal" href="#vrobothlmoves24">VrobotHLMoves24</a></li>
+<li><a class="reference internal" href="#il-linguaggio-aril">Il linguaggio aril</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mappa-della-stanza">Mappa della stanza</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="VirtualRobot23.html"
+                          title="previous chapter">VirtualRobot23</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="VirtualRobotUsage25Survey.html"
+                          title="next chapter">VirtualRobotUsage25Survey</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/VirtualRobotUsage25.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="VirtualRobotUsage25Survey.html" title="VirtualRobotUsage25Survey"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="VirtualRobot23.html" title="VirtualRobot23"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">VirtualRobotUsage25</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

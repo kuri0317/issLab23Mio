@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ConwayLife25 &#8212; iss24 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87712ff3" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Relazione fine Fase1-ISS25" href="FineFase1-ISS25.html" />
+    <link rel="prev" title="PrimoprogettoJava25" href="PrimoprogettoJava25.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="FineFase1-ISS25.html" title="Relazione fine Fase1-ISS25"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="PrimoprogettoJava25.html" title="PrimoprogettoJava25"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ConwayLife25</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="conwaylife25">
+<h1>ConwayLife25<a class="headerlink" href="#conwaylife25" title="Link to this heading">¶</a></h1>
+<p><a class="reference internal" href="#conwaylife25-obiettivi-e-fasi-del-lavoro"><span class="std std-ref">ConwayLife25: Obiettivi e fasi del lavoro</span></a></p>
+<p>Parte I: da JavaScript a Java</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#conwaylife25-il-core-e-la-griglia"><span class="std std-ref">ConwayLife25: il core e la griglia</span></a></p></li>
+<li><p><a class="reference internal" href="#conwaylife25-in-javascript"><span class="std std-ref">ConwayLife25 in JavaScript</span></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#conway25javascript-project"><span class="std std-ref">conway25JavaScript project</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#conwaylife25-in-java"><span class="std std-ref">ConwayLife25 in Java</span></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#conway25java-project"><span class="std std-ref">conway25Java project</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#conwaylife25-una-gui-per-java"><span class="std std-ref">ConwayLife25 una GUI per Java</span></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#conwaygui-project"><span class="std std-ref">conwaygui project</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#conwaylife25-un-microservizio-java"><span class="std std-ref">ConwayLife25: un microservizio Java</span></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#conwaygui-service-deployment"><span class="std std-ref">conwaygui service deployment</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#conwaygui-con-servizio-remoto"><span class="std std-ref">ConwayGui con servizio remoto</span></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#conwayguialone"><span class="std std-ref">conwayguialone</span></a>  project</p></li>
+</ul>
+</li>
+</ol>
+<p>Parte II: verso gli attori</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="ConwayLife25AdAttori.html#conwaylife25-il-controller-come-actor"><span class="std std-ref">ConwayLife25 il controller come actor</span></a></p></li>
+</ol>
+<p>Parte III: celle come attori locali</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="ConwayLife25AdAttori.html#progetto-conwayactorsqak"><span class="std std-ref">Progetto conwayactorsqak</span></a></p></li>
+</ol>
+<p>Parte IV: celle come attori distribuiti</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="ConwayLife25AdAttori.html#progetto-conwaycellsqak"><span class="std std-ref">Progetto conwaycellsqak</span></a></p></li>
+<li><p><a class="reference internal" href="ConwayLife25AdAttori.html#progetto-conwaymasterqak"><span class="std std-ref">Progetto conwaymasterqak</span></a></p></li>
+</ol>
+<section id="conwaylife25-obiettivi-e-fasi-del-lavoro">
+<h2>ConwayLife25: Obiettivi e fasi del lavoro<a class="headerlink" href="#conwaylife25-obiettivi-e-fasi-del-lavoro" title="Link to this heading">¶</a></h2>
+<p>Il <a class="reference external" href="https://it.wikipedia.org/wiki/Gioco_della_vita">Gioco della vita</a> è un automa cellulare sviluppato dal matematico inglese <em>John Horton Conway</em> nel 1970
+e costituisce un modello matematico utilizzato per studiare
+un <a class="reference internal" href="#sistema-complesso"><span class="std std-ref">Sistema Complesso</span></a>.</p>
+<p>La previsione del comportamento a lungo termine del Gioco della Vita è un problema
+che ha affascinato matematici e informatici per decenni e, nonostante numerosi studi,
+non esiste ancora una soluzione definitiva e generale, per alcuni motivi:</p>
+<ul class="simple">
+<li><p><span class="blue">Complessità esponenziale</span>: Il numero di possibili configurazioni di una griglia di celle aumenta in modo
+esponenziale con la dimensione della griglia stessa. Questo rende impraticabile un’analisi esaustiva
+di tutte le possibili evoluzioni.</p></li>
+<li><dl class="simple">
+<dt><span class="blue">Comportamento caotico</span>: Piccole variazioni nella configurazione iniziale possono portare a risultati</dt><dd><p>completamente diversi nel lungo periodo, rendendo difficile stabilire delle leggi generali che governino
+l’evoluzione del sistema.</p>
+</dd>
+</dl>
+</li>
+<li><p><span class="blue">Emergenza</span>: Dal semplice insieme di regole del gioco emergono comportamenti complessi e imprevedibili, come la formazione di strutture stabili, oscillanti o in continua evoluzione.</p></li>
+</ul>
+<p>Anche con una griglia finita, prevedere il comportamento a lungo termine di una configurazione iniziale rimane un problema complesso.
+Il numero di possibili configurazioni, anche se finito, può essere enorme, rendendo impraticabile un’analisi esaustiva.</p>
+<p>Inoltre, a differenza di molti altri sistemi fisici, il Gioco della Vita <span class="remark">non è sempre reversibile</span>.
+Ciò significa che, data una configurazione finale, non è sempre possibile risalire univocamente alla configurazione iniziale
+che l’ha generata. Molte configurazioni finali possono avere più configurazioni iniziali che portano allo stesso risultato.</p>
+<p>Dunque, determinare la configurazione iniziale che porta a una data configurazione finale nel Gioco della Vita
+è un problema molto complesso e, in generale, non esiste una soluzione algoritmica efficiente.</p>
+<p>Nonostante le difficoltà, sono stati fatti numerosi progressi nella comprensione del Gioco della Vita, che includono
+la <em>Classificazione delle configurazioni</em> (<em>still life</em>, <em>oscillatori</em>, <em>spaceship</em>, …)  e <em>Teoremi parziali</em></p>
+<p>Il <cite>Gioco della vita</cite> viene qui usato come applicazione di riferimento per realizzare un sistema software
+per passi successivi, introducendo ad ogni passo qualche nuova caratteristica che lo rende
+via via un <a class="reference internal" href="#sistema-complicato"><span class="std std-ref">Sistema Complicato</span></a>.</p>
+<section id="sistema-complesso">
+<h3>Sistema Complesso<a class="headerlink" href="#sistema-complesso" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Molte parti con interazioni imprevedibili</strong>: Un sistema complesso è più simile a un ecosistema, dove molte entità interagiscono in modo non lineare e le loro interazioni possono portare a comportamenti emergenti e difficili da prevedere.</p></li>
+<li><p><strong>Difficile da ridurre a parti isolate</strong>: Le parti di un sistema complesso sono interconnesse in modo così stretto che è difficile isolarle e analizzarle singolarmente senza perdere informazioni cruciali.</p></li>
+<li><p><strong>Comportamento emergente</strong>: Il comportamento complessivo del sistema non può essere completamente compreso analizzando le singole parti, ma emerge dalle interazioni tra di esse.</p></li>
+</ul>
+</section>
+<section id="sistema-complicato">
+<h3>Sistema Complicato<a class="headerlink" href="#sistema-complicato" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Molte parti, ma interazioni prevedibili</strong>: Un sistema complicato è come un grande puzzle con molti pezzi. Ogni pezzo ha una funzione specifica e le interazioni tra i pezzi sono ben definite e prevedibili.</p></li>
+<li><p><strong>Risolvibile con analisi dettagliata</strong>: Se analizziamo a fondo ogni parte di un sistema complicato e le loro interazioni, possiamo comprendere il sistema nel suo insieme e prevedere il suo comportamento.</p></li>
+</ul>
+<p><span class="slide4">Obiettivi Parte I: da JavaScript a Java</span></p>
+<ul class="simple">
+<li><p>procedere in modo <span class="slide2">bottom-up</span> usando linguaggi noti (<em>JavaScript</em> e <em>Java</em>) per
+realizzrae il gioco <a class="reference external" href="https://it.wikipedia.org/wiki/Gioco_della_vita">Conway Life</a>&gt;  (si veda anche <a class="reference external" href="https://playgameoflife.com/">Conway Life play</a>&gt;);</p></li>
+<li><p>impostare il prodotto in modo che possa ‘evolvere’ mediante aggiunte progressive di funzionalità
+e senza modifiche a quanto è stato già realizzato e testato richiamandosi ad alcuni <a class="reference internal" href="RiferimentiBase.html#principi-base"><span class="std std-ref">Principi base</span></a>
+della costruzione del software;</p></li>
+<li><p>realizzare una pagina HTML che funga da dispostivo di input-ouput capace di interagire con un
+server via WebSocket;</p></li>
+<li><p>trasformare il prodotto, usando <a class="reference external" href="https://spring.io/projects/spring-boot">SpringBoot</a>, in un <a class="reference internal" href="Microservizi.html#microservizi"><span class="std std-ref">microservizio</span></a> a sè
+stante, capace di comunicare con l’applicazione mediante scambio di messaggi usando MQTT fruibile in rete;</p></li>
+<li><p>distribuire il prodotto come immagine Docker, così che
+del sistema occcorre consoscere solo la <a class="reference internal" href="RiferimentiBase.html#viste-di-un-sistema-software"><span class="std std-ref">Vista esterna</span></a>.</p></li>
+<li><p>considerare la GUI come dispositivo evoluto di I/O e realizzarla come un <a class="reference internal" href="Microservizi.html#microservizi"><span class="std std-ref">microservizio</span></a> a sè
+stante, capace di comunicare con l’applicazione mediante scambio di messaggi usando MQTT
+e opportune <span class="slide3">astrazioni di comunicazione</span> (da noi definite).</p></li>
+</ul>
+<p><span class="slide4">Obiettivi Parte II: dagli Oggetti agli Attori</span></p>
+<ul class="simple">
+<li><p>reimpostare l’applicazione Java come un agente (o meglio, un <a class="reference internal" href="ConcettiFondamentali.html#interazioni-tra-attori"><span class="std std-ref">attore</span></a>)
+intrinsecamente capace di interagire con
+il mondo esterno mediante scambio di messaggi, senza dover ricorrere a SpringBoot</p></li>
+<li><p>introdurre <a class="reference internal" href="RiferimentiBase.html#il-linguaggio-custom-qak"><span class="std std-ref">Il linguaggio custom qak</span></a>  (un esempio di <a class="reference internal" href="ConcettiFondamentali.html#domain-specific-languages"><span class="std std-ref">DSL</span></a>)
+per la definizione di attori e per la loro interazione</p></li>
+</ul>
+<p><span class="slide4">Obiettivi Parte III: Celle come attori locali</span></p>
+<ul class="simple">
+<li><p>il sistema viene impostato come un modello espresso mediante <a class="reference internal" href="RiferimentiBase.html#il-linguaggio-custom-qak"><span class="std std-ref">Il linguaggio custom qak</span></a></p></li>
+</ul>
+<p><span class="slide4">Obiettivi Parte IV: Celle come come attori distribuiti</span></p>
+<ul class="simple">
+<li><p>il sistema viene costruito usando <code class="docutils literal notranslate"><span class="pre">N</span></code> computer fisici, su ciacuno dei quali attivare una cella</p></li>
+<li><p>l’uso di un linguaggio di modellazione agevola il refactoring del sistema in quanto
+‘nasconde’ i dettagli di implementazione del sistema
+e permette di concentrarsi sulle interazioni ‘ad alto livello’ tra le parti del sistema</p></li>
+</ul>
+</section>
+</section>
+<section id="conwaylife25-il-core-e-la-griglia">
+<h2>ConwayLife25: il core e la griglia<a class="headerlink" href="#conwaylife25-il-core-e-la-griglia" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Il punto di partenza è il ‘cuore’ del gioco, cioè la logica di calcolo delle celle vive e morte.
+Per questo calcolo è essenziale il concetto di <strong>stato</strong> di una cella e il concetto di <strong>vicinato</strong> di una cella.</p></li>
+<li><p>Lo stato di una cella può essere <strong>vivo</strong> o <strong>morto</strong> e viene modificato in base al numero di celle vive nel
+suo vicinato, secondo le seguenti <span class="slide3">regole</span>:</p>
+<ul class="simple">
+<li><p>Una cella viva con meno di due celle vive adiacenti muore (per isolamento).</p></li>
+<li><p>Una cella viva con due o tre celle vive adiacenti sopravvive alla generazione successiva.</p></li>
+<li><p>Una cella viva con più di tre celle vive adiacenti muore (per sovrappopolazione).</p></li>
+<li><p>Una cella morta con esattamente tre celle vive adiacenti diventa una cella viva (per riproduzione).</p></li>
+</ul>
+</li>
+<li><p>L’insieme delle celle forma concettualmente una griglia bidimensionale infinita, ma per ovvie ragioni,
+noi faremo riferimento a una griglia finita di dimensione <code class="docutils literal notranslate"><span class="pre">NxN</span></code>, con <code class="docutils literal notranslate"><span class="pre">3&lt;=N&lt;=10</span></code>.</p></li>
+<li><p>In una griglia infinita, il vicinato di una cella è costituito dalle <code class="docutils literal notranslate"><span class="pre">8</span></code> celle adiacenti
+(orizzontali, verticali e diagonali). Nel nostro caso di griglia finita, il <strong>vicinato</strong> di una cella
+potrebbe avere anche solo (ai bordi)  <code class="docutils literal notranslate"><span class="pre">3</span></code> o <code class="docutils literal notranslate"><span class="pre">5</span></code> celle.</p></li>
+<li><p>In una prima fase, partiremo rappresentateremo la griglia come una matrice <code class="docutils literal notranslate"><span class="pre">NxN</span></code> di celle. Il vicinato di una cella può essere stabilito in base agli indici della componente
+della  matrice che rappresenta la cella.</p></li>
+<li><p>In una seconda fase, la rappresentazione matriciale sarà usata solo per la <strong>rappresemtazione esterna</strong> della griglia
+(in una pagina HTML) mentre <span class="slide3">ogni cella sarà un actor</span> che scambia informazioni con
+le altre celle mediante scambio di messagggi.</p></li>
+</ol>
+</section>
+<section id="conwaylife25-in-javascript">
+<h2>ConwayLife25 in JavaScript<a class="headerlink" href="#conwaylife25-in-javascript" title="Link to this heading">¶</a></h2>
+<p><span class="slide3">Progetto conway25JavaScript</span>: realizzazione in JavaScript,
+che permette la visualizzazione e il controllo della griglia all’interno in una pagina <code class="docutils literal notranslate"><span class="pre">HTML</span></code>
+senza l’uso di alcun server.
+La pagina propone anche pulsanti per avviare, fermare e terminare il gioco ed è organizzata come un
+insieme di funzioni raggruppate in diversi file:</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conwayjs.jpg"><img alt="_images/conwayjs.jpg" class="align-left" src="_images/conwayjs.jpg" style="width: 100%;" />
+</a>
+</td>
+<td><ul class="simple">
+<li><p><a class="reference external" href="../../../../conway25JavaScript/conway25Js/conwayGuiData.js">conwayGuiData.js</a>: definisce le strutture-dati della GUI</p></li>
+<li><p><a class="reference external" href="../../../../conway25JavaScript/conway25Js/life.js">life.js</a>: definisce  funzioni per la gestione della griglia e del gioco</p></li>
+<li><p><a class="reference external" href="../../../../conway25JavaScript/conway25Js/lifecontroller.js">lifecontroller.js</a>: definisce funzioni per il controllo del gioco e lo configura</p></li>
+<li><p><a class="reference external" href="../../../../conway25JavaScript/conway25Js/conwayOutput.js">conwayOutput.js</a>: definisce funzioni per visualizzare lo stato delle celle</p></li>
+<li><p><a class="reference external" href="../../../../conway25JavaScript/conway25Js/conwayInput.js">conwayInput.js</a>: definisce funzioni per l’input dell’utente</p></li>
+<li><p><a class="reference internal" href="#conway-html"><span class="std std-ref">conway.html</span></a>: la pagina HTML che contiene la GUI</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Principi di riferimento:</p>
+<ul class="simple">
+<li><p><span class="slide2">Divide et impera</span> (<a class="reference internal" href="ConcettiFondamentali.html#id1"><span class="std std-ref">Singola responsabulità</span></a>): ogni file javascript si occupa di un aspetto
+specifico del sistema.</p></li>
+<li><p><span class="slide2">Separazione tra logica e presentazione</span>: la logica del gioco <a class="reference external" href="../../../../conway25JavaScript/conway25Js/life.js">life.js</a> non
+si occupa dell’I/O, ma offre funzioni utili per l’I/O.</p></li>
+</ul>
+<section id="conway-html">
+<h3>conway.html<a class="headerlink" href="#conway-html" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset = &quot;UTF-8&quot; /&gt;
+    &lt;title&gt;The Game of Life&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;life.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;!-- sezione di OUTPUT --&gt;
+&lt;div id=&quot;gridContainer&quot;&gt;
+&lt;/div&gt;
+
+&lt;!-- sezione di INPUT  --&gt;
+&lt;div class=&quot;controls&quot;&gt;
+    &lt;button id=&quot;start&quot;&gt;Start&lt;/button&gt;
+    &lt;button id=&quot;clear&quot;&gt;Clear&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;script src=&quot;conwayGuiData.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;life.js&quot;&gt;&lt;/script&gt;           &lt;!-- logica del gioco --&gt;
+&lt;script src=&quot;lifecontroller.js&quot;&gt;&lt;/script&gt; &lt;!-- configurazione e controllo --&gt;
+&lt;script src=&quot;conwayInput.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;conwayOutput.js&quot;&gt;&lt;/script&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+</section>
+<section id="conway25javascript-project">
+<h3>conway25JavaScript project<a class="headerlink" href="#conway25javascript-project" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Costruzione del progetto</p></td>
+<td><ul class="simple">
+<li><p>nella directory <strong>conway25JavaScript</strong> eseguire: <code class="docutils literal notranslate"><span class="pre">gradle</span> <span class="pre">init</span> <span class="pre">1</span> <span class="pre">2</span> <span class="pre">-</span> <span class="pre">-</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">package</span> <span class="pre">conway25Js</span></code> con i file <code class="docutils literal notranslate"><span class="pre">js</span></code> e <a class="reference internal" href="#conway-html"><span class="std std-ref">conway.html</span></a></p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Esecuzione del prodotto</p></td>
+<td><p>Apertura del file <a class="reference internal" href="#conway-html"><span class="std std-ref">conway.html</span></a> in un browser</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="conwaylife25-in-java">
+<h2>ConwayLife25 in Java<a class="headerlink" href="#conwaylife25-in-java" title="Link to this heading">¶</a></h2>
+<p><span class="slide3">Progetto conway25Java</span>: realizzazione in Java di classi che svolgono i ruoli dei file della
+soluzione JavaScript. Le dipendenze tra le classi sono visualizzate nel diagramma seguente:</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conwayjava.jpg"><img alt="_images/conwayjava.jpg" class="align-left" src="_images/conwayjava.jpg" style="width: 100%;" />
+</a>
+</td>
+<td><ul class="simple">
+<li><p><a class="reference internal" href="#ioutdev-interface"><span class="std std-ref">IOutDev.java</span></a>: contratto per la visualizzazione dello stati di una cella</p></li>
+<li><p><a class="reference external" href="../../../../conway25Java/src/main/java/conway/Life.java">Life.java</a>: definisce  funzioni per la gestione della griglia e del gioco</p></li>
+<li><p><a class="reference external" href="../../../../conway25Java/src/main/java/conway/LifeController.java">LifeController.java</a>: definisce funzioni per il controllo di base del gioco e
+per la visualizzazione della griglia</p></li>
+<li><p><a class="reference external" href="../../../../conway25Java/src/main/java/conway/devices/ConwayOutput.java">ConwayOutput.java</a>: implementa <code class="docutils literal notranslate"><span class="pre">IOutDev.java</span></code> su <em>System.out</em></p></li>
+<li><p><a class="reference external" href="../../../../conway25Java/src/main/java/conway/devices/ConwayInputMock.java">ConwayInputMock.java</a>: simula l’input dell’utente per la configurazione iniziale</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Principi di riferimento:</p>
+<ul class="simple">
+<li><p>I files sorgente sono <span class="slide2">raggruppati in package</span> che riflettono diversi ruoli logici</p></li>
+<li><p>La <a class="reference internal" href="#ioutdev-interface"><span class="std std-ref">IOutDev interface</span></a> è definita nel package della logica applicativa, come un <span class="slide2">contratto</span>
+che i dispositivi di Output devono rispettare implementando in modo opportuno
+il metodo per visualizzare una cella.</p></li>
+<li><p>La classe <a class="reference external" href="../../../../conway25Java/src/main/java/conway/devices/ConwayInputMock.java">ConwayInputMock.java</a> viene introdotta per definire un <span class="slide2">Oggetto simulato</span> (<a class="reference external" href="https://it.wikipedia.org/wiki/Mock_object">Mock object</a>),
+rimandando la costruzione di un componente di input più evoluto ad una fase successiva.</p></li>
+</ul>
+<p><span class="slide1">Conoscenze richieste</span></p>
+<ul class="simple">
+<li><p><span class="slide3">Gradle</span>: per la costruzione del progetto: si veda <a class="reference external" href="_static/GradleTutorialForCompleteBeginners.pdf">gradle-tutorial</a>
+e <a class="reference internal" href="Primipassioperativi25.html#creazione-progetto-con-gradle"><span class="std std-ref">Creazione progetto con Gradle</span></a></p></li>
+</ul>
+<section id="ioutdev-interface">
+<h3>IOutDev interface<a class="headerlink" href="#ioutdev-interface" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="n">interface</span> <span class="n">IOutDev</span> <span class="p">{</span>
+  <span class="n">public</span> <span class="n">void</span> <span class="n">displayCell</span><span class="p">(</span><span class="n">String</span> <span class="n">msg</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In questa versione, la visualizzazione delle celle è fatta su <code class="docutils literal notranslate"><span class="pre">System.out</span></code> dal componente <code class="docutils literal notranslate"><span class="pre">ConwayOutput</span></code>.</p>
+<p>Nel seguito, introdurremo modi pìù evoluti per visualizzare le celle, ma senza modificare la struttura del sistema
+e con ridotte modifiche al codice della classi.</p>
+</section>
+<section id="conway25java-project">
+<h3>conway25Java project<a class="headerlink" href="#conway25java-project" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conway25JavaProjectEclipse.PNG"><img alt="_images/conway25JavaProjectEclipse.PNG" class="align-center" src="_images/conway25JavaProjectEclipse.PNG" style="width: 100%;" />
+</a>
+</td>
+<td><p>Inizializzazione</p>
+<ul class="simple">
+<li><p>nella directory <strong>conway25Java</strong> eseguire: <code class="docutils literal notranslate"><span class="pre">gradle</span> <span class="pre">init</span> <span class="pre">1</span> <span class="pre">2</span> <span class="pre">-</span> <span class="pre">-</span></code></p></li>
+<li><p>aggiunta <em>Java nature</em></p></li>
+<li><p>definito il <a class="reference internal" href="#build-gradle-e-main-di-conway25java"><span class="std std-ref">build.gradle</span></a></p></li>
+<li><p>aggiunta (se non esiste) come <span class="slide3">sourcefolder</span>: <strong>src/main/java</strong>  e le altre directory
+specificate in <a class="reference internal" href="#build-gradle-e-main-di-conway25java"><span class="std std-ref">build.gradle</span></a></p></li>
+<li><p>eseguito  <code class="docutils literal notranslate"><span class="pre">gradlew</span> <span class="pre">eclipse</span></code> per generare i file per Eclipse</p></li>
+</ul>
+<p>Parte applicativa</p>
+<ul class="simple">
+<li><p>aggiunto <code class="docutils literal notranslate"><span class="pre">package</span> <span class="pre">conway</span></code> con i file <code class="docutils literal notranslate"><span class="pre">java</span></code> dell’applicazione,
+incluso <a class="reference internal" href="#build-gradle-e-main-di-conway25java"><span class="std std-ref">Main di conway25Java</span></a></p></li>
+<li><p>aggiunto <code class="docutils literal notranslate"><span class="pre">package</span> <span class="pre">conway.devices</span></code> con i file <code class="docutils literal notranslate"><span class="pre">java</span></code> dei dispositivi di I/O</p></li>
+<li><p>aggiunto <code class="docutils literal notranslate"><span class="pre">folder</span> <span class="pre">userDocs</span></code> e al suo interno:</p>
+<ul>
+<li><p>il file di nome <code class="docutils literal notranslate"><span class="pre">conway25Java_v0.html</span></code> ricavato da <a class="reference external" href="_static/templateToFill.html">template</a>  che ha il ruolo di un <span class="slide3">diario di bordo</span>
+(con varie versioni)</p></li>
+<li><p>la subdirectory <code class="docutils literal notranslate"><span class="pre">userDocs/css</span></code> per gli stili usati dal diario</p></li>
+<li><p>la subdirectory <code class="docutils literal notranslate"><span class="pre">userDocs/img</span></code> per le immagini usate dal diario</p></li>
+</ul>
+</li>
+</ul>
+<p>Settaggio filtri per redere visibili <strong>resources</strong> e <strong>Gradle build folder</strong></p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/eclipseProjectFilers.png"><img alt="_images/eclipseProjectFilers.png" class="align-center" src="_images/eclipseProjectFilers.png" style="width: 40%;" />
+</a>
+</div></blockquote>
+</td>
+</tr>
+<tr class="row-even"><td><p>Esecuzione del prodotto</p></td>
+<td><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gradlew</span> <span class="pre">run</span></code>  o da Eclipse</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="build-gradle-e-main-di-conway25java">
+<h3>build.gradle e Main di conway25Java<a class="headerlink" href="#build-gradle-e-main-di-conway25java" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="slide3">build.gradle</span></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plugins</span> <span class="p">{</span>
+    <span class="nb">id</span> <span class="s1">&#39;java&#39;</span>
+    <span class="nb">id</span> <span class="s1">&#39;eclipse&#39;</span>
+<span class="p">}</span>
+<span class="n">version</span> <span class="s1">&#39;1.0&#39;</span>
+<span class="n">java</span> <span class="p">{</span>
+  <span class="n">toolchain</span><span class="o">.</span><span class="n">languageVersion</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+        <span class="n">JavaLanguageVersion</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="mi">17</span><span class="p">))</span>
+<span class="p">}</span>
+<span class="n">repositories</span> <span class="p">{</span>
+    <span class="n">mavenCentral</span><span class="p">()</span>
+    <span class="n">flatDir</span> <span class="p">{</span>   <span class="n">dirs</span> <span class="s1">&#39;../unibolibs&#39;</span>    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">sourceSets</span> <span class="p">{</span>
+      <span class="n">main</span> <span class="p">{</span>
+          <span class="n">java</span> <span class="p">{</span>
+              <span class="n">srcDirs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;src/main/java&#39;</span><span class="p">]</span>
+          <span class="p">}</span>
+          <span class="n">resources</span> <span class="p">{</span>
+              <span class="n">srcDirs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;src/main/resources&#39;</span><span class="p">]</span>
+          <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="n">test</span> <span class="p">{</span>
+          <span class="n">java</span> <span class="p">{</span>
+              <span class="n">srcDirs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;src/test/java&#39;</span><span class="p">]</span>
+          <span class="p">}</span>
+          <span class="n">resources</span> <span class="p">{</span>
+              <span class="n">srcDirs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;src/test/resources&#39;</span><span class="p">]</span>
+          <span class="p">}</span>
+      <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">dependencies</span> <span class="p">{</span>
+    <span class="n">testImplementation</span> <span class="s1">&#39;junit:junit:4.13.2&#39;</span>
+<span class="p">}</span>
+
+<span class="n">task</span> <span class="n">run</span><span class="p">(</span><span class="nb">type</span><span class="p">:</span> <span class="n">JavaExec</span><span class="p">){</span>
+    <span class="n">classpath</span> <span class="o">=</span> <span class="n">sourceSets</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">runtimeClasspath</span>
+    <span class="n">mainClass</span> <span class="o">=</span> <span class="s2">&quot;conway.MainConway&quot;</span>
+<span class="p">}</span>
+
+<span class="n">jar</span> <span class="p">{</span>
+  <span class="n">println</span><span class="p">(</span><span class="s2">&quot;building jar&quot;</span><span class="p">)</span>
+  <span class="kn">from</span> <span class="nn">sourceSets.main.allSource</span>
+  <span class="n">manifest</span> <span class="p">{</span>
+    <span class="n">attributes</span> <span class="s1">&#39;Main-Class&#39;</span><span class="p">:</span><span class="s1">&#39;src/main/java/conway.MainConway&#39;</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+<p>}</p>
+</td>
+<td><p>Si veda <a class="reference internal" href="Primipassioperativi25.html#creazione-progetto-con-gradle"><span class="std std-ref">Creazione progetto con Gradle</span></a></p>
+<p>In questa versione <span class="remark">vi sono dipendenze</span> solo relative alla libreria JUnit per il <a class="reference internal" href="ConcettiFondamentali.html#testing"><span class="std std-ref">Testing</span></a></p>
+<p><a class="reference external" href="../../../../conway25Java/src/main/java/conway/MainConway.java">MainConway.java</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="k">class</span> <span class="nc">MainConway</span>  <span class="p">{</span>
+
+    <span class="n">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+
+      <span class="o">//</span><span class="n">configureTheSystem</span>
+        <span class="n">Life</span> <span class="n">life</span>           <span class="o">=</span>
+                <span class="n">new</span> <span class="n">Life</span><span class="p">(</span> <span class="mi">3</span><span class="p">,</span><span class="mi">3</span> <span class="p">);</span>
+        <span class="n">LifeController</span> <span class="n">cc</span>   <span class="o">=</span>
+                <span class="n">new</span> <span class="n">LifeController</span><span class="p">(</span><span class="n">life</span><span class="p">);</span>
+        <span class="n">ConwayInputMock</span> <span class="n">cim</span> <span class="o">=</span>
+                <span class="n">new</span> <span class="n">ConwayInputMock</span><span class="p">(</span><span class="n">cc</span><span class="p">,</span><span class="n">life</span><span class="p">);</span>
+
+      <span class="o">//</span><span class="n">start</span> <span class="n">the</span> <span class="n">system</span>
+        <span class="n">cim</span><span class="o">.</span><span class="n">simulateUserControl</span><span class="p">();</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="conway25java-testing">
+<h3>conway25Java testing<a class="headerlink" href="#conway25java-testing" title="Link to this heading">¶</a></h3>
+<p>Per il <a class="reference internal" href="ConcettiFondamentali.html#testing"><span class="std std-ref">Testing</span></a>, eseguire:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gradlew</span> <span class="pre">test</span></code> e aprire il file <code class="docutils literal notranslate"><span class="pre">build\reports\tests\test\index.html</span></code> per vedere il risultato del test</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gradlew</span> <span class="pre">run</span></code> per vedere il risultato dell’esecuzione del programma</p></li>
+</ul>
+<p><span class="slide1">conway25Java refactoring</span></p>
+</section>
+<section id="conway25java-refactoring">
+<h3>conway25Java refactoring<a class="headerlink" href="#conway25java-refactoring" title="Link to this heading">¶</a></h3>
+<p>Il sistema realizzato funziona, ma <strong>non ha una rappresentazione esplicita</strong>
+della <span class="slide2">cella</span>, che costuisce l’elemento fondamentale del gioco.</p>
+<p>Infatti il sistema definisce, in <a class="reference external" href="../../../../conway25Java/src/main/java/conway/Life.java">Life.java</a>, una matrice <em>grid</em> di interi
+che non fa riferimento alla cella, ma a un valore intero,
+che deve essere vincolato (senza alcun controllo in merito) ai valori
+<code class="docutils literal notranslate"><span class="pre">0</span></code> (cella morta) e <code class="docutils literal notranslate"><span class="pre">1</span></code> (cella viva).</p>
+<p><span class="remark">Manca dunque</span> una opportuna <span class="slide3">modellazione delle entità principali del dominio</span> applicativo`.</p>
+<p>Il lettore è invitato:</p>
+<ul class="simple">
+<li><p>a introdurre una <span class="slide3">classe Cell</span> per rappresentare il <strong>concetto di cella</strong> e a modificare
+il codice  in modo da usare questa classe</p></li>
+<li><p>ad <span class="slide2">analizzare la problematica</span> di quale componente deve avere la
+<span class="slide3">responsabilità di visualizzare</span> lo stato di una cella</p></li>
+</ul>
+</section>
+</section>
+<section id="conwaylife25-una-gui-per-java">
+<h2>ConwayLife25 una GUI per Java<a class="headerlink" href="#conwaylife25-una-gui-per-java" title="Link to this heading">¶</a></h2>
+<p><span class="slide3">Progetto conwaygui</span>: realizzazione di una pagina <code class="docutils literal notranslate"><span class="pre">HTML</span></code> che funga da dispostivo di input-ouput
+evoluto per l’applicazione <a class="reference internal" href="#conwaylife25-in-java"><span class="std std-ref">ConwayLife25 in Java</span></a> .</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conwaygui.jpg"><img alt="_images/conwaygui.jpg" class="align-left" src="_images/conwaygui.jpg" style="width: 100%;" />
+</a>
+<a class="reference internal image-reference" href="_images/cellMatrix.png"><img alt="_images/cellMatrix.png" class="align-left" src="_images/cellMatrix.png" style="width: 100%;" />
+</a>
+</td>
+<td><p>La pagina HTML svolge il ruolo di:</p>
+<ul class="simple">
+<li><p>un <span class="slide3">dispositivo di input</span>, in quanto permette a un utente umano di settare lo stato iniziale delle celle
+e di inviare comandi di gestione dell’applicazione con i pulsanti <code class="docutils literal notranslate"><span class="pre">start/stop/exit</span></code>.</p></li>
+<li><p>un <span class="slide3">dispositivo di output</span>, in quanto permette di visualizzare lo stato della griglia</p></li>
+</ul>
+<p>I files relativi alla sua realizazione sono:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1"><span class="std std-ref">guipage.html</span></a>: pagina HTML</p></li>
+<li><p><a class="reference internal" href="#id2"><span class="std std-ref">iomap.js</span></a>: mappa con le celle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buttonInput.js</span></code>: gestione dei pulsanti di input</p></li>
+<li><p><a class="reference internal" href="#commsocket-js-file"><span class="std std-ref">commsocket.js</span></a>: gestione della WebSocket lato client</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="slide1">Una prima analisi del problema</span></p>
+<section id="conwaygui-analisi-del-problema">
+<h3>conwaygui: analisi del problema<a class="headerlink" href="#conwaygui-analisi-del-problema" title="Link to this heading">¶</a></h3>
+<p>Per affrontare l’analisi del problema, introduciamo opportune domande. Ad esempio:</p>
+<p>Il requisito indica che la GUI deve essere una pagina <code class="docutils literal notranslate"><span class="pre">HTML</span></code> che dovrebbe essere fornita da un
+Web-server e che quindi potrebbe essere aperta  da <strong>più utenti contemporaneamente</strong>.</p>
+<ol class="arabic simple">
+<li><p><span class="slidekp">chi comanda?</span>. Nel caso di più utenti,
+questi potranno vedere la stessa griglia o ognuno vedrà la sua griglia?</p>
+<ul class="simple">
+<li><p>il committente precisa che <strong>tutti gli utenti potranno vedere la evoluzione della stessa griglia</strong>,
+ma solo uno potrà
+inviare comandi di gestione del gioco. Questo utente privilegiato (detto <span class="slide3">owner</span>) sarà
+<span class="remark">l’utente che ha aperto per primo la pagina HTML</span>.</p></li>
+</ul>
+</li>
+<li><p><span class="slidekp">chi crea la GUI?</span> Si modifica
+<a class="reference internal" href="#conwaylife25-in-java"><span class="std std-ref">ConwayLife25 in Java</span></a> o è  meglio lasciare il più possibile inalterato
+questo software già testato?</p>
+<ul class="simple">
+<li><p>meglio <span class="slide3">modificare meno possibile</span> ciò che già funziona.
+<a class="reference internal" href="#conwaylife25-in-java"><span class="std std-ref">ConwayLife25 in Java</span></a> è stato impostato in modo da  essere
+estendibile senza dover modificare la logica del gioco. In particolare, la parte di <strong>output</strong> della
+GUI potrebbe essere aggiornata introducendo una nuova classe che implementa la
+<a class="reference internal" href="#ioutdev-interface"><span class="std std-ref">IOutDev interface</span></a> in modo da visualizzare lo stato delle celle nella pagina <code class="docutils literal notranslate"><span class="pre">HTML</span></code>.</p></li>
+<li><p>vi sono <span class="slide3">framework</span> che permettono di realizzare pagine HTML che interagiscono con un server
+senza dover modificare il software già realizzato in Java. Uno di questi è  <a class="reference external" href="https://spring.io/projects/spring-boot">SpringBoot</a>.</p></li>
+</ul>
+</li>
+<li><p><span class="slidekp">come si aggiorna?</span> La pagina HTML deve essere aggiornata in modo automatico
+o l’utente deve premere un pulsante per vedere lo stato delle celle?</p>
+<ul class="simple">
+<li><p>la pagina HTML deve essere <span class="slide3">aggiornata in modo automatico</span> (per tutti gli utenti
+connessi) durante la evoluzione del gioco, senza che un utente debba fare nulla.
+Questo richiede l’uso di  <a class="reference external" href="https://it.wikipedia.org/wiki/WebSocket">WebSocket</a> che permettono di inviare messaggi dal server alla pagina HTML.</p></li>
+</ul>
+</li>
+<li><p><span class="slidekp">e se si ferma?</span> La pagina HTML potrebbe diventare vuota o rimanere stabile.
+Come evitare che il gico continui senza che l’utente se ne accorga?</p></li>
+<li><p><span class="slidekp">come si riduce il traffico di rete?</span></p>
+<ul class="simple">
+<li><p>il traffico di rete può essere ridotto inviando solo le informazioni necessarie per aggiornare la pagina HTML.
+Ad esempio, inviare <span class="slide3">solo le celle che cambiano stato</span> e non tutta la griglia.</p></li>
+<li><p>tuttavia, un utente che si collega mentre il gioco è in corso dovrebbe vedere lo stato attuale
+della griglia in modo corretto. Questo richiede che il server invii al nuovo utente tutta la griglia attuale.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="conwaygui-project">
+<h3>conwaygui project<a class="headerlink" href="#conwaygui-project" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Costruzione del progetto</p>
+<p>conoscere quanto riportato in <a class="reference internal" href="SpringBootInit25.html#springbootinit25"><span class="std std-ref">SpringBootInit25</span></a>
+e l’uso di  <a class="reference external" href="https://start.spring.io/">https://start.spring.io/</a>.</p>
+<p>verificare la presenza della directory <span class="slide3">unibolibs</span> nella directory di lavoro ISS2025,
+e, se non presente, crearla e copiarvi dentro le librerie necessarie</p>
+</td>
+<td><p>Inizializzazione</p>
+<ul class="simple">
+<li><p>nella directory <strong>conwaygui</strong> eseguire: <code class="docutils literal notranslate"><span class="pre">gradle</span> <span class="pre">init</span> <span class="pre">1</span> <span class="pre">2</span> <span class="pre">-</span> <span class="pre">-</span></code> e poi :</p></li>
+<li><p>aggiunta <em>Java nature</em></p></li>
+<li><p>aggiunta <em>sourcefolder src</em></p></li>
+<li><p>scrivere <a class="reference internal" href="#conwaygui-build-gradle"><span class="std std-ref">build.gradle</span></a> con le <span class="remark">opportune dipendenze</span></p></li>
+<li><p>eseguire  <code class="docutils literal notranslate"><span class="pre">gradlew</span> <span class="pre">eclipse</span></code></p></li>
+</ul>
+<p>Parte applicativa</p>
+<ul>
+<li><p>aggiunto <code class="docutils literal notranslate"><span class="pre">package</span> <span class="pre">conway</span></code> con i file <code class="docutils literal notranslate"><span class="pre">java</span></code> dell’applicazione, con alcune modifiche ma <strong>senza Main</strong></p></li>
+<li><p>aggiunto <code class="docutils literal notranslate"><span class="pre">package</span> <span class="pre">conway.devices</span></code> con il file <code class="docutils literal notranslate"><span class="pre">ConwayOutput.java</span></code> del dispositivo di output</p></li>
+<li><p>aggiunto <code class="docutils literal notranslate"><span class="pre">folder</span> <span class="pre">userDocs</span></code> e al suo interno
+- il file di nome <code class="docutils literal notranslate"><span class="pre">conway25Java_v0.html</span></code> ricavato da <a class="reference external" href="_static/templateToFill.html">template</a>  che ha</p>
+<blockquote>
+<div><p>il ruolo di un <span class="slide3">diario di bordo</span> (con varie versioni)</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>la subdirectory <code class="docutils literal notranslate"><span class="pre">userDocs/css</span></code> per gli stili usati dal diario</p></li>
+<li><p>la subdirectory <code class="docutils literal notranslate"><span class="pre">userDocs/img</span></code> per le immagini usate dal diario</p></li>
+</ul>
+</li>
+</ul>
+<p>Parte Spring</p>
+<ul class="simple">
+<li><p>definito il controller <code class="docutils literal notranslate"><span class="pre">ConwayGuiControllerLifeLocal</span></code></p></li>
+<li><p>definita parte <span class="remark">static</span></p></li>
+<li><p>definito in <strong>src/main/reources/templates</strong> il file <a class="reference internal" href="#id1"><span class="std std-ref">guipage.html</span></a></p></li>
+<li><p>definito <code class="docutils literal notranslate"><span class="pre">WebSocketConfiguration</span></code> che implementa <code class="docutils literal notranslate"><span class="pre">WebSocketConfigurer</span></code> per la gestione delle WebSocket (WS)</p></li>
+<li><p>definito <code class="docutils literal notranslate"><span class="pre">WSIoDev</span></code> che estende <code class="docutils literal notranslate"><span class="pre">AbstractWebSocketHandler</span></code> per la gestione dei messaggi
+ricevuti sulla WS e per trasmettare messaggi sulla WS</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Esecuzione del prodotto</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gradlew</span> <span class="pre">bootrun</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p><span class="slide1">Conoscenze richieste per lo sviluppo di conwaygui</span></p>
+<ul class="simple">
+<li><p><span class="slide3">Gradle</span>: per la costruzione del progetto: si veda <a class="reference external" href="_static/GradleTutorialForCompleteBeginners.pdf">gradle-tutorial</a>
+e <a class="reference internal" href="Primipassioperativi25.html#creazione-progetto-con-gradle"><span class="std std-ref">Creazione progetto con Gradle</span></a></p></li>
+<li><p><span class="slide3">SpringBoot</span>: per costruire l’applicazione Web iniziando da <a class="reference internal" href="SpringBootInit25.html#springbootinit25"><span class="std std-ref">SpringBootInit25</span></a>
+e <span class="xref std std-ref">SpringBootInit25#SpringBootWebSocket</span></p></li>
+<li><p><span class="slide3">Annotazioni</span>: intensivamente usate da SpringBoot, introdotte in <a class="reference internal" href="Annotazioni.html#annotazioni"><span class="std std-ref">Annotazioni</span></a></p></li>
+<li><p><span class="slide3">WebSocket</span>: protocollo full-duplex su TCP, introdotto in <a class="reference internal" href="unibo.basicomm23.html#id1"><span class="std std-ref">Websocket</span></a></p></li>
+<li><p>JavaScript</p></li>
+<li><p>Docker</p></li>
+</ul>
+</section>
+<section id="conwaygui-build-gradle">
+<h3>conwaygui build.gradle<a class="headerlink" href="#conwaygui-build-gradle" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../conwaygui/build.gradle">build.gradle</a> NUOVA VERSIONE</p>
+<p>Si noti:</p>
+<ul class="simple">
+<li><p><span class="slide3">flatDir</span> in <strong>repositories</strong></p></li>
+<li><p>le dipendenze da SpringBoot</p></li>
+<li><p>le dipendenze per le WebSocket</p></li>
+<li><p>le dipendenze da librerie UNIBO</p></li>
+<li><p><span class="slide3">id ‘application’</span> in <strong>plugins</strong></p></li>
+<li><p><span class="slide3">task jar</span> per creare un jar eseguibile con un <strong>MANIFEST</strong> che indica la classe Main</p></li>
+</ul>
+</td>
+<td><p>Le librerie UNIBO</p>
+<ul class="simple">
+<li><p>sono nella directory <span class="slide3">unibolibs</span></p></li>
+<li><p>servono per l’utility <strong>CommUtils</strong> e per la gestione dela comunicazioni via WebSocket.</p></li>
+</ul>
+<p>L’applicazione
+<a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/src/main/java/unibo/disi/conwaygui/ConwayguiApplication.java">ConwayguiApplication.java</a>
+può essere <strong>lanciata da Eclipse</strong> e non solo con <cite>gradlew bootrun</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="conwaygui-logback-xml">
+<h3>conwaygui logback.xml<a class="headerlink" href="#conwaygui-logback-xml" title="Link to this heading">¶</a></h3>
+<p>Si noti:</p>
+<ul class="simple">
+<li><p>il file <a class="reference external" href="../../../../conwaygui/src/main/resources/logback.xml">logback.xml</a>  nella directory <strong>src/main/resources</strong>,
+configurato per scrivere i log su file</p></li>
+<li><p>eliminando il file si manifetstano messaggi di log sulla console</p></li>
+<li><p>lasciando il file si possono vedere i log sul file <strong>conwaygui/logs/conwaygui.log</strong></p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>guipage.html<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 60.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../conwaygui/src/main/resources/templates/guipage.html">guipage.html</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+&lt;head&gt;&lt;title&gt;Welcome&lt;/title&gt;&lt;/head&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;mapstyle.css&quot;&gt;
+    &lt;script src=&quot;commsocket.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;outarea.js&quot;&gt;&lt;/script&gt;
+&lt;body&gt;
+  &lt;h1&gt;Welcome to the conwaygui&lt;/h1&gt;
+  &lt;p&gt;Application name=
+    &lt;b&gt;&lt;span th:text=&quot;${arg}&quot;&gt;Still unknown&lt;/span&gt;&lt;/b&gt;.&lt;/p&gt;
+&lt;hr/&gt;
+
+&lt;!--  INPUT AREA--&gt;
+  &lt;button onClick=&quot;sendCmdToServer(&#39;start&#39;); return false&quot;&gt;START&lt;/button&gt;
+  &lt;button onClick=&quot;sendCmdToServer(&#39;stop&#39;);  return false&quot;&gt;STOP&lt;/button&gt;
+  &lt;button onClick=&quot;sendCmdToServer(&#39;clear&#39;); return false&quot;&gt;CLEAR&lt;/button&gt;
+  &lt;button onClick=&quot;sendCmdToServer(&#39;exit&#39;);  return false&quot;&gt;EXIT&lt;/button&gt;
+
+&lt;!--  OUTPUT AREA --&gt;
+  &lt;ol id=&quot;msgslist&quot;&gt;&lt;/ol&gt;
+
+&lt;!-- MAP AREA --&gt;
+    &lt;div &gt;
+      &lt;h3 class=&quot;text-center&quot;&gt;Life Grid Map - starts in (1,1)&lt;/h3&gt;
+      &lt;div id=&quot;map&quot; class=&quot;grid&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+&lt;script src=&quot;buttoninput.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;iomap.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+</td>
+<td><p>Il file si trova in <code class="docutils literal notranslate"><span class="pre">src/main/resources/templates</span></code>. Si noti:</p>
+<ul class="simple">
+<li><p>la notazione <span class="remark">th:text=”${arg}”</span> legata a Theymeleaf</p></li>
+<li><p><span class="remark">PULSANTI</span> che invocano <em>sendCmdToServer</em></p></li>
+<li><p><span class="remark">OUTPUT AREA</span> (<strong>msgslist</strong>) in cui vengono visualizzati i messaggi inviati dal server</p></li>
+<li><p><span class="remark">MAP AREA</span> (<strong>map</strong>)in cui vengono visualizzate le celle</p></li>
+<li><p><span class="slide3">l’ordine</span> in cui vengono caricati i file <code class="docutils literal notranslate"><span class="pre">js</span></code></p></li>
+</ul>
+<p>Si veda:</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">commsocket.js</span>: funzioni di comunicazione via WS</p></li>
+<li><p><a class="reference internal" href="#id3"><span class="std std-ref">outarea.js</span></a>: funzioni di gestone della OUTPUT AREA</p></li>
+<li><p><a class="reference internal" href="#id2"><span class="std std-ref">iomap.js</span></a>: funzioni di gestione della mappa delle celle</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="commsocket-js-file">
+<h3>commsocket.js file<a class="headerlink" href="#commsocket-js-file" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>file: <a class="reference external" href="../../../../conwaygui/src/main/resources/static/commsocket.js">commsocket.js</a></p>
+<p>Contiene le funzioni che creano la web socket di comunicazione con il
+server e la trasmissione-ricezione di messaggi.</p>
+<a class="reference internal image-reference" href="_images/wsiodev.png"><img alt="_images/wsiodev.png" class="align-center" src="_images/wsiodev.png" style="width: 60%;" />
+</a>
+</td>
+<td><p>Funzioni:</p>
+<ul class="simple">
+<li><p><span class="blue">discoverServiceUrl()</span>: chiamata al caricamento, scopre l’URL del servizio inviando
+(con <span class="slide3">fetch(‘/getserverip’)</span>) una richiesta al server. Vedi
+<a class="reference internal" href="#id4"><span class="std std-ref">ConwayGuiControllerLifeLocal</span></a></p></li>
+<li><p><span class="blue">createSocketForGui(serviceUrl)</span>: chiamata da <em>discoverServiceUrl()</em> per creare la WS</p></li>
+<li><p><span class="blue">handleWsMessage(event)</span>: chiamata quando la WS riceve un messaggio dal server
+per <a class="reference internal" href="#aggiornare-la-gui"><span class="std std-ref">aggiornare la GUI</span></a></p></li>
+<li><p><span class="blue">sendCmdToServer(cmd)</span>: chiamata per inviare un comando al server</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<section id="aggiornare-la-gui">
+<h4>aggiornare la GUI<a class="headerlink" href="#aggiornare-la-gui" title="Link to this heading">¶</a></h4>
+<p>Funzione che gestisce i messaggi ricevuti dalla GUI.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">handleWsMessage</span><span class="p">(</span><span class="n">event</span><span class="p">){</span>
+    <span class="n">const</span> <span class="n">message</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">data</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">startsWith</span><span class="p">(</span><span class="s2">&quot;cell(&quot;</span><span class="p">))</span> <span class="p">{</span>
+    <span class="o">//</span> <span class="n">Estrae</span> <span class="n">la</span> <span class="n">posizione</span> <span class="n">e</span> <span class="n">il</span> <span class="n">colore</span>
+      <span class="n">const</span> <span class="p">[</span><span class="n">_</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">v</span><span class="p">]</span> <span class="o">=</span>
+        <span class="n">message</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="o">/</span><span class="n">cell</span>\<span class="p">((</span>\<span class="n">d</span><span class="o">+</span><span class="p">),(</span>\<span class="n">d</span><span class="o">+</span><span class="p">),([</span><span class="o">^</span><span class="p">)]</span><span class="o">+</span><span class="p">)</span>\<span class="p">)</span><span class="o">/</span><span class="p">);</span>
+        <span class="n">pdateCellColor</span><span class="p">(</span><span class="n">parseInt</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">parseInt</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">parseInt</span><span class="p">(</span><span class="n">v</span><span class="p">));</span>
+    <span class="p">}</span><span class="k">else</span>  <span class="n">addItem</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+<td><ul class="simple">
+<li><p>forma del msg: <code class="docutils literal notranslate"><span class="pre">cell(i,j,v)</span></code></p></li>
+<li><p><span class="blue">updateCellColor</span>: in <a class="reference internal" href="#id2"><span class="std std-ref">iomap.js</span></a></p></li>
+<li><p><span class="blue">ddItem</span>: in <a class="reference internal" href="#id2"><span class="std std-ref">iomap.js</span></a></p></li>
+<li><p><span class="blue">msgslist</span>: in <a class="reference internal" href="#id1"><span class="std std-ref">guipage.html</span></a></p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id2">
+<h3>iomap.js<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>file: <a class="reference external" href="../../../../conwaygui/src/main/resources/static/iomap.js">iomap.js</a></p>
+<p>Contiene le funzioni che creano e gestiscono la rappresentazione
+della celle in forma di matricce <code class="docutils literal notranslate"><span class="pre">NxN</span></code> che funge da dispositivo di input/output.</p>
+</td>
+<td><p>Funzioni:</p>
+<ul class="simple">
+<li><p><span class="blue">createMapRep()</span>: chiamata al caricamento del file, crea la rappresentazione della griglia
+inviando al server messaggi con contenuto <code class="docutils literal notranslate"><span class="pre">cell-i-j</span></code></p></li>
+<li><p><span class="blue">updateCellColor(newX, newY,color)</span>: chiamata per aggiornare il colore di una cella
+modificando lo stile</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id3">
+<h3>outarea.js<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<section id="outarea-additem">
+<h4>outarea addItem<a class="headerlink" href="#outarea-additem" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 45.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>File: <a class="reference external" href="../../../../conwaygui/src/main/resources/static/outarea.js">outarea.js</a></p>
+<p>Contiene le funzioni che gestiscono l’OUTPUT AREA (<code class="docutils literal notranslate"><span class="pre">&quot;msgslist&quot;</span></code>)
+definita in <a class="reference internal" href="#id1"><span class="std std-ref">guipage.html</span></a>, in cui vengono visualizzati i messaggi inviati dal server</p>
+</td>
+<td><p>Funzioni:</p>
+<ul class="simple">
+<li><p><span class="blue">addItem</span>: aggiunge un elemento alla lista dei messaggi</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="conwaylife25-un-microservizio-java">
+<h2>ConwayLife25: un microservizio Java<a class="headerlink" href="#conwaylife25-un-microservizio-java" title="Link to this heading">¶</a></h2>
+<p>A questo punto, inseriamo il codice delll’applicazione <a class="reference internal" href="#conwaylife25-in-java"><span class="std std-ref">ConwayLife25 in Java</span></a> entro
+il <span class="remark">package conway</span>
+e usiamo le <a class="reference external" href="https://it.wikipedia.org/wiki/WebSocket">WebSocket</a> come strumento per l’aggiornamento
+dinamico della pagina <code class="docutils literal notranslate"><span class="pre">HTML</span></code> (<strong>output</strong>) e come strumento per l’invio di comandi (<strong>input</strong>) all’applicazione Java.</p>
+<section id="conwaygui-un-processo-di-sviluppo">
+<h3>conwaygui: un processo di sviluppo<a class="headerlink" href="#conwaygui-un-processo-di-sviluppo" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Definizione del software relativo al core-business applicativo (con Cell e Grid)  e suo testing</p></li>
+<li><p>Definizione di un progetto SpringBoot partendo da <a class="reference internal" href="SpringBootInit25.html#primi-passi-con-springboot"><span class="std std-ref">Primi passi con SpringBoot</span></a></p></li>
+<li><p>Directory <span class="remark">userDocs</span> con <strong>diario di bordo</strong> <code class="docutils literal notranslate"><span class="pre">conwaygui_v0.html</span></code>  da <span class="slide2">Aggiornare incrementalmente</span></p></li>
+<li><p><span class="slide3">Innesto esplicito</span> nel package <code class="docutils literal notranslate"><span class="pre">conway</span></code> (o implicito, con un file jar) del core-bsuiness Java nel workspace del progetto</p></li>
+<li><p>Definizione del Controller della GUI <a class="reference external" href="../../../../conwaygui/src/main/java/unibo/disi/conwaygui/controller/ConwayGuiControllerLifeLocal.java">ConwayGuiControllerLifeLocal</a> con funzione <span class="remark">getserverip</span>
+che restituisce l’IP del server</p></li>
+<li><p>Definizione della pagina HTML <a class="reference internal" href="#id1"><span class="std std-ref">guipage.html</span></a></p></li>
+<li><p>Definizione del codice JavaScript da inserire nella pagina HTML per la costruzione della mappa</p></li>
+<li><p>Definizione lato client <span class="slide2">front-end</span> (<span class="xref std std-ref">commsocket.js</span>) e lato server <span class="slide2">back-end</span> (<a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/WSIoDev.java">WSIoDev</a>)
+della interazione via WebSocket</p></li>
+<li><p>Definizione del dispositivo <a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/ConwayOutput.java">ConwayOutput</a> che invia dati via WebSocket</p></li>
+</ol>
+</section>
+<section id="codice-embedded-del-servizio">
+<h3>Codice embedded del servizio<a class="headerlink" href="#codice-embedded-del-servizio" title="Link to this heading">¶</a></h3>
+<p>Il codice Java inserito come parte integrante del servizio:</p>
+<ul class="simple">
+<li><p>ha la stessa struttura introdotta in <a class="reference internal" href="#conwaylife25-in-java"><span class="std std-ref">ConwayLife25 in Java</span></a> ma con un diverso <a class="reference internal" href="#id5"><span class="std std-ref">LifeController</span></a></p></li>
+<li><p>la classe <a class="reference external" href="../../../../conwaygui/src/main/java/conway/Life.java">Life</a> non ha il compito di visualizzare le celle, compito assunto dal <a class="reference external" href="../../../../conwaygui/src/main/java/unibo/disi/conwaygui/controller/ConwayGuiControllerLifeLocal.java">ConwayGuiControllerLifeLocal</a></p></li>
+<li><p>elimina ogni dispositivo di input, in quanto i comandi-utente vengono inviati tramite WebSocket</p></li>
+<li><p>definisce un dispositivo di output <a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/WSIoDev.java">WSIoDev</a> che implementa <a class="reference internal" href="#ioutdev-interface"><span class="std std-ref">IOutDev interface</span></a> inviando messaggi
+alla pagina HTML tramite WebSocket</p></li>
+</ul>
+<p>In questo modo abbiamo un primo microservizio.</p>
+<blockquote>
+<div><table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 60.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conwayguilocal.jpg"><img alt="_images/conwayguilocal.jpg" class="align-center" src="_images/conwayguilocal.jpg" style="width: 100%;" />
+</a>
+</td>
+<td><ul class="simple">
+<li><p><a class="reference internal" href="#id4"><span class="std std-ref">ConwayGuiControllerLifeLocal</span></a>: il controller SpringBoot</p></li>
+<li><p><a class="reference external" href="../../../../conwaygui/src/main/java/conway/Life.java">Life</a>: esegue la logica del gioco, come in precedenza</p></li>
+<li><p><a class="reference internal" href="#id5"><span class="std std-ref">LifeController</span></a>: definisce funzioni per il controllo logico del gioco</p></li>
+<li><p><a class="reference internal" href="#id6"><span class="std std-ref">WSIoDev</span></a>:  Estende  <span class="blue">AbstractWebSocketHandler</span> di <em>org.springframework.web.socket.handler</em>.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>Questo microservizio è l’evoluzione di una versione  mostrata in precedenza:</p>
+<blockquote>
+<div><table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conwayguilocalv0.jpg"><img alt="_images/conwayguilocalv0.jpg" class="align-center" src="_images/conwayguilocalv0.jpg" style="width: 100%;" />
+</a>
+</td>
+<td><p>Il codice di questa versione si trova in <a class="reference external" href="../../../../conwayguiv0">conwayguiv0</a>.</p>
+<p>Il <strong>LifeController</strong> di questa versione include una funzione</p>
+<p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">void</span> <span class="pre">elabMsg(String</span> <span class="pre">message)</span></code></p>
+<p>che nella nuova versione è di pertinenza di <a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/WSIoDev.java">WSIoDev</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</section>
+<section id="id4">
+<h3>ConwayGuiControllerLifeLocal<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="../../../../conwaygui/src/main/java/unibo/disi/conwaygui/controller/ConwayGuiControllerLifeLocal.java">ConwayGuiControllerLifeLocal</a> :</p>
+<ul class="simple">
+<li><p>un controller SpringBoot che si occupa di gestire le richieste HTTP</p></li>
+<li><p>fornisce la pagina HTML</p></li>
+<li><p>definisce la funzione <code class="docutils literal notranslate"><span class="pre">getserverip</span></code> per dare un servizio che fornisve
+l’indirizzo IP   del server su rete locale e anche il suo indirizzo IP pubblico</p></li>
+</ul>
+<p><span class="slide2">Come fa la pagina MTML a conoscere l’indirizzo IP del server?</span></p>
+<p>La funzione <code class="docutils literal notranslate"><span class="pre">getserverip</span></code> è invocabile via HTTP con <code class="docutils literal notranslate"><span class="pre">IPADDR:7110/getserverip</span></code>
+e viene utilizzata dalla funzione <strong>discoverServiceUrl</strong> in <span class="xref std std-ref">commsocket.js</span>
+che fissa, al caricamanto della pagina HTML,
+l’indirizzo <code class="docutils literal notranslate"><span class="pre">IPADDR</span></code> del server.</p>
+<p>In questo modo, la pagina HTML può inviare messaggi al server tramite WebSocket.</p>
+</section>
+<section id="id5">
+<h3>LifeController<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p>Il <a class="reference external" href="../../../../conwaygui/src/main/java/conway/LifeController.java">LifeController</a>:</p>
+<ul class="simple">
+<li><p>definisce funzioni per il controllo del gioco (come <code class="docutils literal notranslate"><span class="pre">play</span></code>, <code class="docutils literal notranslate"><span class="pre">startTheGame</span></code>, etc.)</p></li>
+<li><p>viene chiamato da <a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/WSIoDev.java">WSIoDev</a> quando questi riceve un comando da un utente</p></li>
+<li><p>invoca le funzioni di <a class="reference external" href="../../../../conwaygui/src/main/java/conway/Life.java">Life</a> per eseguire le operazioni richieste</p></li>
+<li><p>invoca le funzioni di output di <a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/WSIoDev.java">WSIoDev</a> per visualizzare lo stato delle celle o inviare
+messaggi alla pagina HTML</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>WSIoDev<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/WSIoDev.java">WSIoDev</a> opera come un dispositivo di I/O. Come <span class="slide3">dispositivo di output</span>:</p>
+<ul class="simple">
+<li><p>implementa <span class="xref std std-ref">IOutDev</span> inviando informazioni su tutti i client connessi alla WbeSocket.</p></li>
+</ul>
+<p>Come <span class="slide3">dispositivo di inpuut</span>:</p>
+<ul class="simple">
+<li><p>riceve i messaggi ricevuti sulla WebSocket,
+converte il contenuto informativo in accordo alle regole della business logigc,
+e invoca <a class="reference internal" href="#id5"><span class="std std-ref">LifeController</span></a> per la loro elaborazione</p></li>
+</ul>
+<p><span class="slide1">Una ulteriore analisi</span></p>
+</section>
+<section id="conwaygui-ulteriore-analisi-del-problema">
+<h3>conwaygui: ulteriore analisi del problema<a class="headerlink" href="#conwaygui-ulteriore-analisi-del-problema" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><span class="slidekp">chi controlle l’owner?</span>. La parte di ‘core business’ scritta in Java non
+si occupa di controllare gli accessi, lasciando questa responsabilità alla GUI
+(<a class="reference internal" href="#id6"><span class="std std-ref">WSIoDev</span></a> parte input).</p>
+<ul class="simple">
+<li><p>il controllo di chi può controllare il gioco ricade nel tema ampio di requisiti di
+sicurezza e questi requisiti <span class="slide3">potrebbero/dovrebbero</span> essere considerati parte integrante
+dei requisiti del gioco.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="conwaygui-service-deployment">
+<h3>conwaygui service deployment<a class="headerlink" href="#conwaygui-service-deployment" title="Link to this heading">¶</a></h3>
+<p>Il deployment del servizio può avvenire mediante una <span class="slide2">immagine Docker</span> che può
+essere creata ed eseguita con i seguenti comandi (si veda anche <a class="reference external" href="../../../../iss24Material/docs/_build/html/_static/IntroDocker23.html">IntroDocker</a>):</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../conwaygui/Dockerfile">Dockerfile</a></p>
+<p>permette di costruire una immagine Docker che denominiamo <code class="docutils literal notranslate"><span class="pre">conwayguilifelocal:2.0</span></code></p>
+</td>
+<td><p>Posizionarsi sulla directory  che contiene il file <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code>
+e il file <code class="docutils literal notranslate"><span class="pre">build/distributions/conwaygui-1.0.tar</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gradle</span> <span class="n">DistTar</span>  <span class="o">//</span> <span class="n">crea</span> <span class="n">la</span> <span class="n">distribuzione</span>
+<span class="n">docker</span>  <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">conwayguilifelocal</span><span class="p">:</span><span class="mf">2.0</span> <span class="o">.</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Eseguiamo l’immagine creando un nuovo container</p></td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">--</span><span class="n">rm</span> <span class="o">--</span><span class="n">name</span> <span class="n">conwayguilife</span> <span class="o">-</span><span class="n">p7110</span><span class="p">:</span><span class="mi">7110</span>
+  <span class="o">--</span><span class="n">env</span> <span class="s2">&quot;HOST_IP=192.168.1.132&quot;</span>
+  <span class="n">conwayguilifelocal</span><span class="p">:</span><span class="mf">2.0</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../conwaygui/conwaygui.yaml">conwaygui.yaml</a></p>
+<p>Un file Docker Compose che semplifica la creazione e l’esecuzione di più container Docker.</p>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">conwaygui</span><span class="o">.</span><span class="n">yaml</span> <span class="o">-</span><span class="n">p</span> <span class="n">conwaygui</span> <span class="n">up</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="spiegazione-del-funzionamento">
+<h3>Spiegazione del funzionamento<a class="headerlink" href="#spiegazione-del-funzionamento" title="Link to this heading">¶</a></h3>
+<p>Chiesto a Gemini:</p>
+<p>Ho messo un server SpringBoot sulla porta 7110 entro un container docker che gira su PC-1 di IP=xxx. Poi attivo un browser su PC-1 e faccio “localhost:7110”. Quando la ‘HttpServletRequest r’ arriva al server questi invoca ‘r..getLocalAddr()’ che vale 172.25.0.2 e ‘r..geRemoteAddr()’  che vale 172.25.0..1 . Sulla stessa rete locale di PC-1 ho un PC-2 di IP=yyy che chiama il server con “xxx:7110” e ottengo gli stessi dati di prima. Vorrei capire meglio come si generano questi dati</p>
+<p>Certo, cerchiamo di capire meglio come si generano questi dati quando usi Docker e Spring Boot.</p>
+<section id="docker-e-la-rete-bridge">
+<h4>1. Docker e la rete bridge:<a class="headerlink" href="#docker-e-la-rete-bridge" title="Link to this heading">¶</a></h4>
+<p>Rete predefinita:</p>
+<ul class="simple">
+<li><p>Quando avvii un container Docker senza specificare una rete personalizzata, Docker utilizza una rete bridge predefinita.</p></li>
+<li><p>Questa rete bridge crea un’interfaccia di rete virtuale per il container, isolandolo dalla rete dell’host.</p></li>
+</ul>
+<p>Indirizzi IP:</p>
+<ul class="simple">
+<li><p>Docker assegna indirizzi IP interni ai container all’interno di questa rete bridge.</p></li>
+<li><p>Questi indirizzi IP sono generalmente nel range 172.17.0.0/16 (o un range simile), ma possono variare a seconda della configurazione di Docker.</p></li>
+</ul>
+<p>NAT (Network Address Translation):</p>
+<ul class="simple">
+<li><p>Docker utilizza NAT per mappare le porte del container alle porte dell’host.</p></li>
+<li><p>Quando una richiesta arriva alla porta dell’host, Docker la inoltra al container sulla porta corrispondente.</p></li>
+</ul>
+</section>
+<section id="r-getlocaladdr-e-r-getremoteaddr">
+<h4>2. r.getLocalAddr() e r.getRemoteAddr():<a class="headerlink" href="#r-getlocaladdr-e-r-getremoteaddr" title="Link to this heading">¶</a></h4>
+<p>r.getLocalAddr():</p>
+<ul class="simple">
+<li><p>Questo metodo restituisce l’indirizzo IP dell’interfaccia di rete locale su cui il server ha ricevuto la richiesta.</p></li>
+<li><p>Nel tuo caso, poiché il server è in esecuzione all’interno di un container Docker, r.getLocalAddr() restituisce l’indirizzo IP dell’interfaccia di rete virtuale del container (172.25.0.2).</p></li>
+</ul>
+<p>r.getRemoteAddr():</p>
+<ul class="simple">
+<li><p>Questo metodo restituisce l’indirizzo IP del client che ha inviato la richiesta.</p></li>
+<li><p>Quando accedi al server da localhost:7110 o xxx:7110, la richiesta passa attraverso il NAT di Docker.</p></li>
+<li><p>Di conseguenza, r.getRemoteAddr() restituisce l’indirizzo IP dell’interfaccia di rete virtuale del gateway Docker (172.25.0.1).</p></li>
+</ul>
+</section>
+<section id="perche-ottieni-gli-stessi-dati-su-pc-1-e-pc-2">
+<h4>3. Perché ottieni gli stessi dati su PC-1 e PC-2:<a class="headerlink" href="#perche-ottieni-gli-stessi-dati-su-pc-1-e-pc-2" title="Link to this heading">¶</a></h4>
+<p>NAT di Docker:</p>
+<ul class="simple">
+<li><p>Indipendentemente dal fatto che tu acceda al server da localhost o dall’indirizzo IP dell’host (xxx), la richiesta passa sempre attraverso il NAT di Docker.</p></li>
+<li><p>Questo significa che dal punto di vista del container, l’origine della richiesta è sempre il gateway Docker.</p></li>
+</ul>
+<p>Isolamento della rete:</p>
+<ul class="simple">
+<li><p>La rete bridge di Docker isola il container dalla rete dell’host.</p></li>
+<li><p>Questo significa che il container non vede direttamente l’indirizzo IP del client originale (PC-1 o PC-2).</p></li>
+</ul>
+</section>
+<section id="come-ottenere-l-indirizzo-ip-del-client-originale">
+<h4>4. Come ottenere l’indirizzo IP del client originale:<a class="headerlink" href="#come-ottenere-l-indirizzo-ip-del-client-originale" title="Link to this heading">¶</a></h4>
+<p>Intestazione <code class="docutils literal notranslate"><span class="pre">X-Forwarded-For</span></code>:</p>
+<ul class="simple">
+<li><p>Se utilizzi un proxy o un load balancer davanti al tuo container Docker, puoi configurarlo per inoltrare
+l’indirizzo IP del client originale nell’intestazione <strong>X-Forwarded-For</strong>.</p></li>
+<li><p>Puoi quindi leggere questa intestazione nel tuo codice Spring Boot per ottenere l’indirizzo IP del client.</p></li>
+</ul>
+<p>Modalità di rete host:</p>
+<ul class="simple">
+<li><p>Se imposti network_mode: “host” nel tuo file docker-compose.yml, il container condividerà lo spazio di rete dell’host.</p></li>
+<li><p>In questo caso, r.getRemoteAddr() restituirà l’indirizzo IP del client originale.</p></li>
+<li><p>attenzione: l’uso di network mode host può portare a problemi di sicurezza e conflitti di porte.</p></li>
+</ul>
+<p><span class="slide1">Interagire con il servizio: verso M2M</span></p>
+</section>
+</section>
+<section id="conwaycallerws-java">
+<h3>ConwayCallerWS.java<a class="headerlink" href="#conwaycallerws-java" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../conwaygui/src/main/java/conway/caller/ConwayCallerWS.java">ConwayCallerWS</a></p></td>
+<td><p>Programma Java che usa la libreria <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/websocket/package-summary.html">javax.websocket</a> per creare una
+WS connessa con il micro-servizio <a class="reference internal" href="#conwaylife25-un-microservizio-java"><span class="std std-ref">ConwayLife25</span></a>.
+La WS viene usata per inviare comandi al micro-servizio a per ricevere
+le informazioni che questo emette.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Le informazioni ricevute sulla WS possono essere gestire dal metodo
+annotato con  <code class="docutils literal notranslate"><span class="pre">&#64;onMessage</span></code>.</p>
+<p>Notiamo che il metodo <code class="docutils literal notranslate"><span class="pre">&#64;onMessage</span></code> è un <span class="slide3">metodo di callback</span>, cioè un metodo che viene invocato
+da <span class="slide2">un’altra entità</span> (in questo caso la libreria delle WebSocket) quando si verifica un evento
+(in questo caso la ricezione di un messaggio)
+allo scopo di rendere disponibile il messaggio alla logica del programma.</p>
+<p>Questa ‘intrusione’ della libreria all’interno programma
+può portare a problemi nella programmazione.</p>
+<p><span class="slide1">L’astrazione Interconnessione</span></p>
+</section>
+<section id="supporti-custom-per-la-comunicazione">
+<h3>Supporti custom per la comunicazione<a class="headerlink" href="#supporti-custom-per-la-comunicazione" title="Link to this heading">¶</a></h3>
+<p>Il concetto <a class="reference internal" href="unibo.basicomm23.html#interconnessione"><span class="std std-ref">Interconnessione</span></a> vuole catturare l’idea di un <em>canale di comunicazione bidirezionale</em>
+e viene realizzato
+dalla libreria <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23"><span class="std std-ref">unibo.basicomm23-1.0.jar</span></a>
+che fornosce supporti  per le comunicazioni via rete mediante un insieme di
+<a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-msg-protocoltype"><span class="std std-ref">protocolli</span></a>.</p>
+<p>I protocolli TCP, UDP, WS, CoAP, MQTT costituiscono ciascuno un diverso supporto implementativo
+alla stessa idea astratta, che viene catturata dalla interfaccia <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">unibo.basicomm23.interfaces.Interaction</span></a>.
+che prefigura due categorie di messaggi:</p>
+<ul class="simple">
+<li><p>semplici String non meglio definite</p></li>
+<li><p>strutture che corrispondono alla interfaccia <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">unibo.basicomm23.interfaces.IApplMessage</span></a>,
+che implica la introduczione di diversi <a class="reference internal" href="unibo.basicomm23.html#tipi-di-messaggi"><span class="std std-ref">Tipi di messaggi</span></a>.</p></li>
+</ul>
+<p>La creazione di oggetti che implementano l’interfaccia
+interfaccia <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">unibo.basicomm23.interfaces.Interaction</span></a>
+può avvenire usando una
+<a class="reference external" href="https://www.tutorialspoint.com/design_pattern/factory_pattern.htm">Factory</a>  appositamente defiita: la <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-utils-connectionfactory"><span class="std std-ref">unibo.basicomm23.utils.ConnectionFactory</span></a>.</p>
+<p>In questo progetto ci interessano due diverse implementazioni di <a class="reference internal" href="unibo.basicomm23.html#interconnessione"><span class="std std-ref">Interconnessione</span></a>:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#wsinteraction"><span class="std std-ref">WsInteraction</span></a> per la comunicazione via WebSocket</p></li>
+<li><p><a class="reference internal" href="MQTTConnection%20-%20Copia.html#mqttinteractionbase"><span class="std std-ref">MqttInteractionBase</span></a> e <a class="reference internal" href="MQTTConnection%20-%20Copia.html#mqttinteraction"><span class="std std-ref">MqttInteraction</span></a> per la comunicazione via MQTT</p></li>
+</ul>
+</section>
+<section id="wsinteraction">
+<h3>WsInteraction<a class="headerlink" href="#wsinteraction" title="Link to this heading">¶</a></h3>
+<p>La classe <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-ws-wsconnection"><span class="std std-ref">unibo.basicomm23.ws.WsConnection</span></a> fornisce un <span class="slide2">oggetto osservabile</span>,
+(per la ricezione dei messaggi inviati dal servizio)
+che implementa l’interfaccia <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iobserver"><span class="std std-ref">unibo.basicomm23.interfaces.IObserver</span></a>, del cui uso abbiamo
+un esempio in <a class="reference internal" href="#id7"><span class="std std-ref">ConwayCallerWSInteraction</span></a></p>
+</section>
+<section id="id7">
+<h3>ConwayCallerWSInteraction<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../conwaygui/src/main/java/conway/caller/ConwayCallerWSInteraction.java">ConwayCallerWSInteraction</a></p></td>
+<td><p>Programma Java che crea una <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-ws-wsconnection"><span class="std std-ref">unibo.basicomm23.ws.WsConnection</span></a> con
+il micro-servizio <a class="reference internal" href="#conwaylife25-un-microservizio-java"><span class="std std-ref">ConwayLife25</span></a> usando la
+<a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-utils-connectionfactory"><span class="std std-ref">unibo.basicomm23.utils.ConnectionFactory</span></a> nascondendo al livello implementativo
+i dettagli relativi all’uso della libreria <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/websocket/package-summary.html">javax.websocket</a>.</p>
+<p>Una <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-ws-wsconnection"><span class="std std-ref">unibo.basicomm23.ws.WsConnection</span></a> è un oggetto osservabile da parte
+di utilizzatori che
+implememntano la interfaccia <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iobserver"><span class="std std-ref">unibo.basicomm23.interfaces.IObserver</span></a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="slide1">L’osservazione</span></p>
+<p>In quanto oggetto osservabile,  i messaggi emessi dal servizio sulla
+<a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-ws-wsconnection"><span class="std std-ref">unibo.basicomm23.ws.WsConnection</span></a>
+possono essere ricevuti da oggetti che usano la connessione e implementano la interfaccia
+<a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iobserver"><span class="std std-ref">unibo.basicomm23.interfaces.IObserver</span></a>.</p>
+<p>Anche in questo caso, notiamo che la ricezione dei messaggi inviati dal servizio
+non è un atto deliberato del programma, in quanto
+il supporto della libreria si ‘introfula’ ancora nel codice dell’oggetto osservatore,
+invocandone il metodo <code class="docutils literal notranslate"><span class="pre">update</span></code>.</p>
+<p><span class="slide2">Altre Interazioni via WS</span>: i primi esperimenti di interazione M2M inclusi nel
+progetto <a class="reference internal" href="#conwaygui-un-processo-di-sviluppo"><span class="std std-ref">conwaygui</span></a> sono un primo passo verso
+forme più generali di comunicazione che cominciamo a vedere nel progetto
+<a class="reference internal" href="commdemo.html#commdemo"><span class="std std-ref">commdemo</span></a>.</p>
+<p><span class="slide1">La GUI come pura interfaccia</span></p>
+</section>
+</section>
+<section id="conwaygui-con-servizio-remoto">
+<h2>ConwayGui con servizio remoto<a class="headerlink" href="#conwaygui-con-servizio-remoto" title="Link to this heading">¶</a></h2>
+<p>In questa
+<span class="slide2">seconda versione</span> del sistema, usiamo <a class="reference external" href="https://spring.io/projects/spring-boot">SpringBoot</a> per realizzare la GUI
+<strong>solo come ‘dispositivo evoluto di I/O</strong>.</p>
+<section id="prima-architettura-logica">
+<h3>Prima architettura logica<a class="headerlink" href="#prima-architettura-logica" title="Link to this heading">¶</a></h3>
+<p>Durante la lezione del <em>18 Marzo</em>, abbiamo concordato sul fatto
+che ora vi sono due agenti, che possono essere attivati in modo indipendente
+e che ‘fanno sistema’ interagendo tra loro via MQTT.</p>
+<p>Si è anche concordato sulla opportunità di introdurre una figura, come quella che segue,
+per esprimere un primo <a class="reference internal" href="ConcettiFondamentali.html#modelli"><span class="std std-ref">modello</span></a> del nuovo sistema:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/ArchTwoMsLezione.png"><img alt="_images/ArchTwoMsLezione.png" class="align-center" src="_images/ArchTwoMsLezione.png" style="width: 60%;" />
+</a>
+</div></blockquote>
+<p>In particolare:</p>
+<ul class="simple">
+<li><p>la <a class="reference internal" href="#conwayguialone"><span class="std std-ref">nuova GUI</span></a>
+ha la possibilià di scambiare informazioni con il mondo esterno usando un <span class="slide3">broker MQTT</span>
+Si veda :<a class="reference internal" href="#conwayguialone"><span class="std std-ref">conwayguialone</span></a>.</p></li>
+<li><p>viene definito un progetto <a class="reference internal" href="#conway25javamqtt"><span class="std std-ref">conway25JavaMqtt</span></a>  che realizza una versione
+della parte logica del servizio che potrà utilizzare e la GUI avvaledosi di una
+<span class="slidekp">implementazione di IOutDev</span> capace di comunicare via <code class="docutils literal notranslate"><span class="pre">MQTT</span></code> con la GUI.</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/conwayguiseqdiagr.jpg"><img alt="_images/conwayguiseqdiagr.jpg" class="align-center" src="_images/conwayguiseqdiagr.jpg" style="width: 100%;" />
+</a>
+<p>La interazione via <code class="docutils literal notranslate"><span class="pre">MQTT</span></code> potrebbe essere realizzata facendo <a class="reference internal" href="MQTTConnection%20-%20Copia.html#uso-diretto-della-libreria-paho"><span class="std std-ref">Uso diretto della libreria Paho</span></a>,
+e delle operazioni <em>publish/subscribe</em>.</p>
+<p>Noi riterremo invece più opportuno costruire, con la <strong>libreria Paho</strong>, <span class="slide2">astrazioni di comunicazione</span> di più
+alto livello, quali  <a class="reference internal" href="unibo.basicomm23.html#interconnessione"><span class="std std-ref">Interconnessione</span></a> introdotti in <a class="reference internal" href="#supporti-custom-per-la-comunicazione"><span class="std std-ref">Supporti custom per la comunicazione</span></a>.</p>
+<p>Vediamo qualche dettaglio.</p>
+</section>
+<section id="conway25javamqtt">
+<h3>conway25JavaMqtt<a class="headerlink" href="#conway25javamqtt" title="Link to this heading">¶</a></h3>
+<p><span class="slide3">Progetto conway25JavaMqtt</span>.</p>
+<p>Il  <a class="reference external" href="../../../../conway25JavaMqtt">progetto conway25JavaMqtt</a> modifica il precedente <a class="reference internal" href="#codice-embedded-del-servizio"><span class="std std-ref">Codice embedded del servizio</span></a>
+introducendo un dispositivo di output <a class="reference external" href="../../../../conway25JavaMqtt/src/main/java/conwayMqtt/devices/OutInMqtt.java">OutInMqtt</a> che:</p>
+<ul class="simple">
+<li><p>invia messaggi di aggiornamento
+dello stato di una cella sulla topic <span class="slidekp">guiin</span></p></li>
+<li><p>gestisce i comandi inviati dalla GUI
+sulla topic <span class="slidekp">life</span>.</p></li>
+</ul>
+<blockquote>
+<div><p>In particolare:</p>
+</div></blockquote>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 35.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Componente</strong></p></td>
+<td><p><strong>Ruolo e Tipo</strong></p></td>
+<td><p><strong>Note</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../conway25JavaMqtt/src/main/java/conwayMqtt/devices/OutInMqtt.java">OutInMqtt</a></p></td>
+<td><p>Dispositivo di I/O in Java</p></td>
+<td><p>Interagisce con le pagine HTML vie MQTT usando <a class="reference internal" href="MQTTConnection%20-%20Copia.html#mqttinteraction"><span class="std std-ref">MqttInteraction</span></a> perchè l’uso di una <em>receiveMsg</em> bloccante
+è accettabile.</p>
+<p>In alternativa potrebbe usare <a class="reference internal" href="MQTTConnection%20-%20Copia.html#mqttconnectionbase"><span class="std std-ref">MqttConnectionBase</span></a> ( e <a class="reference internal" href="MQTTConnection%20-%20Copia.html#mqttconnectioncallbackforreceive"><span class="std std-ref">MqttConnectionCallbackForReceive</span></a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="conwayguialone">
+<h3>conwayguialone<a class="headerlink" href="#conwayguialone" title="Link to this heading">¶</a></h3>
+<p><span class="slide3">Progetto conwayguialone</span>.</p>
+<p>La nuova versione della GUI è analoga alla precedente, ma:</p>
+<ul class="simple">
+<li><p>non ha più il servizio applicativo embedded</p></li>
+<li><p>usa la libreria <cite>Paho</cite> per la comunicazione via MQTT</p></li>
+</ul>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 35.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Componente</strong></p></td>
+<td><p><strong>Ruolo e Tipo</strong></p></td>
+<td><p><strong>Note</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../conwayguialone/src/main/java/unibo/disi/conwaygui/ws/WSConwayguiLifeMqtt.java">WSConwayguiLifeMqtt</a></p></td>
+<td><p>Gestione in Java di informazioni da/a pagina HTML</p></td>
+<td><p>Estende  <em>AbstractWebSocketHandler</em>  di <em>org.springframework.web.socket.handler</em>.
+Usa <a class="reference internal" href="MQTTConnection%20-%20Copia.html#mqttinteraction"><span class="std std-ref">MqttInteraction</span></a> per inviare comandi a  <a class="reference external" href="../../../../conwaygui/src/main/java/conway/LifeController.java">LifeController</a> e per fare update delle pagine
+(metodo <em>broadcastToWebSocket</em>)  cone le informazioni ricevute da  <a class="reference external" href="../../../../conwaygui/src/main/java/conway/LifeController.java">LifeController</a>.</p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#una-ottimizzazione-basata-su-comunicazioni-via-ws"><span class="std std-ref">Una ottimizzazione basata su comunicazioni via WS?</span></a></p>
+</section>
+</section>
+<section id="una-ottimizzazione-basata-su-comunicazioni-via-ws">
+<h2>Una ottimizzazione basata su comunicazioni via WS?<a class="headerlink" href="#una-ottimizzazione-basata-su-comunicazioni-via-ws" title="Link to this heading">¶</a></h2>
+<p>Una ottimizzazione del sistema precedente potrebbe essere realizzata usando le <a class="reference external" href="https://it.wikipedia.org/wiki/WebSocket">WebSocket</a> per la comunicazione.
+In particolare, <code class="docutils literal notranslate"><span class="pre">LifeController</span></code> potrebbe creare una implementazione <a class="reference internal" href="#outws"><span class="std std-ref">OutWs</span></a> di <span class="xref std std-ref">IOutDev</span> che usa le WebSocket per
+inviare informazioni alla GUI:</p>
+<a class="reference internal image-reference" href="_images/conwayguiseqdiagrwithWS.jpg"><img alt="_images/conwayguiseqdiagrwithWS.jpg" class="align-center" src="_images/conwayguiseqdiagrwithWS.jpg" style="width: 100%;" />
+</a>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="k">class</span> <span class="nc">LifeController</span> <span class="p">{</span>
+  <span class="o">...</span>
+    <span class="n">public</span> <span class="n">LifeController</span><span class="p">(</span><span class="n">Life</span> <span class="n">game</span><span class="p">){</span>
+        <span class="n">this</span><span class="o">.</span><span class="n">life</span> <span class="o">=</span> <span class="n">game</span><span class="p">;</span>
+        <span class="o">//</span><span class="n">configureTheSystem</span>
+        <span class="n">life</span><span class="o">.</span><span class="n">createGrids</span><span class="p">();</span>
+        <span class="o">/*</span><span class="mi">1</span><span class="o">*/</span> <span class="n">new</span> <span class="n">OutInMqtt</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+        <span class="o">/*</span><span class="mi">2</span><span class="o">*/</span> <span class="n">outindev</span>  <span class="o">=</span> <span class="n">new</span> <span class="n">OutWS</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+    <span class="p">}</span>
+ <span class="o">...</span>
+</pre></div>
+</div>
+</td>
+<td><p><span class="slidekp">/*1*/</span>: attiva <span class="xref std std-ref">OutInMqtt.java</span> per la sola ricezione</p>
+<p><span class="slidekp">/*2*/</span> inizializza la variabile <strong>outindev</strong> con un’istanza di <a class="reference internal" href="#outws"><span class="std std-ref">OutWs</span></a>,
+che usa le WebSocket per inviare informazioni alla GUI.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<section id="outws">
+<h3>OutWs<a class="headerlink" href="#outws" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="k">class</span> <span class="nc">OutWs</span> <span class="n">implements</span> <span class="n">IOutDev</span><span class="p">{</span>
+<span class="n">private</span> <span class="n">Interaction</span> <span class="n">connwws</span><span class="p">;</span>
+
+  <span class="n">public</span> <span class="n">OutWs</span><span class="p">()</span> <span class="p">{</span>
+<span class="o">/*</span><span class="mi">1</span><span class="o">*/</span> <span class="n">connwws</span> <span class="o">=</span> <span class="n">ConnectionFactory</span><span class="o">.</span><span class="n">createClientSupport</span><span class="p">(</span>
+        <span class="n">ProtocolType</span><span class="o">.</span><span class="n">ws</span><span class="p">,</span> <span class="s2">&quot;localhost:7110&quot;</span><span class="p">,</span> <span class="s2">&quot;wsupdates&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nd">@Override</span>
+  <span class="n">public</span> <span class="n">void</span> <span class="n">displayCell</span><span class="p">(</span><span class="n">String</span> <span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+<span class="o">/*</span><span class="mi">2</span><span class="o">*/</span> <span class="n">connwws</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="ne">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+<td><p><span class="slidekp">/*1*/</span>: crea una <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-ws-wsconnection"><span class="std std-ref">unibo.basicomm23.ws.WsConnection</span></a></p>
+<p><span class="slidekp">/*2*/</span> invia il messaggio alla GUI in modo <em>fire-and-forget</em>
+(si veda <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">unibo.basicomm23.interfaces.Interaction</span></a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Va osservato però che  <span class="slide2">questa ottimizzazione crea una dipendenza perniciosa</span>, in quanto il dispositivo del livello applicativo
+deve conoscere l’indirizzo IP della GUI.</p>
+</section>
+</section>
+<section id="una-ottimizzazione-per-mqtt">
+<h2>Una ottimizzazione per MQTT ?<a class="headerlink" href="#una-ottimizzazione-per-mqtt" title="Link to this heading">¶</a></h2>
+<p>Il componente <a class="reference external" href="../../../../conway25JavaMqtt/src/main/java/conwayMqtt/devices/OutInMqtt.java">OutInMqtt</a> viene creato sia per ricevere sia per trasmettere.
+La fase di trasmissione può essere ottimizzata <strong>accumulando</strong> per ogni ‘epoch’  tutti i messaggi
+di update delle celle
+che cambiano di stato e inviando  una sola volta l’insieme di questi messaggi.</p>
+<p>Ovvimente, lato GUI, la funzione <span class="xref std std-ref">commsocket handleWsMessage</span> deve essere modificata per gestire la lista
+di comandi.</p>
+<p>Va osservato però che  questa ottimizzazione <span class="slide2">contrasta</span> con il nostro obiettivo ultimo di
+<span class="slide3">distribuire ogni cella su un nodo computazionale diverso</span>.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">ConwayLife25</a><ul>
+<li><a class="reference internal" href="#conwaylife25-obiettivi-e-fasi-del-lavoro">ConwayLife25: Obiettivi e fasi del lavoro</a><ul>
+<li><a class="reference internal" href="#sistema-complesso">Sistema Complesso</a></li>
+<li><a class="reference internal" href="#sistema-complicato">Sistema Complicato</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conwaylife25-il-core-e-la-griglia">ConwayLife25: il core e la griglia</a></li>
+<li><a class="reference internal" href="#conwaylife25-in-javascript">ConwayLife25 in JavaScript</a><ul>
+<li><a class="reference internal" href="#conway-html">conway.html</a></li>
+<li><a class="reference internal" href="#conway25javascript-project">conway25JavaScript project</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conwaylife25-in-java">ConwayLife25 in Java</a><ul>
+<li><a class="reference internal" href="#ioutdev-interface">IOutDev interface</a></li>
+<li><a class="reference internal" href="#conway25java-project">conway25Java project</a></li>
+<li><a class="reference internal" href="#build-gradle-e-main-di-conway25java">build.gradle e Main di conway25Java</a></li>
+<li><a class="reference internal" href="#conway25java-testing">conway25Java testing</a></li>
+<li><a class="reference internal" href="#conway25java-refactoring">conway25Java refactoring</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conwaylife25-una-gui-per-java">ConwayLife25 una GUI per Java</a><ul>
+<li><a class="reference internal" href="#conwaygui-analisi-del-problema">conwaygui: analisi del problema</a></li>
+<li><a class="reference internal" href="#conwaygui-project">conwaygui project</a></li>
+<li><a class="reference internal" href="#conwaygui-build-gradle">conwaygui build.gradle</a></li>
+<li><a class="reference internal" href="#conwaygui-logback-xml">conwaygui logback.xml</a></li>
+<li><a class="reference internal" href="#id1">guipage.html</a></li>
+<li><a class="reference internal" href="#commsocket-js-file">commsocket.js file</a><ul>
+<li><a class="reference internal" href="#aggiornare-la-gui">aggiornare la GUI</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id2">iomap.js</a></li>
+<li><a class="reference internal" href="#id3">outarea.js</a><ul>
+<li><a class="reference internal" href="#outarea-additem">outarea addItem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conwaylife25-un-microservizio-java">ConwayLife25: un microservizio Java</a><ul>
+<li><a class="reference internal" href="#conwaygui-un-processo-di-sviluppo">conwaygui: un processo di sviluppo</a></li>
+<li><a class="reference internal" href="#codice-embedded-del-servizio">Codice embedded del servizio</a></li>
+<li><a class="reference internal" href="#id4">ConwayGuiControllerLifeLocal</a></li>
+<li><a class="reference internal" href="#id5">LifeController</a></li>
+<li><a class="reference internal" href="#id6">WSIoDev</a></li>
+<li><a class="reference internal" href="#conwaygui-ulteriore-analisi-del-problema">conwaygui: ulteriore analisi del problema</a></li>
+<li><a class="reference internal" href="#conwaygui-service-deployment">conwaygui service deployment</a></li>
+<li><a class="reference internal" href="#spiegazione-del-funzionamento">Spiegazione del funzionamento</a><ul>
+<li><a class="reference internal" href="#docker-e-la-rete-bridge">1. Docker e la rete bridge:</a></li>
+<li><a class="reference internal" href="#r-getlocaladdr-e-r-getremoteaddr">2. r.getLocalAddr() e r.getRemoteAddr():</a></li>
+<li><a class="reference internal" href="#perche-ottieni-gli-stessi-dati-su-pc-1-e-pc-2">3. Perché ottieni gli stessi dati su PC-1 e PC-2:</a></li>
+<li><a class="reference internal" href="#come-ottenere-l-indirizzo-ip-del-client-originale">4. Come ottenere l’indirizzo IP del client originale:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conwaycallerws-java">ConwayCallerWS.java</a></li>
+<li><a class="reference internal" href="#supporti-custom-per-la-comunicazione">Supporti custom per la comunicazione</a></li>
+<li><a class="reference internal" href="#wsinteraction">WsInteraction</a></li>
+<li><a class="reference internal" href="#id7">ConwayCallerWSInteraction</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conwaygui-con-servizio-remoto">ConwayGui con servizio remoto</a><ul>
+<li><a class="reference internal" href="#prima-architettura-logica">Prima architettura logica</a></li>
+<li><a class="reference internal" href="#conway25javamqtt">conway25JavaMqtt</a></li>
+<li><a class="reference internal" href="#conwayguialone">conwayguialone</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#una-ottimizzazione-basata-su-comunicazioni-via-ws">Una ottimizzazione basata su comunicazioni via WS?</a><ul>
+<li><a class="reference internal" href="#outws">OutWs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#una-ottimizzazione-per-mqtt">Una ottimizzazione per MQTT ?</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="PrimoprogettoJava25.html"
+                          title="previous chapter">PrimoprogettoJava25</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="FineFase1-ISS25.html"
+                          title="next chapter">Relazione fine Fase1-ISS25</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ConwayLife25.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="FineFase1-ISS25.html" title="Relazione fine Fase1-ISS25"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="PrimoprogettoJava25.html" title="PrimoprogettoJava25"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ConwayLife25</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

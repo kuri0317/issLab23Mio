@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ISS2025 &#8212; issLab2025 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3d783734" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CorsoISS2025" href="CorsoISS2025.html" />
+    <link rel="prev" title="iss25Material" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CorsoISS2025.html" title="CorsoISS2025"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="iss25Material"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ISS2025</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="iss2025">
+<h1>ISS2025<a class="headerlink" href="#iss2025" title="Link to this heading">¶</a></h1>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#introduzione-2025"><span class="std std-ref">Introduzione 2025</span></a></p></li>
+<li><p><a class="reference internal" href="CorsoISS2025.html#corsoiss2025"><span class="std std-ref">Il corso 2025</span></a></p></li>
+</ol>
+<section id="introduzione-2025">
+<h2>Introduzione 2025<a class="headerlink" href="#introduzione-2025" title="Link to this heading">¶</a></h2>
+<p>L’informatica come scienza, sia pura che applicata, ha avuto numerosi promotori e promotrici
+nel corso della sua storia. Sarebbe impossibile citarli tutti, ma si veda <a class="reference internal" href="History.html#history"><span class="std std-ref">History</span></a>.</p>
+<p>L’evoluzione dell’informatica dal 1950 ad oggi può essere suddivisa in diverse ere,
+ciascuna caratterizzata da specifici sviluppi tecnologici, cambiamenti nei modelli di business e nuove sfide.</p>
+<section id="tecnologie-e-paradigmi-software">
+<h3>Tecnologie e paradigmi software<a class="headerlink" href="#tecnologie-e-paradigmi-software" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Era</strong></p></td>
+<td><p><strong>Tecnologia</strong></p></td>
+<td><p><strong>Paradigmi software</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Mainframe</span> (anni ‘50 - ‘70)</p></td>
+<td><p>Elaborazione centralizzata, batch processing. Valvole termoioniche, transistor.</p></td>
+<td><p>Subroutine e funzioni, Moduli, Librerie</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">Personal Computer</span> (anni ‘80 - ‘90)</p></td>
+<td><p>Elaborazione decentralizzata, interazione utente-macchina. Microprocessori, memoria RAM</p></td>
+<td><p>Componenti software “packaged”, Oggetti, Componenti COM/DCOM</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Internet</span> (anni ‘90 - 2000)</p></td>
+<td><p>Connettività globale, applicazioni web. Server, browser, protocolli di rete.</p></td>
+<td><p>Componenti web, Servizi web, Framework</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">Cloud Computing</span> (anni 2000 - oggi)</p></td>
+<td><p>Elaborazione “on demand”, scalabilità. Data center, cloud provider, virtualizzazione.</p></td>
+<td><p><a class="reference internal" href="Microservizi.html#microservizi"><span class="std std-ref">Microservizi</span></a>, Container, Funzioni serverless</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Sistemi Distribuiti/IoT</span> (anni 2010 - oggi)</p></td>
+<td><p>Connessione di dispositivi, raccolta dati, automazione. Dispositivi IoT (sensori, attuatori), gateway</p></td>
+<td><p>Client-Server, Peer-to-Peer (P2P), Message Passing, Distributed Objects, MapReduce</p>
+<p>Pub/Sub (Publish/Subscribe), Request/Response, Event-Driven, Data Streaming, <a class="reference external" href="https://it.wikipedia.org/wiki/Edge_computing">Edge Computing</a>, Fog Computing</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>L’era dell’<code class="docutils literal notranslate"><span class="pre">IoT</span></code> si sovrappone all’era del <span class="blue">Cloud Computing</span>,
+in quanto molte soluzioni <code class="docutils literal notranslate"><span class="pre">IoT</span></code> utilizzano infrastrutture cloud per l’elaborazione e l’analisi dei dati.</p>
+</section>
+<section id="componenti-e-processi-software">
+<h3>Componenti e processi software<a class="headerlink" href="#componenti-e-processi-software" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Era</strong></p></td>
+<td><p><strong>Componenti    Software</strong></p></td>
+<td><p><strong>Processi di Produzione del Software</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Mainframe</span> (anni ‘50 - ‘70)</p></td>
+<td><p>Linguaggi di basso livello (assembly), software proprietario</p></td>
+<td><p>Sviluppo “artigianale”, metodologie “waterfall”</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">Personal Computer</span> (anni ‘80 - ‘90)</p></td>
+<td><p>Software “packaged”, linguaggi di alto livello (C, Pascal)</p></td>
+<td><p>Metodologie “waterfall”, ambienti di sviluppo integrati</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Internet</span> (anni ‘90 - 2000)</p></td>
+<td><p>Applicazioni web, servizi web, software open source</p></td>
+<td><p>Metodologie agili (Scrum, XP), controllo di versione</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">Cloud Computing</span> (anni 2000 - oggi)</p></td>
+<td><p>Software “as-a-service” (SaaS), <a class="reference internal" href="Microservizi.html#microservizi"><span class="std std-ref">Microservizi</span></a>, container</p></td>
+<td><p>DevOps, Continuous Integration/Continuous Delivery (CI/CD)</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Sistemi Distribuiti/IoT</span> (anni 2010 - oggi)</p></td>
+<td><p>Software “low-code/no-code”, componenti IA, applicazioni adattive</p></td>
+<td><p>Sviluppo di software per dispositivi embedded, integrazione con piattaforme cloud</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="architetture-e-modelli-di-business">
+<h3>Architetture e modelli di business<a class="headerlink" href="#architetture-e-modelli-di-business" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Era</strong></p></td>
+<td><p><strong>Architetture Softwaree</strong></p></td>
+<td><p><strong>Modelli di Business</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Mainframe</span> (anni ‘50 - ‘70)</p></td>
+<td><p>Centralizzaa</p></td>
+<td><p>Vendita di hardware e software, servizi di supporto</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">Personal Computer</span> (anni ‘80 - ‘90)</p></td>
+<td><p>Client-server</p></td>
+<td><p>Vendita di software e hardware, licenze software</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Internet</span> (anni ‘90 - 2000)</p></td>
+<td><p>Web (modello a tre livelli), SOA</p></td>
+<td><p>Pubblicità online, e-commerce, modelli <a class="reference external" href="https://it.wikipedia.org/wiki/Freemium">Freemium</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">Cloud Computing</span> (anni 2000 - oggi)</p></td>
+<td><p>Cloud native, <a class="reference internal" href="Microservizi.html#microservizi"><span class="std std-ref">Microservizi</span></a></p></td>
+<td><p>Pay-as-you-go, abbonamenti, servizi cloud</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Sistemi Distribuiti/IoT</span> (anni 2010 - oggi)</p></td>
+<td><p>Architetture distribuite, <a class="reference external" href="https://it.wikipedia.org/wiki/Edge_computing">Edge computing</a></p></td>
+<td><p>Servizi basati sui dati, manutenzione predittiva, nuovi ecosistemi</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="tendenze-attuali-e-future">
+<h2>Tendenze attuali e future<a class="headerlink" href="#tendenze-attuali-e-future" title="Link to this heading">¶</a></h2>
+<p><span class="slide3">Domanda</span>: Vorrei una tabella con le ‘Tendenze attuali e future’ relative ai segenti campi della infromatica teorica e applicata:
+tecnologie di base, paradigmi e linguaggi di programmazione, componenti software, processi di sviluppo del software,
+architetture software, modelli di business legati al software`</p>
+<p><span class="slidekp">Chiesto a Gemini 11/Feb/20025</span></p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Campo</strong></p></td>
+<td><p><strong>Tendenza</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Tecnologie di base</span></p></td>
+<td><ul class="simple">
+<li><p><span class="brown">Calcolo quantistico</span>: Sfruttamento dei principi della meccanica quantistica per risolvere problemi
+complessi non affrontabili dai computer classici.</p></li>
+<li><p><span class="brown">Neuromorphic computing</span>: Ispirato al funzionamento del cervello umano, utilizza hardware specializzato
+per eseguire modelli di intelligenza artificiale in modo più efficiente.</p></li>
+<li><p><span class="brown">Fotoni</span> Sostituzione degli elettroni con fotoni per una maggiore velocità e minore dispersione di calore.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">Paradigmi e linguaggi</span></p></td>
+<td><ul class="simple">
+<li><p><span class="brown">Linguaggi specifici per dominio (DSL)</span>: Linguaggi specializzati per risolvere problemi in un determinato ambito
+(es. finanza, bioinformatica).</p></li>
+<li><p><span class="brown">Programmazione funzionale</span>: Paradigma che enfatizza l’utilizzo di funzioni matematiche e l’immutabilità dei dati.</p></li>
+<li><p><span class="brown">Linguaggi di programmazione visiva</span>: Sviluppo di software attraverso interfacce grafiche intuitive,
+adatte anche a non programmatori.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Componenti software</span></p></td>
+<td><ul class="simple">
+<li><p><span class="brown">Componenti IA</span>: Integrazione di modelli di intelligenza artificiale pre-addestrati in diverse applicazioni.</p></li>
+<li><p><span class="brown">Componenti adattivi</span>: Componenti software in grado di modificarsi dinamicamente in base alle esigenze e all’ambiente.</p></li>
+<li><p><span class="brown">Componenti “low-code/no-code”</span>: Sviluppo di componenti software senza dover scrivere codice, attraverso piattaforme visuali.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">Processi di sviluppo</span></p></td>
+<td><ul class="simple">
+<li><p><span class="brown">Automazione</span>: Utilizzo dell’IA per automatizzare attività ripetitive come test, debugging e deployment.</p></li>
+<li><p><span class="brown">Sviluppo “agile” avanzato</span>: Metodologie agili sempre più sofisticate, con maggiore attenzione alla collaborazione
+e al feedback continuo.</p></li>
+<li><p><span class="brown">DevSecOps</span>: Integrazione della sicurezza nel processo di sviluppo del software fin dalle prime fasi.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Architetture software</span></p></td>
+<td><ul class="simple">
+<li><p><span class="brown">Architetture ibride</span>: Combinazione di risorse on-premise e cloud, richiedendo soluzioni di integrazione complesse.</p></li>
+<li><p><span class="brown">Architetture adattive</span>: Sistemi software in grado di modificarsi dinamicamente in base ai cambiamenti dell’ambiente.</p></li>
+<li><p><span class="brown">Serverless computing</span>: Esecuzione di codice senza doversi preoccupare della gestione dei server.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">Modelli di business</span></p></td>
+<td><ul class="simple">
+<li><p><span class="brown">Servizi basati sui dati</span>: Raccolta, analisi e monetizzazione dei dati per offrire servizi personalizzati.</p></li>
+<li><p><span class="brown">Nuovi ecosistemi</span>: Creazione di piattaforme che mettono in contatto diversi attori (es. sviluppatori, utenti, aziende).</p></li>
+<li><p><span class="brown">Modelli “platform”</span>: Offrire piattaforme software che consentono a terzi di sviluppare applicazioni e servizi.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="slidekp">Chiesto a ChatGpt 11/Feb/20025</span></p>
+<p>potresti darmi la tabella in un formato rst <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">list-table</span></code>? (colori e formattazione mia)</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Tendenze attuali e future nell’informatica</span><a class="headerlink" href="#id1" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Campo</p></th>
+<th class="head"><p>Tendenze Attuali</p></th>
+<th class="head"><p>Tendenze Future</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="blue">Tecnologie di base</span></p></td>
+<td><ul class="simple">
+<li><p>Cloud computing e <span class="brown">virtualizzazione</span></p></li>
+<li><p><span class="brown">Containerizzazione</span> ed <a class="reference external" href="https://it.wikipedia.org/wiki/Edge_computing">Edge computing</a></p></li>
+<li><p>Acceleratori hardware per l’IA (<span class="brown">GPU, TPU</span>)</p></li>
+<li><p>Prime applicazioni di <span class="brown">blockchain</span> e <a class="reference external" href="https://en.wikipedia.org/wiki/Distributed_ledger">distributed ledger</a></p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>Maturazione del <span class="brown">quantum computing</span></p></li>
+<li><p>Sviluppo di  <a class="reference external" href="https://it.wikipedia.org/wiki/Ingegneria_neuromorfica">Ingegneria neuromorfica</a></p></li>
+<li><p>Diffusione pervasiva dell’<a class="reference external" href="https://it.wikipedia.org/wiki/Edge_computing">Edge computing</a> e <span class="brown">IoT avanzato</span></p></li>
+<li><p>Integrazione di reti <span class="brown">5G/6G</span> per comunicazioni a bassa latenza</p></li>
+<li><p>Evoluzione di soluzioni di <span class="brown">sicurezza basate su hardware</span></p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">Paradigmi e linguaggi di programmazione</span></p></td>
+<td><ul class="simple">
+<li><p>Dominio di <span class="brown">linguaggi multi-paradigma</span> (Python, JavaScript, Java, C++)</p></li>
+<li><p>Diffusione di <span class="brown">paradigmi OOP e funzionale</span></p></li>
+<li><p>Crescente attenzione a linguaggi per la <span class="brown">concorrenza e la sicurezza</span> (<strong>Go</strong>, <strong>Rust</strong>)</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>Linguaggi nativamente orientati al <span class="brown">calcolo distribuito</span> e quantistico</p></li>
+<li><p>Integrazione di <span class="brown">strumenti AI</span> per assistenza alla programmazione e refactoring</p></li>
+<li><p>Adozione di approcci con <span class="brown">formal verification</span> per la sicurezza</p></li>
+<li><p><span class="brown">Sviluppo di DSL</span> (<strong>domain-specific languages</strong>) per settori specialistici</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Componenti software</span></p></td>
+<td><ul class="simple">
+<li><p>Architetture a <a class="reference internal" href="Microservizi.html#microservizi"><span class="std std-ref">Microservizi</span></a>  e API-first</p></li>
+<li><p>Adozione di soluzioni <span class="brown">serverless e container</span> (Docker, Kubernetes)</p></li>
+<li><p><span class="brown">Ecosistemi open source</span> e librerie modulari</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>Evoluzione verso micro frontends e <span class="brown">Function-as-a-Service (FaaS)</span></p></li>
+<li><p>Componenti software basati su <span class="brown">eventi e architetture reattive</span></p></li>
+<li><p>Adozione di <span class="brown">piattaforme low-code/no-code</span> per la composizione automatizzata</p></li>
+<li><p>Integrazione di <span class="brown">moduli di machine learning</span> come “componenti” autonomi</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">Processi di sviluppo del software</span></p></td>
+<td><ul class="simple">
+<li><p>Metodologie <strong>Agile</strong> e pratiche  <span class="brown">DevOps</span></p></li>
+<li><p>Continuous Integration/Continuous Deployment (<span class="brown">CI/CD</span>)</p></li>
+<li><p>Test-driven development (<span class="brown">TDD</span>) e automazione dei test</p></li>
+<li><p>Collaborazione e integrazione di  <span class="brown">strumenti di monitoraggio</span></p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p><span class="brown">Utilizzo di AI</span> per code review, bug detection e generazione di codice</p></li>
+<li><p>Estensione del concetto di DevOps a <span class="brown">DevSecOps</span> (integrazione della sicurezza)</p></li>
+<li><p>Processi di sviluppo <span class="brown">adattativi e auto-miglioranti</span> grazie al <strong>machine learning</strong></p></li>
+<li><p>Adozione di <span class="brown">strumenti di collaborazione</span> sempre più integrati e basati su <strong>cloud</strong></p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="blue">Architetture software</span></p></td>
+<td><ul class="simple">
+<li><p>Diffusione di architetture cloud-native e a <a class="reference internal" href="Microservizi.html#microservizi"><span class="std std-ref">Microservizi</span></a></p></li>
+<li><p>Soluzioni ibride e <span class="brown">multi-cloud</span></p></li>
+<li><p>Uso intensivo di <span class="brown">container e orchestratori</span></p></li>
+<li><p>Architetture orientate ai servizi (<span class="brown">SOA</span>)</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>Adozione di <span class="brown">architetture decentralizzate</span> (<strong>blockchain</strong>, <a class="reference external" href="https://it.wikipedia.org/wiki/Edge_computing">Edge computing</a>)</p></li>
+<li><p>Sistemi <span class="brown">self-adaptive e self-healing</span></p></li>
+<li><p>Integrazione più profonda di <span class="brown">IoT ed ecosistemi distribuiti</span></p></li>
+<li><p>Architetture basate su <span class="brown">eventi con orchestrazione AI-driven</span></p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="blue">Modelli di business legati al software</span></p></td>
+<td><ul class="simple">
+<li><p><span class="brown">SaaS, PaaS</span> e modelli basati su abbonamento</p></li>
+<li><p>Approcci <a class="reference external" href="https://it.wikipedia.org/wiki/Freemium">Freemium</a> e licenze open source</p></li>
+<li><p>Marketplace e <span class="brown">piattaforme di distribuzione</span></p></li>
+<li><p>Monetizzazione tramite <span class="brown">API e servizi aggiuntivi</span></p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>Ecosistemi di <span class="brown">piattaforme integrate</span> e soluzioni AI-driven</p></li>
+<li><p>Modelli di business basati su:brown:<cite>token e blockchain</cite> (decentralized apps)</p></li>
+<li><p>Billing on-demand e <span class="brown">microtransazioni</span></p></li>
+<li><p>Nuove <span class="brown">forme di monetizzazione</span> basate sui dati e sui servizi in tempo reale</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<section id="non-solo-tendenze">
+<h3>Non solo tendenze<a class="headerlink" href="#non-solo-tendenze" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Legge di Moore</strong></p></td>
+<td><p>Questa legge, legata, dal 1965, al nome di Gordon Moore, co-fondatore di Intel dice che
+il numero di transistor in un microchip raddoppia circa ogni due anni, portando a un
+aumento esponenziale della potenza di calcolo e una diminuzione dei costi.</p>
+<p>La Legge ha iniziato a mostrare, negli ultimi anni, segni di rallentamento, in quanto la
+miniaturizzazione dei transistor sta raggiungendo limiti fisici.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>Legge di Huang</strong></p></td>
+<td><p>Questa legge, legata al nome di Jensen Huang - CEO di NVIDIA -
+è spesso citata come un fattore chiave per la rapida crescita
+e i progressi dell’intelligenza artificiale.</p>
+<p>Infatti, le prestazioni delle <code class="docutils literal notranslate"><span class="pre">GPU</span></code> (<em>Unità di Elaborazione Grafica</em>) per l’intelligenza artificiale raddoppiano ogni anno,
+superando di gran lunga il ritmo della Legge di Moore.
+Bill Dally - Chief Scientist di NVIDIA -  ha dichiarato che in 10 anni è riuscito a migliorare di 1000 volte
+le prestazioni di una singola <code class="docutils literal notranslate"><span class="pre">GPU</span></code>  per l’addestramento di reti neurali.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Legge dei ritorni accelerati</strong></p></td>
+<td><p>Questa legge, legata al nome di Ray Kurzweil, futurista e inventore, dice che
+il progresso tecnologico avviene a un ritmo esponenziale, e che questo ritmo è in continua accelerazione.</p>
+<p>La legge è stata utilizzata per prevedere sviluppi
+futuri in vari campi, dall’informatica alla medicina,
+all’energia. Kurzweil ha anche applicato questa legge per teorizzare la “Singolarità tecnologica”,
+un punto nel futuro in cui l’intelligenza artificiale supererà quella umana.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="CorsoISS2025.html#corsoiss2025"><span class="std std-ref">Il corso 2025</span></a></p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">ISS2025</a><ul>
+<li><a class="reference internal" href="#introduzione-2025">Introduzione 2025</a><ul>
+<li><a class="reference internal" href="#tecnologie-e-paradigmi-software">Tecnologie e paradigmi software</a></li>
+<li><a class="reference internal" href="#componenti-e-processi-software">Componenti e processi software</a></li>
+<li><a class="reference internal" href="#architetture-e-modelli-di-business">Architetture e modelli di business</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tendenze-attuali-e-future">Tendenze attuali e future</a><ul>
+<li><a class="reference internal" href="#non-solo-tendenze">Non solo tendenze</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">iss25Material</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="CorsoISS2025.html"
+                          title="next chapter">CorsoISS2025</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ISS2025.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CorsoISS2025.html" title="CorsoISS2025"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="iss25Material"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ISS2025</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, ANatali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

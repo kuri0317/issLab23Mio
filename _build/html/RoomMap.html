@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>RoomMap &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87712ff3" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="BoundaryWalk24" href="BoundaryWalk24.html" />
+    <link rel="prev" title="VirtualRobotUsage25Survey" href="VirtualRobotUsage25Survey.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="BoundaryWalk24.html" title="BoundaryWalk24"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="VirtualRobotUsage25Survey.html" title="VirtualRobotUsage25Survey"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RoomMap</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="roommap">
+<h1>RoomMap<a class="headerlink" href="#roommap" title="Link to this heading">¶</a></h1>
+<p>Un (micro)servizio relativo al robot potrebbe/dovrebbe incudere anche comandi per</p>
+<ul class="simple">
+<li><p>posizionare il robot in uno specifico punto della stanza</p></li>
+<li><p>muovere il robot da un punto A a un punto B della stanza (liberi da ostacoli)</p></li>
+</ul>
+<p>Un premessa utile al raggiungimento di questi obiettivi è la costruzione di una
+<strong>rappresentazione a livello software della stanza</strong>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/tf25sceneNewAnnotated.jpg"><img alt="_images/tf25sceneNewAnnotated.jpg" class="align-center" src="_images/tf25sceneNewAnnotated.jpg" style="width: 80%;" />
+</a>
+</div></blockquote>
+<p><span class="slidekp">OSSERVO CHE</span> la rappresentazione software di entità “del mondo reale” quali la stanza o il robot
+conduce rapidamente all’idea del <span class="slide3">Gemello digitale</span> (si veda <a class="reference external" href="https://it.wikipedia.org/wiki/Gemello_digitale">Digital twin</a>).</p>
+<p>Procederemo per passi (nel <span class="slide3">Progetto unibomapbuilder25</span>)</p>
+<section id="rappresentazione-della-mappa-della-stanza">
+<h2>Rappresentazione della mappa della stanza<a class="headerlink" href="#rappresentazione-della-mappa-della-stanza" title="Link to this heading">¶</a></h2>
+<section id="un-approocio-naive">
+<h3>Un approocio naive<a class="headerlink" href="#un-approocio-naive" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Una PRIMA versione ‘naive’ della mappa: <a class="reference external" href="../../../../unibomapbuild25/src/main/resources/mapnaive/RoomMapNaive.java">RoomMapNaive.java</a> e <a class="reference external" href="../../../../unibomapbuild25/src/main/resources/mapnaive/RobotDir.java">RobotDir.java</a></p></td>
+<td><p>La mappa viene rappresentata come un semplice matrice</p></td>
+</tr>
+<tr class="row-even"><td><p>Costruzione di una mappa naive delle stanza: <a class="reference external" href="../../../../unibomapbuild25/src/mapbuildnaive.qaktt">mapbuildnaive.qak</a></p></td>
+<td><p>Usa <a class="reference external" href="../../../../unibomapbuild25/src/main/resources/mapnaive/RoomMapNaive.java">RoomMapNaive.java</a> e <a class="reference internal" href="VrobotLLMoves24.html#id1"><span class="std std-ref">VrobotLLMoves24</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 65.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Il concetto di <span class="slide2">posizione</span> viene formalizato introducendo una coppia di coordinate cartesiane che identifica
+una cella della mappa.</p></td>
+<td><a class="reference internal image-reference" href="_images/griglia.PNG"><img alt="_images/griglia.PNG" class="align-center" src="_images/griglia.PNG" style="width: 100%;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Muovere il robot con mossa <code class="docutils literal notranslate"><span class="pre">step(T)</span></code> con tempo <code class="docutils literal notranslate"><span class="pre">T</span></code> tale da spostare il robot (con velocità prefissata)
+di uno spazio <code class="docutils literal notranslate"><span class="pre">D</span></code>, permette di costruire una mappa della stanza formata da celle quadrate <code class="docutils literal notranslate"><span class="pre">DxD</span></code>.</p>
+</section>
+</section>
+<section id="mappa-di-una-stanza-vuota">
+<h2>Mappa di una stanza vuota<a class="headerlink" href="#mappa-di-una-stanza-vuota" title="Link to this heading">¶</a></h2>
+<p><span class="slide1">Mappa ‘naive’ di una stanza vuota</span></p>
+<p><a class="reference external" href="../../../../unibomapbuild25/src/mapbuildnaive.qaktt">mapbuildnaive.qak</a>: produce una prima versione della mappa percorrendo
+i bordi privi di ostacoli, usando <a class="reference internal" href="VrobotLLMoves24.html#id1"><span class="std std-ref">VrobotLLMoves24</span></a> e <a class="reference external" href="../../../../unibomapbuild25/src/main/resources/mapnaive/RoomMapNaive.java">RoomMapNaive.java</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Una mappa più adeguata al percorso sui bordi è</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span><span class="n">r</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Al fine di ottenere questo scopo, la rappresentazione della stanza viene estesa,
+con una operazione che muove il robot nel suo ‘spazio mentale’
+(si veda <a class="reference internal" href="#robotmapper"><span class="std std-ref">RobotMapper</span></a>):</p>
+<section id="una-versione-evoluta">
+<h3>Una versione evoluta<a class="headerlink" href="#una-versione-evoluta" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 55.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Il componente <a class="reference external" href="../../../../unibomapbuild25/src/main/resources/map/RobotState.java">RobotState.java</a>.
+Rappresenta lo stato del robot nella mappa, comprensivo della direzione</p></td>
+<td><p>Realizza le mosse <code class="docutils literal notranslate"><span class="pre">turnRight,</span> <span class="pre">turnLeft,</span> <span class="pre">forward,</span> <span class="pre">backward</span></code> costruedo un nuovo <strong>RobotState</strong> a partire dai valori
+correnti delle cooridante e della direzione</p></td>
+</tr>
+<tr class="row-even"><td><p>Il componente <a class="reference external" href="../../../../unibomapbuild25/src/main/resources/map/Box.java">Box.java</a>.
+E’ una rappresentazione della cella che memorizza se la cella stessa:</p>
+<ul class="simple">
+<li><p>contiene un ostacolo (<code class="docutils literal notranslate"><span class="pre">X</span></code>)</p></li>
+<li><p>è stata percorsa con successo (<code class="docutils literal notranslate"><span class="pre">1</span></code>)</p></li>
+<li><p>non è mai stata percorsa (<code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
+</ul>
+</td>
+<td><p>Realizza le mosse <code class="docutils literal notranslate"><span class="pre">turnRight,</span> <span class="pre">turnLeft,</span> <span class="pre">forward,</span> <span class="pre">backward</span></code> costruedo un nuovo <strong>RobotState</strong> a partire dai valori
+correnti delle cooridante e della direzione</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../unibomapbuild25/src/main/resources/map/RoomMap.java">RoomMap.java</a>  rappresentazione della mappa come <strong>lista di liste</strong> di <a class="reference external" href="../../../../unibomapbuild25/src/main/resources/map/Box.java">Box.java</a>.</p>
+<p>La lista permette una <span class="remark">costruzione incrementale</span> della mappa, cella dopo cella.</p>
+</td>
+<td><p>Usa <a class="reference external" href="../../../../unibomapbuild25/src/main/resources/map/RobotState.java">RobotState.java</a>  e <a class="reference external" href="../../../../unibomapbuild25/src/main/resources/map/Box.java">Box.java</a></p></td>
+</tr>
+</tbody>
+</table>
+<p>A questi componenti aggiungiamo il seguente:</p>
+</section>
+<section id="robotmapper">
+<h3>RobotMapper<a class="headerlink" href="#robotmapper" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 55.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Un componente che posiziona il robot nella mappa intesa come immagine mentale: <a class="reference external" href="../../../../unibomapbuild25/src/main/resources/map/RobotMapper.java">RobotMapper.java</a></p></td>
+<td><p>Usa <a class="reference external" href="../../../../unibomapbuild25/src/main/resources/map/RobotState.java">RobotState.java</a></p></td>
+</tr>
+</tbody>
+</table>
+<p><span class="slide1">Mappa evoluta di una stanza vuota</span></p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 55.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Costruzione della mappa delle stanza vuota: <a class="reference external" href="../../../../unibomapbuild25/src/mapbuildconmapper.qaktt">mapbuildconmapper.qak</a></p></td>
+<td><p>Usa <a class="reference internal" href="VrobotLLMoves24.html#id1"><span class="std std-ref">VrobotLLMoves24</span></a> e <a class="reference internal" href="#robotmapper"><span class="std std-ref">RobotMapper</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<p>Un esempio di mappa costruita in questo modo:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">5</span>  <span class="mi">6</span>  <span class="mi">7</span>  <span class="n">asse</span> <span class="n">x</span>
+<span class="o">|</span><span class="n">r</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+</section>
+<section id="mappa-di-una-stanza-con-ostacoli">
+<h2>Mappa di una stanza con ostacoli<a class="headerlink" href="#mappa-di-una-stanza-con-ostacoli" title="Link to this heading">¶</a></h2>
+<p>Avviene in due passi:</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Costruzione di una <a class="reference internal" href="#mappa-con-ostacoli-parziale"><span class="std std-ref">Mappa con ostacoli parziale</span></a> di una stanza con ostacoli assumendo che il bordo superiore sia libero</p></td>
+<td><p>Costruzione di una <a class="reference internal" href="#mappa-con-ostacoli-completa"><span class="std std-ref">Mappa con ostacoli completa</span></a> a partire dalla mappa parziale.</p></td>
+</tr>
+</tbody>
+</table>
+<section id="mappa-con-ostacoli-parziale">
+<h3>Mappa con ostacoli parziale<a class="headerlink" href="#mappa-con-ostacoli-parziale" title="Link to this heading">¶</a></h3>
+<p>Vine costruita da <a class="reference external" href="../../../../unibomapbuild25/src/mapobstaclesconmapper.qaktt">mapobstaclesconmapper.qak</a> che usa <a class="reference external" href="../../../../unibomapbuild25/src/main/resources/map/RobotState.java">RobotState.java</a>  e <a class="reference external" href="../../../../unibomapbuild25/src/main/resources/map/Box.java">Box.java</a>
+assumendo che il bordo superiore della stanza sia libero</p>
+<p>Mappa parziale <code class="docutils literal notranslate"><span class="pre">map2025new.txt</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="o">|</span><span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span>
+</pre></div>
+</div>
+</section>
+<section id="mappa-con-ostacoli-completa">
+<h3>Mappa con ostacoli completa<a class="headerlink" href="#mappa-con-ostacoli-completa" title="Link to this heading">¶</a></h3>
+<p>Vine costruita da <a class="reference external" href="../../../../unibomapbuild25/src/completemapconmapper.qaktt">completemapconmapper.qak</a> che opera come segue:</p>
+<p>Per ogni cella non ancora esplorata di posizione <code class="docutils literal notranslate"><span class="pre">P</span></code> nella mappa parziale</p>
+<ul class="simple">
+<li><p>costruisce un piano per portare il robot da <code class="docutils literal notranslate"><span class="pre">HOME</span></code> a <code class="docutils literal notranslate"><span class="pre">P</span></code></p></li>
+<li><p>esegue il piano usando <a class="reference internal" href="Planner.html#planaima"><span class="std std-ref">PlanAima</span></a> .
+Se questo ha sucesso, marca la cella come libera,  e cerca di raggingere la prossima cella inesplorata.
+In caso di fallimento del piano, costruisce ed esegue un altro piano, per tornare in <cite>HOME`</cite>.</p></li>
+</ul>
+<p>Il riposizionamento in  <code class="docutils literal notranslate"><span class="pre">HOME</span></code> pottebbe essere critico per due motivi:</p>
+<ul class="simple">
+<li><p>nell’eseguire il piano per tornare, il robot potrebbe urtare contro qualche muro,
+a causa di disellineamenti. In questo caso, il piano prosgue dopo evere emesso un doppio <strong>beep</strong></p></li>
+<li><p>la poszione finale in <code class="docutils literal notranslate"><span class="pre">HOME</span></code> potrebbe non essere perfetta. Per evitare ciò, si introduce una fase
+di ‘tuning’ (si veda lo stato <code class="docutils literal notranslate"><span class="pre">tuneAtHome</span></code>).</p></li>
+</ul>
+</section>
+<section id="un-esempio-di-mappa-con-ostacoli">
+<h3>Un esempio di mappa con ostacoli<a class="headerlink" href="#un-esempio-di-mappa-con-ostacoli" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">5</span>  <span class="mi">6</span>  <span class="mi">7</span>  <span class="n">x</span>
+<span class="mi">0</span> <span class="o">|</span><span class="n">r</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="mi">1</span> <span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="mi">2</span> <span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="mi">3</span> <span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="mi">4</span> <span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="mi">5</span> <span class="o">|</span><span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span>
+<span class="n">y</span>
+</pre></div>
+</div>
+</td>
+<td><ul class="simple">
+<li><p><strong>0</strong> denota una cella mai percorsa</p></li>
+<li><p><strong>1</strong> denota una cella libreria</p></li>
+<li><p><strong>X</strong> denota una cella occupata da un ostacolo</p></li>
+<li><p><strong>r</strong> denota la posizione corrente del robot</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="mappa-usando-un-servizio-locale">
+<h2>Mappa usando un servizio locale<a class="headerlink" href="#mappa-usando-un-servizio-locale" title="Link to this heading">¶</a></h2>
+<p>Il modello <a class="reference external" href="../../../../unibomapbuild25/src/mapobstconservice.qaktt">mapobstconservice.qak</a> specifica la
+costruzione di una mappa usando un servzio locale derivato da
+<a class="reference internal" href="VirtualRobotUsage25.html#il-microservizio-vrqak24"><span class="std std-ref">vrqak24</span></a>: <a class="reference external" href="../../../../unibomapbuild25/src/mapobstconservice.qaktt">mapobstconservice.qak</a> .</p>
+<p>Come già osservato in <a class="reference internal" href="VirtualRobotUsage25.html#il-microservizio-vrqak24"><span class="std std-ref">Il microservizio vrqak24</span></a>, possimao <span class="slide2">riusare a livello locale</span> l’actor che
+realizza il microservizio, superando ogni probelam di conesssione di rete.</p>
+</section>
+<section id="robot-che-percorre-un-path">
+<h2>Robot che percorre un path<a class="headerlink" href="#robot-che-percorre-un-path" title="Link to this heading">¶</a></h2>
+<p><span class="worktodo">WORKTODO: Robot che percorre un path</span>
+Con riferimento ad una stanza come quella di figura, fare in modo che robot sia capace di spostarsi
+da un punto <code class="docutils literal notranslate"><span class="pre">A</span></code> a un punto <code class="docutils literal notranslate"><span class="pre">B</span></code> della stanza. Ad esempio:</p>
+<ol class="arabic simple">
+<li><p>dalla <code class="docutils literal notranslate"><span class="pre">HOME</span></code> a <code class="docutils literal notranslate"><span class="pre">IOPORT</span></code> e poi</p></li>
+<li><p>da <code class="docutils literal notranslate"><span class="pre">IOPORT</span></code> allo <code class="docutils literal notranslate"><span class="pre">SLOT2</span></code></p></li>
+</ol>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">RoomMap</a><ul>
+<li><a class="reference internal" href="#rappresentazione-della-mappa-della-stanza">Rappresentazione della mappa della stanza</a><ul>
+<li><a class="reference internal" href="#un-approocio-naive">Un approocio naive</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mappa-di-una-stanza-vuota">Mappa di una stanza vuota</a><ul>
+<li><a class="reference internal" href="#una-versione-evoluta">Una versione evoluta</a></li>
+<li><a class="reference internal" href="#robotmapper">RobotMapper</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mappa-di-una-stanza-con-ostacoli">Mappa di una stanza con ostacoli</a><ul>
+<li><a class="reference internal" href="#mappa-con-ostacoli-parziale">Mappa con ostacoli parziale</a></li>
+<li><a class="reference internal" href="#mappa-con-ostacoli-completa">Mappa con ostacoli completa</a></li>
+<li><a class="reference internal" href="#un-esempio-di-mappa-con-ostacoli">Un esempio di mappa con ostacoli</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mappa-usando-un-servizio-locale">Mappa usando un servizio locale</a></li>
+<li><a class="reference internal" href="#robot-che-percorre-un-path">Robot che percorre un path</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="VirtualRobotUsage25Survey.html"
+                          title="previous chapter">VirtualRobotUsage25Survey</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="BoundaryWalk24.html"
+                          title="next chapter">BoundaryWalk24</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/RoomMap.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="BoundaryWalk24.html" title="BoundaryWalk24"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="VirtualRobotUsage25Survey.html" title="VirtualRobotUsage25Survey"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RoomMap</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

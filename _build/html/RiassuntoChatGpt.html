@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>RiassuntoChatGpt &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MicroserviziEQak(GPT)" href="MicroserviziEQak%28GPT%29.html" />
+    <link rel="prev" title="MQTTConnection" href="MQTTConnection.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="MicroserviziEQak%28GPT%29.html" title="MicroserviziEQak(GPT)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="MQTTConnection.html" title="MQTTConnection"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RiassuntoChatGpt</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="riassuntochatgpt">
+<h1>RiassuntoChatGpt<a class="headerlink" href="#riassuntochatgpt" title="Permalink to this heading">¶</a></h1>
+<section id="chiesto-a-chatgpt">
+<h2>Chiesto a ChatGpt<a class="headerlink" href="#chiesto-a-chatgpt" title="Permalink to this heading">¶</a></h2>
+<p>Vorrei un riassunto dei concetti fondamentali del documento allegato, con particolare cura alla parte relativa al linguaggio qak,  in quanto DSL che definisce un metamodello con cui definire modelli eseguibili basati sul concetto di attore, grazie alla Qak software factory e alla Qak infrastructure. Vorrei che nel riassunto fossero anche ben evidenziati gli elementi fondamentali del linguaggio qak e le azioni che il linguaggio pernette di esprimere e perchè il linguaggio stesso potrebbe essere uno strumento utile per colmare l’abstraction gap tra un tecnologia come Java e le necessità di programmazione che nascono nella progettazione del software per sistemi distributi.</p>
+<p><span class="xref std std-ref">QakActors25</span></p>
+</section>
+<section id="contesto-e-obiettivi-generali">
+<h2>Contesto e Obiettivi Generali<a class="headerlink" href="#contesto-e-obiettivi-generali" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Modello ad Attori:</strong>
+Il documento si basa sul paradigma del modello computazionale ad attori, ispirato alle teorie di Carl Hewitt, in cui ogni componente del sistema è un attore autonomo che comunica tramite lo scambio di messaggi. Questo approccio è particolarmente adatto per la progettazione di sistemi distribuiti e microservizi.</p></li>
+<li><p><strong>Prototipazione Rapida e Model Driven Engineering:</strong>
+L’obiettivo è permettere la definizione e l’esecuzione di modelli ad alto livello per facilitare l’analisi dei requisiti e la prototipazione dei sistemi distribuiti, riducendo il divario tra l’astrazione progettuale e l’implementazione concreta.</p></li>
+</ul>
+</section>
+<section id="il-linguaggio-qak-caratteristiche-e-metamodello">
+<h2>Il Linguaggio qak: Caratteristiche e Metamodello<a class="headerlink" href="#il-linguaggio-qak-caratteristiche-e-metamodello" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>DSL per la Modellazione Eseguibile:</strong>
+Il linguaggio qak non è un linguaggio di programmazione generico, ma un Domain Specific Language (DSL) che consente di descrivere in modo compatto ed espressivo il comportamento di un sistema distribuito.</p></li>
+<li><p><strong>Struttura del Modello:</strong></p>
+<ul>
+<li><p><em>Definizione del Sistema:</em> Specifica il nome del sistema, la configurazione (inclusa l’eventuale connessione a broker MQTT), le librerie di supporto e le dichiarazioni di messaggi, contesti, attori, display e facade.</p></li>
+<li><p><em>Messaggi:</em> Utilizza una sintassi Prolog-like per definire diversi tipi di messaggi (Dispatch, Request, Reply, Event) fondamentali per la comunicazione tra attori.</p></li>
+<li><p><em>Contesti:</em> Rappresentano nodi logici di elaborazione, ciascuno dei quali gestisce una collezione di attori e abilita la comunicazione via rete (utilizzando protocolli come TCP, UDP, CoAP, MQTT).</p></li>
+<li><p><em>Attori:</em></p>
+<ul>
+<li><p><strong>Attori Interni (QActor):</strong> Definiti come automi a stati finiti, possiedono un nome univoco, una coda locale per i messaggi e una serie di stati con relative transizioni.</p></li>
+<li><p><strong>Attori Coded ed External:</strong> Altri tipi di attori, rispettivamente integrati tramite codice (es. Kotlin) ed esterni al modello corrente.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="elementi-fondamentali-e-azioni-del-linguaggio-qak">
+<h2>Elementi Fondamentali e Azioni del Linguaggio qak<a class="headerlink" href="#elementi-fondamentali-e-azioni-del-linguaggio-qak" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Sintassi e Struttura:</strong>
+La grammatica qak, definita con Xtext, organizza la descrizione del sistema in una sequenza ordinata di dichiarazioni (ad es. <cite>QActorSystemSpec</cite>).</p></li>
+<li><p><strong>Azioni Disponibili:</strong></p>
+<ul>
+<li><p><em>Azioni di Base:</em></p>
+<ul>
+<li><p><strong>Invio Messaggi:</strong> Operazioni come <cite>forward</cite>, <cite>request</cite>, <cite>replyTo</cite>, <cite>autorequest</cite> e <cite>autodispatch</cite> consentono agli attori di comunicare.</p></li>
+<li><p><strong>Inclusione di Codice Kotlin:</strong> Tramite la sintassi <cite>AnyAction</cite>, è possibile incorporare codice Kotlin direttamente nel modello per operazioni personalizzate.</p></li>
+</ul>
+</li>
+<li><p><em>Azioni Condizionali e di Controllo:</em></p>
+<ul>
+<li><p><strong>Transizioni e Stati:</strong> Gli attori sono modellati come automi a stati finiti, con transizioni condizionali (basate su guardie scritte in Kotlin) e timeout per evitare attese indefinite.</p></li>
+<li><p><strong>Costrutti di Controllo:</strong> Costrutti come <cite>ifSolved</cite> e <cite>onMsg</cite> permettono di reagire in modo condizionale ai messaggi in arrivo.</p></li>
+</ul>
+</li>
+<li><p><em>Operazioni di Messaggistica Avanzata:</em></p>
+<ul>
+<li><p><strong>Comandi MQTT:</strong> I comandi <cite>connectToMqttBroker</cite>, <cite>publish</cite> e <cite>subscribe</cite> integrano il supporto per la comunicazione via MQTT.</p></li>
+<li><p><strong>Operazioni Streamed e di Delegazione:</strong> Azioni quali <cite>emit</cite>, <cite>emitlocalstream</cite>, <cite>delegate</cite> e <cite>delegateCurrentMsgTo</cite> facilitano la gestione degli eventi e la delega di compiti ad altri attori.</p></li>
+</ul>
+</li>
+<li><p><em>Creazione Dinamica e Esecuzione di Codice:</em></p>
+<ul>
+<li><p><strong>Creazione di Attori:</strong> Con la primitiva <cite>create</cite>, il modello può generare attori in maniera dinamica.</p></li>
+<li><p><strong>Invocazione di Codice Esterno:</strong> Comandi come <cite>run</cite>, <cite>machineExec</cite> e <cite>qrun</cite> permettono di eseguire metodi o codice di sistema.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Gestione dei Messaggi e del Comportamento:</strong>
+Ogni attore possiede una coda principale (<cite>msgQueue</cite>) e una coda secondaria (<cite>msgQueueStore</cite>) per gestire i messaggi non elaborati. Il comportamento dell’attore è definito in base alle transizioni di stato attivate dai messaggi ricevuti, in un contesto message-driven e asincrono.</p></li>
+</ul>
+</section>
+<section id="vantaggi-di-qak-nel-colmare-l-abstraction-gap">
+<h2>Vantaggi di qak nel Colmare l’Abstraction Gap<a class="headerlink" href="#vantaggi-di-qak-nel-colmare-l-abstraction-gap" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Astrazione Elevata e Semantica Ricca:</strong>
+qak consente di esprimere in modo compatto le componenti e le interazioni di un sistema distribuito, evitando la scrittura di lunghi codici boilerplate in linguaggi come Java.</p></li>
+<li><p><strong>Prototipazione Rapida e Iterativa:</strong>
+Grazie alla Qak software factory, il modello viene automaticamente tradotto in codice (tipicamente Kotlin) e altre risorse, accelerando la fase di prototipazione e riducendo gli errori.</p></li>
+<li><p><strong>Integrazione con Infrastrutture Esistenti:</strong>
+La Qak infrastructure gestisce aspetti come la comunicazione, il dispatch dei messaggi e l’interazione tra attori, colmando il divario tra il livello di astrazione del modello e l’implementazione concreta.</p></li>
+<li><p><strong>Adattamento ai Sistemi Distribuiti Moderni:</strong>
+La definizione esplicita di attori, contesti e transizioni facilita la progettazione di sistemi scalabili, manutenibili e reattivi, ideali per ambienti distribuiti e basati su microservizi.</p></li>
+</ul>
+</section>
+<section id="conclusioni">
+<h2>Conclusioni<a class="headerlink" href="#conclusioni" title="Permalink to this heading">¶</a></h2>
+<p>Il linguaggio qak, grazie alla sua natura DSL, permette di definire modelli eseguibili che rispecchiano il paradigma degli attori, semplificando la progettazione di sistemi distribuiti. La sua ricca espressività e l’automazione nella generazione del codice tramite la Qak software factory lo rendono uno strumento efficace per colmare il gap tra astrazione progettuale e implementazione concreta in ambienti basati su tecnologie come Java o Kotlin.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">RiassuntoChatGpt</a><ul>
+<li><a class="reference internal" href="#chiesto-a-chatgpt">Chiesto a ChatGpt</a></li>
+<li><a class="reference internal" href="#contesto-e-obiettivi-generali">Contesto e Obiettivi Generali</a></li>
+<li><a class="reference internal" href="#il-linguaggio-qak-caratteristiche-e-metamodello">Il Linguaggio qak: Caratteristiche e Metamodello</a></li>
+<li><a class="reference internal" href="#elementi-fondamentali-e-azioni-del-linguaggio-qak">Elementi Fondamentali e Azioni del Linguaggio qak</a></li>
+<li><a class="reference internal" href="#vantaggi-di-qak-nel-colmare-l-abstraction-gap">Vantaggi di qak nel Colmare l’Abstraction Gap</a></li>
+<li><a class="reference internal" href="#conclusioni">Conclusioni</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="MQTTConnection.html"
+                          title="previous chapter">MQTTConnection</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="MicroserviziEQak%28GPT%29.html"
+                          title="next chapter">MicroserviziEQak(GPT)</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/RiassuntoChatGpt.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="MicroserviziEQak%28GPT%29.html" title="MicroserviziEQak(GPT)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="MQTTConnection.html" title="MQTTConnection"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RiassuntoChatGpt</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

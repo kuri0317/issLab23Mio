@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Primipassioperativi25 &#8212; iss24 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PrimoprogettoJava25" href="PrimoprogettoJava25.html" />
+    <link rel="prev" title="RiferimentiBase" href="RiferimentiBase.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="PrimoprogettoJava25.html" title="PrimoprogettoJava25"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="RiferimentiBase.html" title="RiferimentiBase"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Primipassioperativi25</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="primipassioperativi25">
+<h1>Primipassioperativi25<a class="headerlink" href="#primipassioperativi25" title="Permalink to this heading">¶</a></h1>
+<section id="installare-su-pc">
+<h2>Installare su PC<a class="headerlink" href="#installare-su-pc" title="Permalink to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Installare <span class="blue">Java JDK 17</span> (e anche <span class="blue">Java JDK 11</span>) <em>Windows-&gt;Preferences-&gt;Java-&gt;InstalledJRE</em></p></li>
+<li><p>Installare <span class="blue">GIT</span> e un Git repository <span class="brown">PERSONALE PRIVATO</span> e <strong>dare accesso al docente</strong></p></li>
+<li><p>Installare <span class="blue">Gradle</span>  (8.4, 8.6)  (per accedere a <em>System Properties Advanced</em> su Windows: <code class="docutils literal notranslate"><span class="pre">sysdm.cpl</span></code>)</p></li>
+<li><p>Installare <span class="blue">Docker</span> e provare <a class="reference external" href="_static/mosquittoOnly.yml">mosquittoOnly.yml</a></p></li>
+<li><p>Installare  <span class="blue">Eclipse IDE</span>: <a class="reference external" href="https://www.eclipse.org/downloads/packages/">Eclipse IDE for Java and DSL Developers</a> (2024 12)</p></li>
+<li><p>Installare <span class="blue">Python (3.9.13)</span> (usando Anaconda)</p></li>
+<li><p>Installare <span class="blue">IntelliJ</span></p></li>
+<li><p>Installare <span class="blue">Node.js</span></p></li>
+</ol>
+</section>
+<section id="clonare-il-sito-del-corso">
+<h2>Clonare il sito del corso<a class="headerlink" href="#clonare-il-sito-del-corso" title="Permalink to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Clonare <a class="reference external" href="https://github.com/anatali/issLab2025">https://github.com/anatali/issLab2025</a> in una directory vuota e.g. <code class="docutils literal notranslate"><span class="pre">C:/.../issLab25</span></code></p></li>
+<li><p>Compilare il <a class="reference external" href="_static/templateToFill.html">template</a> inserendo <strong>fotografia, email e numero di matricola</strong></p></li>
+</ol>
+</section>
+<section id="creazione-progetto-con-gradle">
+<h2>Creazione progetto con Gradle<a class="headerlink" href="#creazione-progetto-con-gradle" title="Permalink to this heading">¶</a></h2>
+<p>La costruzione di un sistema software non può oggi prescindere dall’uso di un <strong>IDE</strong> e di
+strumenti di come <a class="reference external" href="https://gradle.org/">Gradle</a>, uno strumento open source per automatizzare la costruzione (build) del software.</p>
+<p>Gradle è ormai uno standard di fatto in questo settore ed è interessante non solo in quanto
+strumento, ma anche perchè applica i principi del <a class="reference external" href="https://it.wikipedia.org/wiki/Domain-driven_design">Domain Driven Design</a> (<strong>DDD</strong>)
+per modellare il suo proprio  domain-building software.</p>
+<p>Ne consegue che non poco tempo deve essere dedicato allo studio di questi tools e
+alla preparazione del file <code class="docutils literal notranslate"><span class="pre">build.gradle</span></code> che governa lo sviluppo e il deployment
+del sistema software.</p>
+<p>Le rete offfre numerosi tutorial su Gradle, come ad esempio:
+<a class="reference external" href="https://tomgregory.com/gradle/gradle-tutorial-for-complete-beginners/">https://tomgregory.com/gradle/gradle-tutorial-for-complete-beginners/</a>
+(anche in <a class="reference external" href="_static/GradleTutorialForCompleteBeginners.pdf">gradle-tutorial</a>)</p>
+</section>
+<section id="eclipse-e-gradle">
+<h2>Eclipse e Gradle<a class="headerlink" href="#eclipse-e-gradle" title="Permalink to this heading">¶</a></h2>
+<p>Per usare Eclipse insieme a Gradle, potrebbe essere necessario eseguire i seguenti passi (Grazie a <em>Stefano Arasi</em>):</p>
+<ol class="arabic simple">
+<li><p>Help-&gt;Eclipse MarketPlace</p></li>
+<li><p>Search “Gradle”</p></li>
+<li><p>Go to “BuildShop Gradle Integration 3.0” (the elephant) which is indicated as installed and
+clic on the grayed installed button.</p></li>
+<li><p>Either click on update or uninstall and reinstall it, this will restart eclipse.</p></li>
+</ol>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Primipassioperativi25</a><ul>
+<li><a class="reference internal" href="#installare-su-pc">Installare su PC</a></li>
+<li><a class="reference internal" href="#clonare-il-sito-del-corso">Clonare il sito del corso</a></li>
+<li><a class="reference internal" href="#creazione-progetto-con-gradle">Creazione progetto con Gradle</a></li>
+<li><a class="reference internal" href="#eclipse-e-gradle">Eclipse e Gradle</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="RiferimentiBase.html"
+                          title="previous chapter">RiferimentiBase</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="PrimoprogettoJava25.html"
+                          title="next chapter">PrimoprogettoJava25</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Primipassioperativi25.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="PrimoprogettoJava25.html" title="PrimoprogettoJava25"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="RiferimentiBase.html" title="RiferimentiBase"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Primipassioperativi25</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2024, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

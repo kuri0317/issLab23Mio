@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Microservizi &#8212; iss24 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cargosystem25" href="cargosystem25.html" />
+    <link rel="prev" title="Studenti2025" href="Studenti2025.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="cargosystem25.html" title="cargosystem25"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Studenti2025.html" title="Studenti2025"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Microservizi</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="microservizi">
+<h1>Microservizi<a class="headerlink" href="#microservizi" title="Permalink to this heading">¶</a></h1>
+<p>L’architettura a microservizi rappresenta l’apice di un’evoluzione (<a class="reference external" href="./_static/msoIEEE.pdf">mshistory</a>) che ha visto i sistemi informatici
+trasformarsi da semplici programmi a complicate infrastrutture distribuite.
+Le principali tappe che hanno segnato questo cambiamento possono essere visualizzate come segue:</p>
+<a class="reference internal image-reference" href="_images/microservices.jpg"><img alt="_images/microservices.jpg" class="align-left" src="_images/microservices.jpg" style="width: 100%;" /></a>
+<hr class="docutils" />
+<p>Le motivazioni che spingono le aziende industriali verso i microservizi sono molteplici e spesso legate alla
+necessità di gestire sistemi complessi e scalabili, migliorare la resilienza, accelerare l’innovazione,
+e supportare la trasformazione digitale.</p>
+<section id="motivazioni-all-uso-dei-microservizi">
+<h2>Motivazioni all’uso dei microservizi<a class="headerlink" href="#motivazioni-all-uso-dei-microservizi" title="Permalink to this heading">¶</a></h2>
+<p>L’architettura a microservizi offre la flessibilità necessaria
+per rispondere a queste sfide, permettendo alle aziende di adattarsi più facilmente alle evoluzioni
+del mercato e alle esigenze operative.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Motivazione</p></th>
+<th class="head"><p>Descrizione</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Scalabilità</p></td>
+<td><p>Permette di scalare specifici servizi in base alla domanda, ottimizzando le risorse.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Manutenibilità</p></td>
+<td><p>Ogni servizio è indipendente, facilitando aggiornamenti e manutenzione senza impatti globali.</p></td>
+</tr>
+<tr class="row-even"><td><p>Resilienza</p></td>
+<td><p>I guasti di un microservizio non compromettono l’intero sistema, migliorando l’affidabilità.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Deployment Continuo</p></td>
+<td><p>Consente di implementare nuove funzionalità senza downtime, grazie a CI/CD.</p></td>
+</tr>
+<tr class="row-even"><td><p>Flessibilità Tecnologica</p></td>
+<td><p>Permette l’uso di linguaggi e tecnologie differenti per ogni microservizio.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Efficienza Operativa</p></td>
+<td><p>Riduce i tempi di sviluppo e rilascio grazie alla modularità e all’automazione.</p></td>
+</tr>
+<tr class="row-even"><td><p>Integrazione con IoT e Big Data</p></td>
+<td><p>Facilita l’integrazione con sensori industriali e analisi dati avanzate.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Motivazione</p></th>
+<th class="head"><p>Descrizione</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="slide4">Scalabilità e Prestazioni</span></p></td>
+<td><p>Le aziende industriali spesso gestiscono sistemi di produzione e automazione che richiedono una scalabilità elevata per supportare un numero crescente di sensori, macchine, impianti o clienti. L’architettura monolitica può diventare inefficiente quando i sistemi crescono in termini di carico e complessità.</p>
+<p><span class="blue">Microservizi</span>: Permettono di scalare singoli componenti (servizi) indipendentemente, senza dover scalare l’intera applicazione. Ciò è utile quando alcuni servizi, come l’elaborazione dei dati dei sensori o l’analisi in tempo reale, richiedono più risorse rispetto ad altri. Questo riduce i costi e ottimizza l’uso delle risorse.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide4">Manutenibilità e Aggiornamento</span></p></td>
+<td><p>I sistemi industriali tendono a diventare molto complessi e possono richiedere aggiornamenti continui per adattarsi a nuove tecnologie o standard di settore. La manutenzione di una grande applicazione monolitica può essere difficile e costosa, con rischi di downtime elevati.</p>
+<p><span class="blue">Microservizi</span>: Consentono di aggiornare e mantenere singoli componenti senza interrompere l’intero sistema. Le aziende possono effettuare modifiche e aggiornamenti a singoli servizi in maniera più rapida e con minori rischi, migliorando la produttività e riducendo il rischio di guasti durante gli aggiornamenti.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="slide4">Sviluppo autonomo e Time-to-Market</span></p></td>
+<td><p>In ambito industriale, le aziende spesso necessitano di sviluppare nuove funzionalità in tempi rapidi per rispondere a nuove richieste del mercato, integrare nuovi macchinari o tecnologie, o offrire nuove soluzioni ai clienti. Gli approcci monolitici rallentano lo sviluppo perché richiedono la coordinazione tra più team su un’unica base di codice.</p>
+<p><span class="blue">Microservizi</span>: Permettono ai team di sviluppo di lavorare in parallelo su servizi separati, con cicli di sviluppo indipendenti. Questo riduce i tempi di rilascio delle nuove funzionalità, migliorando il time-to-market delle innovazioni, e consente alle aziende di rispondere più rapidamente alle esigenze del settore.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide4">Flessibilità Tecnologica</span></p></td>
+<td><p>Le aziende industriali spesso utilizzano una vasta gamma di tecnologie e strumenti, che vanno dai sistemi legacy agli impianti moderni basati su IoT (Internet of Things) o AI. Una singola tecnologia o piattaforma potrebbe non essere adatta per tutti i casi d’uso.</p>
+<p><span class="blue">Microservizi</span>: Consentono di utilizzare diversi stack tecnologici per servizi diversi, permettendo alle aziende di scegliere la tecnologia più adatta per ogni componente del sistema. Questo offre una grande flessibilità e consente di integrare più facilmente nuovi strumenti o tecnologie all’interno dell’architettura aziendale.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="slide4">Resilienza e Tolleranza ai Guasti</span></p></td>
+<td><p>Le aziende industriali richiedono un’alta affidabilità nei loro sistemi, poiché anche brevi interruzioni nei processi produttivi possono causare perdite significative. In un’applicazione monolitica, un errore in un singolo componente può bloccare l’intero sistema.</p>
+<p><span class="blue">Microservizi</span>: Migliorano la resilienza poiché i servizi sono isolati e l’errore di un singolo servizio non comporta necessariamente il fallimento dell’intero sistema. Questo approccio permette di costruire architetture più robuste e con capacità di recupero automatico (self-healing), minimizzando l’impatto di eventuali guasti.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide4">Supporto per la Digital Transformation</span></p></td>
+<td><p>La trasformazione digitale è una priorità per molte aziende industriali, che puntano a modernizzare i loro impianti e processi tramite automazione, IoT, AI e analisi avanzata dei dati. Un’architettura monolitica può essere difficile da adattare a queste esigenze, limitando l’integrazione di nuove tecnologie.</p>
+<p><span class="blue">Microservizi</span>: Facilitano l’integrazione di nuovi paradigmi tecnologici come l’IoT, l’Industria 4.0 e la manutenzione predittiva. Offrono un’architettura flessibile per gestire grandi quantità di dati in tempo reale e permettono alle aziende di implementare strategie di trasformazione digitale in modo più efficace.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="slide4">Facilità di Deployment e Automazione</span></p></td>
+<td><p>L’automazione e il deployment continuo sono fondamentali per aziende che gestiscono complessi sistemi produttivi distribuiti in diverse località. La configurazione e il deployment di una grande applicazione monolitica possono essere lenti e complessi.</p>
+<p><span class="blue">Microservizi</span>: Si adattano bene agli approcci DevOps e CI/CD (Continuous Integration/Continuous Deployment). Permettono di automatizzare il deployment di singoli servizi e di gestire in modo efficiente l’infrastruttura distribuita tramite container e orchestratori come Docker e Kubernetes. Ciò accelera il rilascio di nuove versioni e migliora l’efficienza operativa.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide4">Conformità e Regolamentazioni</span></p></td>
+<td><p>Le industrie devono spesso rispettare normative complesse (es. norme di sicurezza o ambientali) che possono variare a seconda della regione o del mercato. L’aggiornamento di un’applicazione monolitica per garantire la conformità in più giurisdizioni può essere difficile e rischioso.</p>
+<p><span class="blue">Microservizi</span>: Consentono alle aziende di implementare logiche di conformità e requisiti regolatori specifici solo nei servizi necessari, senza dover modificare l’intero sistema. Questo facilita l’adattamento delle applicazioni alle normative locali e alle regole settoriali.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="slide4">Monitoraggio e Analisi in Tempo Reale</span></p></td>
+<td><p>Il monitoraggio in tempo reale è cruciale per le aziende industriali che gestiscono processi produttivi, dove il rilevamento immediato di guasti o inefficienze può prevenire danni o interruzioni.</p>
+<p><span class="blue">Microservizi</span>: Facilitano il monitoraggio dettagliato di ogni servizio e componente, offrendo una maggiore visibilità sui processi. I microservizi possono essere monitorati in modo indipendente, permettendo di analizzare i problemi in tempo reale e migliorare le prestazioni del sistema globale.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide4">Gestione delle Dipendenze e Interoperabilità</span></p></td>
+<td><p>In ambito industriale, le applicazioni devono spesso integrarsi con una varietà di sistemi legacy, impianti di produzione, robotica, sensori e strumenti di terze parti. Integrare queste dipendenze in un’applicazione monolitica può essere complesso e richiede un approccio monolitico pesante.</p>
+<p><span class="blue">Microservizi</span>: Ogni servizio può gestire la propria integrazione con strumenti e tecnologie specifiche, riducendo la complessità e migliorando l’interoperabilità tra sistemi diversi. L’uso di API ben definite facilita l’integrazione e la comunicazione tra i vari componenti.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="problematiche-dei-microservizi">
+<h2>Problematiche dei microservizi<a class="headerlink" href="#problematiche-dei-microservizi" title="Permalink to this heading">¶</a></h2>
+<p>I microservizi ntroducono anche diverse problematiche e sfide rispetto all’approccio monolitico tradizionale basato su POJO.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Problematica</p></th>
+<th class="head"><p>Descrizione</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="slide4">Gestione della complessità</span></p></td>
+<td><ul class="simple">
+<li><p>Con i POJO (monolitico): In un’architettura monolitica, tutti i componenti risiedono nello stesso processo, il che semplifica la gestione della complessità interna. Le interazioni tra oggetti e componenti avvengono attraverso semplici chiamate di metodo e la gestione degli errori è più lineare.</p></li>
+<li><p>Con i microservizi: La complessità aumenta perché ogni microservizio è un’entità separata, e la comunicazione tra loro deve avvenire tramite chiamate di rete (HTTP, gRPC, messaggistica, ecc.). Questo introduce problemi di latenza, gestione degli errori distribuiti e coordinamento delle dipendenze tra i servizi.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide4">Comunicazione distribuita</span></p></td>
+<td><ul class="simple">
+<li><p>Con i POJO: Le interazioni tra i componenti avvengono tramite invocazioni di metodi locali, che sono rapide e sicure, senza il rischio di fallimenti di rete.</p></li>
+<li><p>Con i microservizi: La comunicazione tra i microservizi avviene tramite la rete, il che comporta latenza, errori di rete, timeout, e problematiche legate alla serializzazione/deserializzazione dei dati. Questo richiede anche la gestione delle API e protocolli di comunicazione, introducendo ulteriori livelli di complessità. Inoltre, è necessario implementare meccanismi di retry, circuit breaker, e gestione delle fallimenti parziali.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="slide4">Consistenza dei dati</span></p></td>
+<td><ul class="simple">
+<li><p>Con i POJO: I dati sono gestiti in un database comune all’interno di un’applicazione monolitica. È possibile garantire consistenza transazionale in modo relativamente semplice utilizzando transazioni ACID.</p></li>
+<li><p>Con i microservizi: Ogni microservizio potrebbe avere il proprio database, il che rende difficile garantire la consistenza transazionale globale (es. le transazioni distribuite). I microservizi spesso adottano modelli di consistenza eventuale attraverso la propagazione asincrona degli eventi o l’uso di saghe. Questo introduce complessità nella gestione dei dati e nella coerenza dei sistemi.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide4">Gestione delle dipendenze e orchestrazione</span></p></td>
+<td><ul class="simple">
+<li><p>Con i POJO: Tutte le classi e i componenti risiedono nello stesso ambiente di runtime, e le dipendenze tra di loro possono essere gestite attraverso un gestore delle dipendenze (come Maven o Gradle).</p></li>
+<li><p>Con i microservizi: Ogni microservizio è un’entità separata con le sue dipendenze. Questo può portare a problemi di compatibilità delle versioni tra servizi diversi. Inoltre, è necessario un sistema di orchestrazione per coordinare l’avvio, lo scaling, la gestione e l’aggiornamento di tutti i servizi, spesso con l’aiuto di strumenti come Kubernetes o Docker.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="slide4">Gestione dello stato</span></p></td>
+<td><ul class="simple">
+<li><p>Con i POJO: Lo stato viene gestito in memoria o attraverso il database centralizzato, ed è facile mantenere lo stato condiviso tra diversi componenti dell’applicazione.</p></li>
+<li><p>Con i microservizi: I microservizi dovrebbero essere stateless o mantenere uno stato isolato, poiché la gestione dello stato distribuito è complessa. Se un microservizio ha bisogno di gestire lo stato, deve fare affidamento su sistemi di storage distribuito o cache distribuita, il che introduce ulteriori complessità e sfide nella coerenza dello stato.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide4">Deployment e monitoraggio</span></p></td>
+<td><ul class="simple">
+<li><p>Con i POJO: In un’applicazione monolitica, il deployment è semplice: si distribuisce un singolo artefatto (es. un file .war o .jar) su un server. Il monitoraggio è anch’esso più semplice perché tutte le informazioni sullo stato del sistema sono in un unico posto.</p></li>
+<li><p>Con i microservizi: Ogni microservizio ha il proprio ciclo di vita di deployment e potrebbe essere distribuito indipendentemente. Questo richiede orchestrazione automatizzata, gestione delle versioni e coordinamento per evitare downtime. Inoltre, il monitoraggio diventa più complesso: è necessario tracciare il comportamento di ciascun microservizio, le loro dipendenze e le interazioni tra loro, spesso utilizzando strumenti come Prometheus, ELK stack o Jaeger per il tracing distribuito.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="slide4">Gestione degli errori e tolleranza ai guasti</span></p></td>
+<td><ul class="simple">
+<li><p>Con i POJO: Gli errori e le eccezioni possono essere gestiti in modo centralizzato, e in un ambiente monolitico è più facile fare rollback completo o ripristinare uno stato coerente in caso di guasti.</p></li>
+<li><p>Con i microservizi: Gli errori possono verificarsi in punti diversi del sistema, e devono essere gestiti a livello di ogni microservizio. Il fallimento di un servizio può non impattare l’intero sistema, ma i fallimenti parziali (ad es. un servizio chiave che non risponde) devono essere gestiti attentamente per evitare che il sistema vada in crash o degradi le performance. Tecniche come il circuit breaker, bulkhead pattern e retry sono essenziali per garantire la resilienza dell’architettura.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide4">Test e debugging</span></p></td>
+<td><ul class="simple">
+<li><p>Con i POJO: Il testing di un’applicazione monolitica è relativamente semplice. Si possono eseguire test unitari e di integrazione sull’intero sistema in un unico ambiente. Il debugging è diretto, poiché tutte le classi e i componenti sono parte dello stesso processo.</p></li>
+<li><p>Con i microservizi: Il testing diventa più complicato, poiché è necessario testare non solo i singoli servizi (test unitari) ma anche le interazioni tra di essi (test di integrazione e contratti). Il debugging di un sistema distribuito è molto più difficile a causa della natura asincrona e della comunicazione tra processi separati. Tecniche come il contract testing e l’uso di strumenti di tracing distribuito diventano fondamentali.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><span class="slide4">Sicurezza</span></p></td>
+<td><ul class="simple">
+<li><p>Con i POJO: La sicurezza può essere gestita a livello di applicazione centralizzata, utilizzando autenticazione e autorizzazione in un unico punto.</p></li>
+<li><p>Con i microservizi: Ogni microservizio potrebbe richiedere un proprio sistema di sicurezza, o deve integrarsi in un framework di sicurezza distribuito (ad es. OAuth, JWT). Questo introduce complessità nella gestione delle credenziali, autenticazione tra microservizi, e nella protezione dei dati durante le comunicazioni. La gestione della sicurezza deve essere implementata in maniera consistente su tutti i servizi.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide4">Sovraccarico infrastrutturale</span></p></td>
+<td><ul class="simple">
+<li><p>Con i POJO: Le risorse di calcolo, memoria e archiviazione sono generalmente centralizzate in un’unica applicazione. La gestione delle risorse è relativamente semplice, poiché tutte le componenti condividono lo stesso ambiente.</p></li>
+<li><p>Con i microservizi: Ogni microservizio richiede un proprio ambiente di esecuzione, che può comportare un aumento significativo del carico infrastrutturale. Ad esempio, potrebbero essere necessari più container, database separati, logging distribuito e capacità di gestione delle risorse. Questo può aumentare i costi operativi e richiede un’architettura cloud ben progettata per scalare in modo efficiente.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="progettazione-dei-microservizi">
+<h2>Progettazione dei microservizi<a class="headerlink" href="#progettazione-dei-microservizi" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Richardson: <a class="reference external" href="https://microservices.io/index.html">https://microservices.io/index.html</a></p></li>
+<li><p>Richardson Understanding Microservices (si veda il video):
+<a class="reference external" href="https://microservices.io/microservices/2020/02/04/jfokus-geometry-of-microservices.html">https://microservices.io/microservices/2020/02/04/jfokus-geometry-of-microservices.html</a></p></li>
+<li><p>Richardson Microservice architecture patern languages: <a class="reference external" href="https://microservices.io/patterns/index.html">https://microservices.io/patterns/index.html</a></p></li>
+<li><p>Richardson Decomposizione per sottodominio: <a class="reference external" href="https://microservices.io/patterns/decomposition/decompose-by-subdomain.html">https://microservices.io/patterns/decomposition/decompose-by-subdomain.html</a> :</p></li>
+<li><p>Richardson Microservice Architecture: <a class="reference external" href="https://microservices.io/patterns/microservices.html">https://microservices.io/patterns/microservices.html</a> :</p></li>
+<li><p>Api Gateway, Service Discovery, Circuit Breaker, Event Sourcing, CQRS, Saga, etc.</p></li>
+<li><p>Il concetto di <span class="blue">aggregator</span>. Un possibile riferimento
+<a class="reference external" href="https://medium.com/nerd-for-tech/design-patterns-for-microservices-aggregator-pattern-99c122ac6b73">https://medium.com/nerd-for-tech/design-patterns-for-microservices-aggregator-pattern-99c122ac6b73</a></p></li>
+</ul>
+<section id="tematche-sul-progetto-dei-microservizi">
+<h3>Tematche sul progetto dei microservizi<a class="headerlink" href="#tematche-sul-progetto-dei-microservizi" title="Permalink to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>API Gateway</p></li>
+<li><p>Service catalogs and orhestrators</p></li>
+<li><p>Microservices aggregators</p></li>
+<li><p>Microservices patterns (MicroservicePatternLanguage.pdf Richardson)</p></li>
+<li><p>Circuit Breaker</p></li>
+<li><p>Service Discovery</p></li>
+<li><p>Load Balancing</p></li>
+<li><p>Bulkhead Pattern</p></li>
+<li><p>Retry</p></li>
+<li><p>Saga Pattern</p></li>
+<li><p>Event Sourcing</p></li>
+<li><p>CQRS</p></li>
+<li><p>Distributed Tracing</p></li>
+<li><p>Monitoring and Logging</p></li>
+<li><p>Security</p></li>
+<li><p>Deployment Automation</p></li>
+<li><p>Testing Strategies</p></li>
+<li><p>Continuous Integration/Continuous Deployment (CI/CD)</p></li>
+<li><p>DevOps Culture</p></li>
+</ol>
+</section>
+</section>
+<section id="nanoservizi">
+<h2>Nanoservizi<a class="headerlink" href="#nanoservizi" title="Permalink to this heading">¶</a></h2>
+<p>Un nanoservizio rappresenta un’evoluzione più radicale del concetto di microservizio. La differenza principale sta nella granularità. Un nanoservizio è ancora più piccolo e svolge un compito molto più specifico di un microservizio. Spesso si occupa di un’unica operazione o di una singola responsabilità molto limitata.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Caratteristica</p></th>
+<th class="head"><p>Descrizione</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="slide4">Responsabilità limitatissima</span></p></td>
+<td><p>Un nanoservizio è progettato per svolgere un singolo compito atomico, come la convalida di un campo di input, la gestione di una richiesta HTTP o l’invio di una singola notifica.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide4">Dimensioni ridotte</span></p></td>
+<td><p>Il codice e la logica di un nanoservizio sono minimi, riducendo la complessità e rendendoli facilmente manutenibili, ma solo in contesti molto specifici.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="slide4">Estrema modularità</span></p></td>
+<td><p>I nanoservizi portano all’estremo la filosofia della modularità e della separazione delle responsabilità.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide4">Sovraccarico di comunicazione</span></p></td>
+<td><p>Poiché i nanoservizi sono estremamente piccoli, richiedono molta più comunicazione tra loro rispetto ai microservizi, il che può aumentare il traffico di rete e la latenza.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="slide4">Manutenzione e distribuzione complicata</span></p></td>
+<td><p>Sebbene siano facili da manutenere, la distribuzione e l’orchestrazione di una vasta quantità di nanoservizi può diventare molto complessa.</p></td>
+</tr>
+</tbody>
+</table>
+<p>I Nanoservizi:</p>
+<ul class="simple">
+<li><p>Potrebbero essere usati in contesti in cui si vogliono implementare operazioni estremamente semplici e modulari, ad esempio in un’architettura serverless.</p></li>
+<li><p>Si adattano bene quando si ha bisogno di risposte rapide a eventi specifici, come la convalida di campi o la gestione di eventi atomici.</p></li>
+<li><p>La loro complessità di gestione (soprattutto in fase di orchestrazione e comunicazione) li rende meno adatti a progetti di grandi dimensioni o in team più tradizionali.</p></li>
+<li><p>Possono essere utili per i dispositivi IoT edge, ovvero dispositivi con capacità limitate o che devono operare in ambienti con poche risorse (ad esempio, dispositivi a bassa potenza, sensori remoti, ecc.). minimizzando il carico di elaborazione, permettendo operazioni più mirate ed efficienti.</p></li>
+</ul>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Microservizi</a><ul>
+<li><a class="reference internal" href="#motivazioni-all-uso-dei-microservizi">Motivazioni all’uso dei microservizi</a></li>
+<li><a class="reference internal" href="#problematiche-dei-microservizi">Problematiche dei microservizi</a></li>
+<li><a class="reference internal" href="#progettazione-dei-microservizi">Progettazione dei microservizi</a><ul>
+<li><a class="reference internal" href="#tematche-sul-progetto-dei-microservizi">Tematche sul progetto dei microservizi</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nanoservizi">Nanoservizi</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="Studenti2025.html"
+                          title="previous chapter">Studenti2025</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="cargosystem25.html"
+                          title="next chapter">cargosystem25</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Microservizi.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="cargosystem25.html" title="cargosystem25"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Studenti2025.html" title="Studenti2025"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Microservizi</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2024, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

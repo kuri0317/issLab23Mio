@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>MicroserviziEQak(AI) &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="History" href="History.html" />
+    <link rel="prev" title="RiassuntoAI" href="RiassuntoAI.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="History.html" title="History"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="RiassuntoAI.html" title="RiassuntoAI"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">MicroserviziEQak(AI)</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="microservizieqak-ai">
+<h1>MicroserviziEQak(AI)<a class="headerlink" href="#microservizieqak-ai" title="Permalink to this heading">¶</a></h1>
+<p><span class="slide2">Chiesto a Google NotebookLM</span>
+Vorrei sapere se gli attori Qak possono essere un utile supporto alla progettazione e sviluppo di sistemi a microservizi e perchè.</p>
+<section id="gli-attori-qak-come-supporto-alla-progettazione-e-sviluppo-di-sistemi-a-microservizi">
+<h2>Gli attori Qak come supporto alla progettazione e sviluppo di sistemi a microservizi<a class="headerlink" href="#gli-attori-qak-come-supporto-alla-progettazione-e-sviluppo-di-sistemi-a-microservizi" title="Permalink to this heading">¶</a></h2>
+<p>Sì, gli attori Qak possono essere un utile supporto alla progettazione e sviluppo di sistemi a microservizi,
+e ci sono diverse ragioni per questo, basate sulle informazioni presenti nelle fonti:</p>
+<p><span class="blue">Specificamente progettato per sistemi distribuiti</span>: Il linguaggio Qak è inteso come un linguaggio di modellazione eseguibile da utilizzare durante l’analisi e la progettazione di prototipi di sistemi distribuiti, i cui componenti sono attori che si comportano come automi a stati finiti, in stretta relazione con l’idea di sistemi basati su microservizi. Questo indica che Qak è concettualmente allineato con l’architettura a microservizi.</p>
+<p><span class="blue">Modello ad attori</span>: I sistemi Qak sono composti da una collezione di attori, che sono entità autonome capaci di elaborare messaggi. Un attore Qak è un componente attivo con un nome univoco, dotato di un flusso di controllo autonomo, in grado di inviare messaggi ad altri attori (anche a se stesso), eseguire elaborazioni e gestire una propria coda di messaggi. Queste caratteristiche rispecchiano i principi fondamentali dei microservizi: indipendenza, comunicazione tramite messaggi e gestione autonoma.</p>
+<p><span class="blue">Comunicazione via messaggi</span>: Gli attori Qak interagiscono scambiandosi messaggi (di tipo IApplMessage). Questa è una caratteristica chiave dei sistemi a microservizi, dove i diversi servizi comunicano tipicamente in modo asincrono tramite messaggi per garantire l’isolamento e la resilienza.</p>
+<p><span class="blue">Raggruppamento in contesti</span>: Gli attori sono raggruppati in contesti che li abilitano alle interazioni via rete. Un contesto gestisce più attori e permette loro di ricevere e trasmettere messaggi tramite rete, spesso basandosi su protocolli come TCP, CoAP e MQTT. I contesti possono essere allocati su uno o più nodi computazionali, fisici o virtuali, il che si adatta bene al deployment distribuito dei microservizi.</p>
+<p><span class="blue">Software Factory e generazione di codice</span>: L’uso della Qak software factory e del linguaggio Qak rende lo sviluppo dei sistemi più rapido, comprensibile e gestibile. La factory genera il codice necessario per mappare i concetti di alto livello del modello in strutture eseguibili, appoggiandosi a librerie di utilità application-independent. Questo approccio basato su modelli può semplificare notevolmente la creazione e la manutenzione di sistemi complessi come quelli a microservizi.</p>
+<p><span class="blue">Supporto per diversi protocolli di comunicazione</span>: L’infrastruttura Qak si appoggia a librerie che implementano il concetto di Interaction per diversi protocolli (TCP, UDP, CoAP, MQTT). Ciò fornisce la flessibilità necessaria per far comunicare i diversi “microservizi” implementati come attori Qak utilizzando i protocolli più appropriati per le loro esigenze. Gli esempi di interazioni MQTT tra attori lo dimostrano chiaramente.</p>
+<p><span class="blue">Gestione di componenti esterni</span>: La possibilità di dichiarare attori esterni (ExternalQActor) permette di integrare nel sistema Qak componenti che fanno parte di altri contesti o che non sono definiti nel modello corrente. Questo è analogo a come un sistema a microservizi può interagire con altri servizi sviluppati e gestiti indipendentemente.</p>
+<p>In sintesi, Qak offre un modello di programmazione e un linguaggio che si sposano bene con i principi dell’architettura a microservizi, fornendo astrazioni per la creazione di componenti indipendenti, comunicanti tramite messaggi e distribuibili su diverse piattaforme. L’approccio basato sulla modellazione e la generazione di codice può inoltre accelerare e semplificare lo sviluppo di tali sistemi.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">MicroserviziEQak(AI)</a><ul>
+<li><a class="reference internal" href="#gli-attori-qak-come-supporto-alla-progettazione-e-sviluppo-di-sistemi-a-microservizi">Gli attori Qak come supporto alla progettazione e sviluppo di sistemi a microservizi</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="RiassuntoAI.html"
+                          title="previous chapter">RiassuntoAI</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="History.html"
+                          title="next chapter">History</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/MicroserviziEQak(AI).rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="History.html" title="History"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="RiassuntoAI.html" title="RiassuntoAI"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">MicroserviziEQak(AI)</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

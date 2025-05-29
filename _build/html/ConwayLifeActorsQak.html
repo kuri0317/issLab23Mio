@@ -1,0 +1,404 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>ConwayLifeActorsQak &#8212; iss24 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ConwayCellDistributedQak" href="ConwayCellDistributedQak.html" />
+    <link rel="prev" title="QakActors25Demo" href="QakActors25Demo.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ConwayCellDistributedQak.html" title="ConwayCellDistributedQak"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="QakActors25Demo.html" title="QakActors25Demo"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ConwayLifeActorsQak</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="conwaylifeactorsqak">
+<h1>ConwayLifeActorsQak<a class="headerlink" href="#conwaylifeactorsqak" title="Permalink to this heading">¶</a></h1>
+<p>Qui si descrive come realizzare il gioco della vita di Conway <span class="remark">rappresentando anche le celle come attori Qak</span>.</p>
+<p>Questa può sembrare una inutile complicazione, ma vi alcuni validi motivi per proedere in questo senso:</p>
+<ol class="arabic simple">
+<li><p><span class="slide3">l’:analisi e la progettazione dei sistemi distribuiti</span>
+(si veda <a class="reference internal" href="ChiediAdAI.html#sistemi-distribuiti-e-microservizi-koltraka-kevin"><span class="std std-ref">Sistemi distribuiti e microservizi (Koltraka Kevin)</span></a>)
+è (molto) <strong>più complicata</strong> di quella dei sistemi
+centralizzati.  Pensare alle celle come attori introduce <span class="remark">nuove problematiche</span>, che ricorrrono quasi sempre
+anche nel caso di sistemi distribuiti e a microservizi.</p></li>
+<li><p>l’uso di <span class="slide3">modelli eseguibili del sistema</span> (Si veda: <a class="reference internal" href="QakActors25Intro.html#il-metamodello-qak"><span class="std std-ref">Il metamodello Qak</span></a>),
+prima in locale e poi nel distribuito, permette di ridurre i tempi della analisi e della progettazione
+e di testare le soluzioni proposte.</p></li>
+<li><p>In particolare, può essere difficile completare al primo colpo l’analisi di un problema complicato
+La possibilità di realizzare prototipi in tempi rapidi
+consente di capire meglio i requsiiti e il problema stesso, aprendo la via
+a uno sviluppo evolutivo e incrementale che può riguardare anche i requisiti e l’analisi del problema.</p></li>
+<li><p>L’esperienza maturata nel realizzare <em>ConwayLife a celle distribuite</em> può aiutarci a qualche riflessione
+su come si possono organizzare <strong>spettacoli con droni sincronizzati</strong> che formano figure (dinamiche) nel cielo notturno
+Si veda: <a class="reference internal" href="ChiediAdAI.html#non-droni-ma-led"><span class="std std-ref">Non droni ma Led</span></a></p></li>
+</ol>
+<section id="analisi-del-problema-lifeactorsqak">
+<h2>Analisi del problema LifeActorsQak<a class="headerlink" href="#analisi-del-problema-lifeactorsqak" title="Permalink to this heading">¶</a></h2>
+<p>Cominciamo con l’introduzione di alcune problematiche che si evidenziano subito.</p>
+<ol class="arabic simple">
+<li><p><span class="slide2">Vicinanza tra celle</span>: informazione  logica o relatova alla dislocazione fisica?</p></li>
+<li><p><span class="slide2">Numero delle celle</span>: chi lo stabilisce?</p></li>
+<li><p><span class="slide2">Scomparsa della struttura-dati grid</span>: corrisponde al superamento della ‘architettura monolitica’
+nel mondo a microservizi e implica comunicazioni via rete:</p>
+<ul class="simple">
+<li><p>lo stato delle ccelle limitrofe a una caella deve essere reso noto mediante messaggi</p></li>
+<li><p>il nuovo stato di una cella deve essere reso noto alle altre mediante messaggi; ma quando?</p></li>
+</ul>
+</li>
+<li><p><span class="slide2">Denominazione delle celle</span>:  come fa ciascuna cella-actor ad avere un nome univoco nel sistema?.
+Chi stabilisce questo nome? E con quale criterio?</p></li>
+<li><p><span class="slide2">Evoluzione delle epoch</span>: chi decide che una epoch è terminata e si può
+passare al calcolo della successiva?</p></li>
+<li><p><span class="slide2">Controllo del sistema</span>:  chi reagisce a comandi quali START/STOP/CLEAR della versione precedente?</p></li>
+</ol>
+<section id="iniziamo-dalla-cella">
+<h3>Iniziamo dalla cella<a class="headerlink" href="#iniziamo-dalla-cella" title="Permalink to this heading">¶</a></h3>
+<p>Cominciamo l’analisi focalizzando l’attenzione sulle celle.</p>
+<ol class="arabic">
+<li><p><span class="remark">I componenti</span>. Il sistema è composto da <code class="docutils literal notranslate"><span class="pre">NC=NRxNC</span></code> celle-actor.</p></li>
+<li><p><span class="remark">I nomi</span>. Ogni cella-actor deve avere nome univoco. La struttura del nome può essere definita in
+modo che ogni cella possa sapere, dato il suo nome, il nome delle celle limitrofe.
+Esempio di nome: <span class="slidekp">cell_X_Y</span>, con <code class="docutils literal notranslate"><span class="pre">0&lt;=X&lt;NR</span></code>, <code class="docutils literal notranslate"><span class="pre">0&lt;=Y&lt;NY</span></code>.</p></li>
+<li><p><span class="remark">Le dimensioni</span>. Pur essendo <code class="docutils literal notranslate"><span class="pre">NC</span></code> limitato, un valore di <code class="docutils literal notranslate"><span class="pre">NR</span></code> e <code class="docutils literal notranslate"><span class="pre">NC</span></code> troppo basso potrebbe rendere il gioco
+non significativo. Si possono proporre i seguenti valori:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NR=NC=3</span></code>  per un primo prototipo</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NR=NC=5</span></code>  per un secondo prototipo</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NR=NC=20</span></code> per un prototipo simile al caso concentrato</p></li>
+</ul>
+<p>I valori di  <code class="docutils literal notranslate"><span class="pre">NR</span></code> e <code class="docutils literal notranslate"><span class="pre">NC</span></code> andrebbero fissati in un file di configurazione del sistema</p>
+</li>
+<li><p><span class="remark">Le azioni</span>. Ogni cella-actor deve</p>
+<ul class="simple">
+<li><p>rendere visibile (comunicare?) il suo stato corrente alle celle limitrofe</p></li>
+<li><p>acquisire lo stato delle sue celle limitrofe</p></li>
+<li><p>calcolare il suo nuovo stato nella prossima <em>Epoch</em>, in base alle regole Conway</p></li>
+<li><p>ripetere le azioni precedenti dopo che la <em>Epoch</em> corrente si è stabilizzata</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="rendere-visibile-lo-stato-di-una-cella">
+<h3>Rendere visibile lo stato di una cella<a class="headerlink" href="#rendere-visibile-lo-stato-di-una-cella" title="Permalink to this heading">¶</a></h3>
+<p>Ci sono due possibilità:</p>
+<ol class="arabic simple">
+<li><p><span class="slide3">Comunazioni dirette</span>: la cella <code class="docutils literal notranslate"><span class="pre">C</span></code> comunica direttemente con le celle limitrofe.
+In questo caso occorre individuare il giusto tipo di messaggi e di interezione.</p></li>
+<li><p><span class="slide3">Risorse osservabilii</span>: la cella è una risorsa che rende osservabile il suo stato alle
+celle interessate. In questo caso, ci sono due pattern principale.</p>
+<ul class="simple">
+<li><p><span class="remark">Osservare Eventi`</span>: la cella <code class="docutils literal notranslate"><span class="pre">C</span></code> emette un evento che ha come payload il suo stato</p></li>
+<li><p><span class="remark">Pattern Observer distribuito`</span>: le celle limitrofe si ‘registrano’ come observer alla cella <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="acqusire-lo-stato-di-una-cella">
+<h3>Acqusire lo stato di una cella<a class="headerlink" href="#acqusire-lo-stato-di-una-cella" title="Permalink to this heading">¶</a></h3>
+<p>Questa problematica è legata alla precedente <a class="reference internal" href="#rendere-visibile-lo-stato-di-una-cella"><span class="std std-ref">Rendere visibile lo stato di una cella</span></a>.</p>
+</section>
+<section id="evoluzione-delle-epoch">
+<h3>Evoluzione delle Epoch<a class="headerlink" href="#evoluzione-delle-epoch" title="Permalink to this heading">¶</a></h3>
+<p>La evoluzione del gioco (in quanto risultato del comportamento di un  sistema distribuito)
+può essere ottenuto in due modi principali:</p>
+<ul class="simple">
+<li><p><span class="slide3">Coreografia</span>: le celle <strong>si coordinano</strong> in modo da sapere quando una Epoch è termiata e quindi
+quando poter inziare le azioni relative alla Epoch successiva</p></li>
+<li><p><span class="slide3">Orchestratore</span>: si introduce un <strong>orchestratore</strong>, una sorta di direttore di orchestra che ha
+la responsabilità di ‘dettare i tempi’, cioè di capire quando una Epoch è termiata e quando indicare alle
+celle che è possibile inziare le azioni per una Epoch successiva</p></li>
+<li><p>Evidenziamo la problematica di determinare quando una Epoch ha prodotto unno stato stabile del sistema
+e qundi quando una singola cella possa ripetere il calcolo-Conway del suo nuovo stato.</p></li>
+</ul>
+</section>
+<section id="controllare-il-sistema">
+<h3>Controllare il sistema<a class="headerlink" href="#controllare-il-sistema" title="Permalink to this heading">¶</a></h3>
+<p><span class="remark">Controllo del gioco</span>: Le celle non devono solo eseguire il gioco, ma devono essere anche sensibili
+a forme di controllo quali:</p>
+<ul class="simple">
+<li><p>modifica del valore corrente di stato (fase di <code class="docutils literal notranslate"><span class="pre">inizializzazione</span></code>, <code class="docutils literal notranslate"><span class="pre">CLEAR</span></code>)</p></li>
+<li><p>attivazione delle azioni (<code class="docutils literal notranslate"><span class="pre">START</span></code>)</p></li>
+<li><p>sospensione delle azioni (<code class="docutils literal notranslate"><span class="pre">STOP</span></code>)</p></li>
+<li><p>terminazione delle attività (<code class="docutils literal notranslate"><span class="pre">EXIT</span></code>)</p></li>
+</ul>
+<p>Queste forme di controollo nascono al di fuori del gioco e richedono che le celle siano sensibili
+a comandi provenienti dal mondo esterno ed emessi da un componente che possiamo denominare
+<code class="docutils literal notranslate"><span class="pre">gamecontroller</span></code>.</p>
+</section>
+<section id="costruzione-del-sistema">
+<h3>Costruzione del sistema<a class="headerlink" href="#costruzione-del-sistema" title="Permalink to this heading">¶</a></h3>
+<p>Le <code class="docutils literal notranslate"><span class="pre">NC=NRxNC</span></code> celle-actor possono essere create in due modi diversi:</p>
+<ul class="simple">
+<li><p><span class="remark">NC nodi reali</span>: ogni cella ‘nasce’ su un suo nodo di elaborazione fisico distinto, ad
+esempio su un PC o su un RaspberryPi. In questo seocndo caso un <strong>LED</strong> potrebbe indicare il valore
+corrente dello stato della cella</p></li>
+<li><p><span class="remark">NC nodi simuati</span>:  ogni cella ‘nasce’ all’interno di uno stesso nodo fisico di elaborazione
+come <strong>risorsa puramente logica</strong>. In questo caso la creazione del sistema può essere realizzara da
+un opportuno programma, con notevole risparmio di risorse.</p></li>
+</ul>
+<p>Quallo dei nodi simulati è l’approccio <span class="slide2">sicuramente più appropriato in fase di prima prototipazione</span>.
+Il codice delle celle-actor messo a punto in questa fase può
+poi essere riusato per impostare il caso dei nodi reali, con il vantaggio di essere
+già stato sperimentato e testato da un punto di vista logico.</p>
+</section>
+<section id="risultato-della-analisi">
+<h3>Risultato della analisi<a class="headerlink" href="#risultato-della-analisi" title="Permalink to this heading">¶</a></h3>
+<p>Come analisti del problema, osserviamo che</p>
+<ul class="simple">
+<li><p>occore pervenire in tempi rapidei alla realizzazione di un primo prototipo che
+permetta di interagire con il committente per l’assestamento dei requisiti.</p></li>
+<li><p>il sofware del primo prototipo dovrebbe essere organizzato in modo da poter essere
+la base per successive evoluzioni e perfezionamenti</p></li>
+<li><p>introdurre un orchestratore per gestire la evoluzione del gioco riduce la complessità
+del sistema rispetto all’approcio coreografato e introduce un componente che
+può essere usato anche come controller del gioco</p></li>
+<li><p>la scelta delle forme di comunicazione/interazione tra le celle richiede un approfondimento
+della analisi</p>
+</li>
+</ul>
+<p>Come analisiti, proponiamo di impostare un quindi di impostare un
+<span class="slide2">primo prototipo a nodi simulati</span> con i seguenti componenti (actor)</p>
+<ol class="arabic simple">
+<li><p>un  <code class="docutils literal notranslate"><span class="pre">gamebuilder</span></code> che abbia il compito di creare i nodi simulati</p></li>
+<li><p>un  <code class="docutils literal notranslate"><span class="pre">gamecmaster</span></code> che funga da orchestratore del gioco</p></li>
+<li><p>un  <code class="docutils literal notranslate"><span class="pre">gamecontroller</span></code> (eventualemente coincidente con il <code class="docutils literal notranslate"><span class="pre">gamecmaster</span></code>)
+che abbia la responsabilità di realizzare il controllo sul gioco</p></li>
+</ol>
+<p>Inoltre, sii ritiene opportuno:</p>
+<ol class="arabic simple">
+<li><p>definire inzialmente <code class="docutils literal notranslate"><span class="pre">NR=NC=3</span></code> e, dopo la fase di testing del primo
+prototipo, mostrare come si possa agenvolmente passare a valori più elevati del numero delle celle</p></li>
+<li><p>preparare un RaspberryPi - con un LED - che possa diventare il supporto di elaborazione per
+una cella che opera su un proprio nodo fisico</p></li>
+<li><p>capire come il prototipo realizzato possa evolvere verso un sistema
+di celle su nodi fisici.</p></li>
+</ol>
+</section>
+</section>
+<section id="il-punto-di-vista-di-una-cella">
+<h2>Il punto di vista di una cella<a class="headerlink" href="#il-punto-di-vista-di-una-cella" title="Permalink to this heading">¶</a></h2>
+<p>Mettiamo in luce la differenza tra il cosa e il come:</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 10%" />
+<col style="width: 45%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="slide2">======= COSA =======</span></p></td>
+<td><p>CELLA</p></td>
+<td><p><span class="slide2">======= COME =======</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Mi aspetto di:</p>
+<ol class="arabic simple">
+<li><p>ricevre informazini sullo stato delle celle limitrofe</p></li>
+<li><p>calcolare il mio nuovo stato</p></li>
+<li><p>comunicare il mio stato alle celle limitrofe</p></li>
+</ol>
+</td>
+<td></td>
+<td><p>Potrei:</p>
+<ol class="arabic simple">
+<li><p>percepire eventi o ricevere dispatch.  Usare <code class="docutils literal notranslate"><span class="pre">request-reply</span></code> in questa fase introduce traffico inutile</p></li>
+<li><p>eseguire le regole di Conway</p></li>
+<li><p>emettere eventi o inviare dispatch. Usare <code class="docutils literal notranslate"><span class="pre">request-reply</span></code> in questa fase introduce traffico inutile</p></li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+<section id="emitstreammqtt">
+<h3>emitstreammqtt<a class="headerlink" href="#emitstreammqtt" title="Permalink to this heading">¶</a></h3>
+<p>Per le comunicazioni tra celle,
+propendiamo per l’uso di eventi realizzati via MQTT mediante la operazione</p>
+<p><code class="docutils literal notranslate"><span class="pre">emitstreammqtt((topic:</span> <span class="pre">String,</span> <span class="pre">msgId</span> <span class="pre">:</span> <span class="pre">String,</span> <span class="pre">msg</span> <span class="pre">:</span> <span class="pre">String))</span></code></p>
+<p>che invia sulla topic indicata l’evento
+<code class="docutils literal notranslate"><span class="pre">msgId</span></code> con payload <code class="docutils literal notranslate"><span class="pre">msg</span></code> che contiene il vaore dello stato della cella.</p>
+<p>Il nome di questa (nuova) primitiva evoca l’idea che l’evento emesso non sia propagato a tutto
+il sistema, ma solo ai componenti (cell-actor) che si sono dichiarati interessati.</p>
+<p>Ogni cell-actor <strong>cell-X-Y</strong> dichiara il proprio interesse a ricevere eventi dalle celle limitrofe,
+facendo una <strong>subscribe</strong> alla topic che ha lo stasso nome di tali celle.
+Si veda <a class="reference internal" href="#subscribetoneighborsmqtt-myself-x-y"><span class="std std-ref">subscribeToNeighborsMqtt(myself,X,Y)</span></a>.</p>
+<p><span class="slide1">Prototipo in locale</span></p>
+<p>Premessa: <span class="slide3">Progetto  conwaycellsqaknaive</span>:</p>
+</section>
+</section>
+<section id="conwaycellsqaknaive">
+<h2>conwaycellsqaknaive<a class="headerlink" href="#conwaycellsqaknaive" title="Permalink to this heading">¶</a></h2>
+<p>Realizziamo un sistema di 4 celle-actor create dinamenicamente che resagiscono ai seguenti eventi:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Event</span> <span class="n">startthegame</span>  <span class="p">:</span> <span class="n">startthegame</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">Event</span>    <span class="n">synch</span>      <span class="p">:</span> <span class="n">synch</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>        <span class="o">//</span><span class="n">per</span> <span class="n">attivare</span> <span class="n">una</span> <span class="n">nuova</span> <span class="n">epoch</span> <span class="n">al</span> <span class="n">temine</span> <span class="n">della</span> <span class="n">precedente</span>
+<span class="n">Event</span>    <span class="n">stopthecell</span><span class="p">:</span> <span class="n">stopthecell</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="subscribetoneighborsmqtt-myself-x-y">
+<h3>subscribeToNeighborsMqtt(myself,X,Y)<a class="headerlink" href="#subscribetoneighborsmqtt-myself-x-y" title="Permalink to this heading">¶</a></h3>
+<p>Si noti il metodo <strong>subscribeToNeighborsMqtt(myself, X,Y)</strong> del supporto <a class="reference external" href="../../../../conwayactorsqak/src/conway/GridSupport25.kt">GridSupport25.kt</a>
+con cui una cella di nome cell_X_Y si registra via MQTT presso le sue celle limitrofe</p>
+<p>Finale:  <span class="slide3">Progetto  conwayactorsqak</span></p>
+</section>
+</section>
+<section id="conwayactorsqak">
+<h2>conwayactorsqak<a class="headerlink" href="#conwayactorsqak" title="Permalink to this heading">¶</a></h2>
+<p>Introduciamo un file di configurazione per le celle: <a class="reference external" href="../../../../conwayactorsqak/gridConfig.json">gridConfig.json</a> e i seguenti componenti del sistema</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gamebuilder</span></code></p></td>
+<td><p>attore che costruisce del gioco creando dinamicamente tanti player quente le <code class="docutils literal notranslate"><span class="pre">NC=NR*NC</span></code> celle in  <a class="reference external" href="../../../../conwayactorsqak/gridConfig.json">gridConfig.json</a>.</p>
+<p>Attende dei player la request <strong>addtogame</strong> di aggiungere una cella al gioco, rispondendo col nome
+logico della cella <code class="docutils literal notranslate"><span class="pre">cell_X_Y</span></code> seguendo l’idea una  matrice logica.</p>
+<p>Attende il dispacth <strong>cellecreated</strong> dalle celle che si creano man amano.</p>
+<p>Quando sono arrivati <code class="docutils literal notranslate"><span class="pre">NC</span></code> dispatch di avvenuta creazione, attiva il <code class="docutils literal notranslate"><span class="pre">gamemaster</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">player</span></code></p></td>
+<td><p>attore che chiede (<strong>addtogame</strong>) al gamebuilder di aggiungere al gioco una cella con nome random,
+ricevendone come risposta il nome logico <code class="docutils literal notranslate"><span class="pre">cell_X_Y</span></code> e poi crea la cella dinamicamente</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gamemaster</span></code></p></td>
+<td><p>orechestratore delle celle che viene attivato da <code class="docutils literal notranslate"><span class="pre">gamebuilder</span></code></p>
+<p>Attende  il dispach <code class="docutils literal notranslate"><span class="pre">start</span></code> dal <code class="docutils literal notranslate"><span class="pre">gamecontroller</span></code> (o da altri) e quando arriva,
+emette l’evento <code class="docutils literal notranslate"><span class="pre">startthegame</span></code> atteso dalle celle, che inziano la loro attività
+(dell-Epoch)
+come in  <a class="reference internal" href="#conwaycellsqaknaive"><span class="std std-ref">conwaycellsqaknaive</span></a> inviando al <code class="docutils literal notranslate"><span class="pre">gamemaster</span></code> il dispatch <code class="docutils literal notranslate"><span class="pre">cellready</span></code>
+quando la dell-Epoch è terminata termina</p>
+<p>Quando sono arrivati <code class="docutils literal notranslate"><span class="pre">NC</span></code> dispatch <code class="docutils literal notranslate"><span class="pre">cellready</span></code> emette l’evento <code class="docutils literal notranslate"><span class="pre">synch</span></code> per attivare
+una nuova Epoch</p>
+<p>Tiene conto dei comandi di STOP inviati dal  <code class="docutils literal notranslate"><span class="pre">gamecontroller</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gamecontroller</span></code></p></td>
+<td><p>attore che gestire i comandi START/STOP/CLEAR della console inviando opportuni dispatch
+al  <code class="docutils literal notranslate"><span class="pre">gamemaster</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cell</span></code></p></td>
+<td><p>attore che realizza la singola cella come in <a class="reference internal" href="#conwaycellsqaknaive"><span class="std std-ref">conwaycellsqaknaive</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">ConwayLifeActorsQak</a><ul>
+<li><a class="reference internal" href="#analisi-del-problema-lifeactorsqak">Analisi del problema LifeActorsQak</a><ul>
+<li><a class="reference internal" href="#iniziamo-dalla-cella">Iniziamo dalla cella</a></li>
+<li><a class="reference internal" href="#rendere-visibile-lo-stato-di-una-cella">Rendere visibile lo stato di una cella</a></li>
+<li><a class="reference internal" href="#acqusire-lo-stato-di-una-cella">Acqusire lo stato di una cella</a></li>
+<li><a class="reference internal" href="#evoluzione-delle-epoch">Evoluzione delle Epoch</a></li>
+<li><a class="reference internal" href="#controllare-il-sistema">Controllare il sistema</a></li>
+<li><a class="reference internal" href="#costruzione-del-sistema">Costruzione del sistema</a></li>
+<li><a class="reference internal" href="#risultato-della-analisi">Risultato della analisi</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#il-punto-di-vista-di-una-cella">Il punto di vista di una cella</a><ul>
+<li><a class="reference internal" href="#emitstreammqtt">emitstreammqtt</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conwaycellsqaknaive">conwaycellsqaknaive</a><ul>
+<li><a class="reference internal" href="#subscribetoneighborsmqtt-myself-x-y">subscribeToNeighborsMqtt(myself,X,Y)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conwayactorsqak">conwayactorsqak</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="QakActors25Demo.html"
+                          title="previous chapter">QakActors25Demo</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="ConwayCellDistributedQak.html"
+                          title="next chapter">ConwayCellDistributedQak</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ConwayLifeActorsQak.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ConwayCellDistributedQak.html" title="ConwayCellDistributedQak"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="QakActors25Demo.html" title="QakActors25Demo"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ConwayLifeActorsQak</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2024, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

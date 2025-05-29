@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>RaspberryStartingVideo &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87712ff3" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SpringBootWebSocketSTOMP" href="SpringBootWebSocketSTOMP.html" />
+    <link rel="prev" title="Vrqak24" href="Vrqak24.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="SpringBootWebSocketSTOMP.html" title="SpringBootWebSocketSTOMP"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Vrqak24.html" title="Vrqak24"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RaspberryStartingVideo</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1>RaspberryStartingVideo<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<section id="raspberrystarting">
+<h2>raspberryStarting<a class="headerlink" href="#raspberrystarting" title="Link to this heading">¶</a></h2>
+<p><span class="slide3">VIDEO</span>: <a class="reference external" href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=97bac624-0d41-4897-a953-b2c2009c9cff">raspberryStartingVideo</a></p>
+<a class="reference internal image-reference" href="_images/raspPi2B.jpg"><img alt="_images/raspPi2B.jpg" class="align-center" src="_images/raspPi2B.jpg" style="width: 60%;" />
+</a>
+<p>In questo esperimento,
+connettiamo il Raspberry al PC tramite un cavo Ethernet,
+tenendo conto di quanto detto in <a class="reference internal" href="RaspberrySoftware.html#se-non-abbiamo-wifi"><span class="std std-ref">Se non abbiamo WIFI</span></a>.</p>
+<p>Il problema è che Windows11 <span class="blue">potrebbe non configurare</span> l’IP statico
+della connessione Ethernet a <code class="docutils literal notranslate"><span class="pre">192.168.137.1</span></code>.</p>
+<p>In tal caso, proviamo a configurarlo manualmente.</p>
+</section>
+<section id="su-windows11">
+<h2>Su Windows11<a class="headerlink" href="#su-windows11" title="Link to this heading">¶</a></h2>
+<p>Pannello di <strong>controlloRete</strong> e <strong>InternetCentro connessioni di rete e condivisione</strong></p>
+<a class="reference internal image-reference" href="_images/rete.jpg"><img alt="_images/rete.jpg" class="align-center" src="_images/rete.jpg" style="width: 80%;" />
+</a>
+<p>Vediamo <strong>Impostazioni -&gt; impostazione di Ethernet</strong></p>
+<a class="reference internal image-reference" href="_images/reteAvanzate.jpg"><img alt="_images/reteAvanzate.jpg" class="align-center" src="_images/reteAvanzate.jpg" style="width: 60%;" />
+</a>
+<p>Apriamo Ethernet3 e accediamo alle <strong>proprietà aggiuntive</strong></p>
+<a class="reference internal image-reference" href="_images/ethernetAggiuntive.jpg"><img alt="_images/ethernetAggiuntive.jpg" class="align-center" src="_images/ethernetAggiuntive.jpg" style="width: 60%;" />
+</a>
+<p>Modifichiamo (se necessario) le <strong>proprietà IPv4</strong></p>
+<a class="reference internal image-reference" href="_images/ethernetIp.jpg"><img alt="_images/ethernetIp.jpg" class="align-center" src="_images/ethernetIp.jpg" style="width: 40%;" />
+</a>
+<section id="connessione-ethernet-privata">
+<h3>Connessione Ethernet privata<a class="headerlink" href="#connessione-ethernet-privata" title="Link to this heading">¶</a></h3>
+<p><span class="blue">Problema</span>: Driver differenti della scheda di rete Ethernet
+potrebbero influenzare la <span class="blue">classificazione predefinita</span> della rete.</p>
+<p>Per rendere accessibile mosquitto su PC senza disattivare il firewall
+di Windows è necessario cambiare la rete Ethernet da pubblica a privata.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Windows</span> <span class="n">powershell</span> <span class="p">(</span><span class="n">administrator</span><span class="p">)</span>
+<span class="n">Get</span><span class="o">-</span><span class="n">NetConnectionProfile</span>            <span class="o">---&gt;</span> <span class="p">(</span><span class="n">alias</span> <span class="o">=</span>  <span class="n">Ethernet</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">Set</span><span class="o">-</span><span class="n">NetConnectionProfile</span> <span class="o">-</span><span class="n">InterfaceAlias</span> <span class="s2">&quot;Ethernet 2&quot;</span> <span class="o">-</span><span class="n">NetworkCategory</span> <span class="n">Private</span>
+<span class="n">Rete</span> <span class="n">e</span> <span class="n">Intenet</span><span class="p">:</span> <span class="n">su</span> <span class="n">Ethernet</span> <span class="mi">2</span> <span class="n">adesso</span> <span class="n">compare</span> <span class="n">Rete</span> <span class="n">privata</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="ispezioniamo-il-raspberry">
+<h2>Ispezioniamo il Raspberry<a class="headerlink" href="#ispezioniamo-il-raspberry" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">/etc/os-release</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PRETTY_NAME</span><span class="o">=</span><span class="s2">&quot;Raspbian GNU/Linux 11 (bullseye)&quot;</span>
+<span class="n">NAME</span><span class="o">=</span><span class="s2">&quot;Raspbian GNU/Linux&quot;</span>
+<span class="n">VERSION_ID</span><span class="o">=</span><span class="s2">&quot;11&quot;</span>
+<span class="n">VERSION</span><span class="o">=</span><span class="s2">&quot;11 (bullseye)&quot;</span>
+<span class="n">VERSION_CODENAME</span><span class="o">=</span><span class="n">bullseye</span>
+<span class="n">ID</span><span class="o">=</span><span class="n">raspbian</span>
+<span class="n">ID_LIKE</span><span class="o">=</span><span class="n">debian</span>
+<span class="n">HOME_URL</span><span class="o">=</span><span class="s2">&quot;http://www.raspbian.org/&quot;</span>
+<span class="n">SUPPORT_URL</span><span class="o">=</span><span class="s2">&quot;http://www.raspbian.org/RaspbianForums&quot;</span>
+<span class="n">BUG_REPORT_URL</span><span class="o">=</span><span class="s2">&quot;http://www.raspbian.org/RaspbianBugs&quot;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">/proc/cpuinfo</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">processor</span>       <span class="p">:</span> <span class="mi">0</span>
+<span class="o">...</span>
+<span class="n">processor</span>       <span class="p">:</span> <span class="mi">1</span>
+<span class="o">...</span>
+<span class="n">processor</span>       <span class="p">:</span> <span class="mi">2</span>
+<span class="o">...</span>
+<span class="n">processor</span>       <span class="p">:</span> <span class="mi">3</span>
+<span class="o">...</span>
+<span class="n">Hardware</span>        <span class="p">:</span> <span class="n">BCM2835</span>
+<span class="n">Revision</span>        <span class="p">:</span> <span class="n">a01041</span>
+<span class="n">Serial</span>          <span class="p">:</span> <span class="mi">00000000461</span><span class="n">d8a38</span>
+<span class="n">Model</span>           <span class="p">:</span> <span class="n">Raspberry</span> <span class="n">Pi</span> <span class="mi">2</span> <span class="n">Model</span> <span class="n">B</span> <span class="n">Rev</span> <span class="mf">1.1</span>
+</pre></div>
+</div>
+</section>
+<section id="i-dispositivi-connessi">
+<h2>I dispositivi connessi<a class="headerlink" href="#i-dispositivi-connessi" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="RaspBasicCode.html#usiamo-un-led"><span class="std std-ref">Usiamo un LED</span></a> (<strong>Anodo +</strong> BCM25 (fisico 22) <strong>Catodo -</strong> GND (fisico 20))</p>
+<ul>
+<li><p><a class="reference external" href="../../../../rasp2025/resources/python/ledPython25On.py">ledPython25On.py</a></p></li>
+<li><p><a class="reference external" href="../../../../rasp2025/resources/python/ledPython25Off.py">ledPython25Off.py</a></p></li>
+<li><p><a class="reference external" href="../../../../rasp2025/resources/python/ledPython25.py">ledPython25.py</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="RaspBasicCode.html#usiamo-un-sonar-hc-sr04"><span class="std std-ref">Usiamo un SONAR HC-SR04</span></a></p>
+<ul>
+<li><p><a class="reference external" href="../../../../rasp2025/resources/python/sonar.py">sonar.py</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h2>Rasp2025Ledalone<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p><span class="slide3">VIDEO</span>: <a class="reference external" href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=81fc27ee-c052-4717-9702-b2c3009aad15">Rasp2025Ledalone</a></p>
+</section>
+<section id="id3">
+<h2>Rasp2025Led2Ctx<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p><span class="slide3">VIDEO</span>: <a class="reference external" href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=42cb22b6-2f21-40a7-bd8d-b2c30112b64b">Rasp2025Led2Ctx</a></p>
+<section id="sistema-a-due-contesti-su-192-168-137-1-2">
+<h3>Sistema a due contesti su 192.168.137.1/2<a class="headerlink" href="#sistema-a-due-contesti-su-192-168-137-1-2" title="Link to this heading">¶</a></h3>
+<p>Quando il Raspberry Pi tenta di creare un Socket verso il PC sulla porta 8180,
+il sistema operativo del PC riceve la richiesta di connessione TCP (SYN packet).
+Tuttavia, poiché non c’è alcuna applicazione o servizio in “ascolto”
+(in stato di LISTEN) su quella specifica porta, il PC rispondeva con un pacchetto
+di “connessione rifiutata” (RST o RST/ACK).</p>
+<p>Il comportamento di blocco che osservi sul Raspberry Pi è dovuto al fatto
+che la funzione Socket(hostName, portNum) tenta di stabilire una connessione TCP
+e rimane in attesa fino a quando la connessione non viene stabilita con successo
+o si verifica un timeout (che a volte può essere lungo).
+In questo caso, probabilmente il sistema operativo del Raspberry Pi
+stava aspettando una risposta positiva (ACK) dal PC che non arrivava mai
+(arrivava invece un RST).</p>
+<ol class="arabic simple">
+<li><p>Cerca “Firewall di Windows Defender con sicurezza avanzata” nel menu Start e aprilo.</p></li>
+<li><p>Nel pannello di sinistra, fai clic su “Regole in entrata”.</p></li>
+<li><p>Nel pannello di destra, fai clic su “Nuova regola…”.</p></li>
+<li><p>Seleziona “Porta” e fai clic su “Avanti”.</p></li>
+<li><p>Seleziona “TCP”.</p></li>
+<li><p>In “Porte locali specifiche”, inserisci 8180.</p></li>
+<li><p>In “Indirizzi IP remoti”, puoi:</p></li>
+<li><p>Selezionare “Questi indirizzi IP” e aggiungere 192.168.137.2 per consentire solo le connessioni dal tuo Raspberry Pi.</p></li>
+<li><p>Selezionare “Qualsiasi indirizzo IP” per consentire connessioni da qualsiasi dispositivo sulla rete (meno restrittivo).</p></li>
+<li><p>Fai clic su “Avanti”.</p></li>
+<li><p>Seleziona “Consenti la connessione”.</p></li>
+<li><p>Fai clic su “Avanti”.</p></li>
+<li><p>Seleziona i profili di rete a cui si applica la regola (dovresti selezionare almeno “Privato” e potenzialmente “Pubblico” se la tua connessione Ethernet è classificata come tale).</p></li>
+<li><p>Assegna un nome alla regola (es. “Consenti TCP 8180 da Raspberry Pi”) e fai clic su “Fine”.</p></li>
+</ol>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">RaspberryStartingVideo</a><ul>
+<li><a class="reference internal" href="#raspberrystarting">raspberryStarting</a></li>
+<li><a class="reference internal" href="#su-windows11">Su Windows11</a><ul>
+<li><a class="reference internal" href="#connessione-ethernet-privata">Connessione Ethernet privata</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ispezioniamo-il-raspberry">Ispezioniamo il Raspberry</a></li>
+<li><a class="reference internal" href="#i-dispositivi-connessi">I dispositivi connessi</a></li>
+<li><a class="reference internal" href="#id2">Rasp2025Ledalone</a></li>
+<li><a class="reference internal" href="#id3">Rasp2025Led2Ctx</a><ul>
+<li><a class="reference internal" href="#sistema-a-due-contesti-su-192-168-137-1-2">Sistema a due contesti su 192.168.137.1/2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="Vrqak24.html"
+                          title="previous chapter">Vrqak24</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="SpringBootWebSocketSTOMP.html"
+                          title="next chapter">SpringBootWebSocketSTOMP</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/RaspberryStartingVideo.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="SpringBootWebSocketSTOMP.html" title="SpringBootWebSocketSTOMP"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Vrqak24.html" title="Vrqak24"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RaspberryStartingVideo</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

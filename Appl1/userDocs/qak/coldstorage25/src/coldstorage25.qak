@@ -1,0 +1,126 @@
+System coldstorage25 
+
+//--messaggi
+Request depositRequest : depositRequest(NO_PARAM)
+Reply accept : accept(TICKET)
+Reply reject : reject(NO_PARAM)
+
+Request checkmyticket : checkmyticket(TICKET) 
+Reply ticketcheck : ticketcheck(BOOL) 
+
+//----contesto----
+Context ctxservicearea ip [host="localhost" port=8080]
+//----------------
+
+QActor coldroom context ctxservicearea {
+	State s0 initial {
+			printCurrentMessage 
+			println("COLDROOM:  attivo") color green
+			
+		}
+}
+
+QActor transporttrolley context ctxservicearea {
+	State s0 initial {
+			printCurrentMessage 
+			println("TransportTrolley:  attivo") color green
+			
+		}
+}
+
+QActor coldstorageservice context ctxservicearea {
+	[#
+		var TICKETTIME =15000;
+		var Token= "_" 
+		var InitialToken ="T"
+		var Ticket =""
+		var Sequenza =0 
+	#]
+	
+	State s0 initial {
+			printCurrentMessage 
+			println("COLDSTORAGE:  ticket time = $TICKETTIME") color blue 
+			
+		} Goto s1 
+		
+		State s1 {//attesa messaggio
+			
+		}Transition t0 whenRequest checkmyticket -> checktheticket
+						whenRequest depositRequest -> check
+		
+		
+		State checktheticket {
+			onMsg(checkmyticket : checkmyticket(TICKETTIME)){
+				[#
+					var Ticket =payloadArg(0)
+					var Ticketvalid= false ;
+					var StartTime= Ticket.split( Token, ignoreCase= true, limit=0).get(1)toInt()
+					var Now = java.util.Date()getTime()/1000
+					if(Now<StartTime +TICKETTIME){ //se è valido
+						Ticketvalid = true
+					}	
+					
+				#]
+				println("COLDSTORAGE : ticket valido? $Ticketvalid") color magenta 
+				replyTo checkmyticket with ticketcheck : ticketcheck($Ticketvalid)
+			}
+		} Goto s1 
+		
+		State check{
+			println("COLDSTORAGE : chiedo il peso ") color magenta 
+		} Goto s1
+		
+}
+
+QActor  serviceaccessgui context ctxservicearea {
+	
+	[# 
+		var Ticket= " "
+		var Ticketok= false 
+	#]
+	
+	State s0 initial {
+			printCurrentMessage 
+			println("ACCESSGUI : attende") color cyan 
+			
+		} Goto s1
+		
+		State s1 {
+			request coldstorageservice -m depositRequest : depositRequest(NO_PARAM)
+			
+		}Transition t0 whenReply accept ->indoor
+						whenReply reject -> trylater 
+						
+		State trylater {
+			println("ACCESSGUI: rifiutato") color red
+			
+		} Transition wait whenTime 5000 -> s1 
+		
+		State indoor {
+			onMsg(accept : accept(TICKET)){
+				[# Ticket = payloadArg(0)#]
+				println("ACCESSGUI: ticket accettato, Ticket : $Ticket ") color green 
+			}
+		} Transition t2 whenTime 3000 -> giveticket 
+			
+		State giveticket{
+			println("ACCESSGUI: consegno ticket ")color cyan
+			
+			request coldstorageservice -m checkmyticket : checkmyticket($Ticket)
+		} Transition tc whenReply ticketcheck -> checkresponse 
+		
+		State checkresponse {
+			onMsg (ticketcheck : ticketcheck(BOOL)){
+				[# TIcketok = payloadArg(0).toBoolean() #]
+				
+			}
+			println("ACCESSGUI: biglietto accettato? : $Ticketok") color cyan 
+			
+		} Goto s1 if [#!Ticketok#] else unloading 
+		
+		State unloading {
+			println("ACCESSGUI: effettua scarico") color yellow 
+		} Goto s1 
+}
+
+

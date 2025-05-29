@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>SituatedActors &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="VirtualRobot23" href="VirtualRobot23.html" />
+    <link rel="prev" title="RaspberryCode2025" href="RaspberryCode2025.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="VirtualRobot23.html" title="VirtualRobot23"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="RaspberryCode2025.html" title="RaspberryCode2025"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">SituatedActors</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="situatedactors">
+<h1>SituatedActors<a class="headerlink" href="#situatedactors" title="Permalink to this heading">¶</a></h1>
+<p>La introduzione del concetto di <span class="xref std std-ref">actor</span> e dei relativi supporti
+(a run-time:<a class="reference internal" href="QakActors25Intro.html#qak-infrastructure"><span class="std std-ref">Qak infrastructure</span></a> e a design-time:ref:<cite>Qak software factory</cite>)
+fornisce strumenti più adeguati per la progettazione e lo sviluppo di sistemi
+basati su architetture a <span class="xref std std-ref">Microservizi`(e a :ref:`Nanoservizi</span>).</p>
+<p>A questo proposito vediamo la ‘opinione’ della AI:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="RiassuntoAI.html#riassuntoai"><span class="std std-ref">RiassuntoAI</span></a></p></li>
+<li><p><a class="reference internal" href="MicroserviziEQak%28AI%29.html#microservizieqak-ai"><span class="std std-ref">MicroserviziEQak(AI)</span></a></p></li>
+</ul>
+<p>Oltre alla ‘classiche’  applicazioni di cloud-computing, i <a class="reference internal" href="Microservizi.html#microservizi"><span class="std std-ref">Microservizi</span></a> sono oggi
+un possibile punto di riferimento per la realizzazione di <a class="reference internal" href="#agenti-software-situati"><span class="std std-ref">Agenti Software Situati</span></a>.</p>
+<p>Nel contesto del <strong>cloud computing</strong>, i microservizi offrono numerosi vantaggi:</p>
+<ul class="simple">
+<li><p><strong>Scalabilità</strong>: ogni microservizio può essere scalato indipendentemente, consentendo un uso più efficiente delle risorse cloud.</p></li>
+<li><p><strong>Elasticità</strong>: grazie alla natura modulare, è possibile aggiungere o rimuovere dinamicamente servizi in base alla domanda.</p></li>
+<li><p><strong>Manutenibilità</strong>: i microservizi permettono aggiornamenti, deployment e rollback rapidi senza interrompere l’intera applicazione.</p></li>
+<li><p><strong>Resilienza</strong>: eventuali guasti di un microservizio possono essere isolati, migliorando l’affidabilità complessiva dell’applicazione.</p></li>
+<li><p><strong>Adozione di tecnologie eterogenee</strong>: ogni microservizio può essere sviluppato con linguaggi e tecnologie diverse, ottimizzando l’efficienza.</p></li>
+</ul>
+<p>Ad esempio: Un’applicazione di e-commerce su cloud può essere suddivisa in microservizi distinti:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Gestione utenti</p></li>
+<li><p>Catalogo prodotti</p></li>
+<li><p>Carrello</p></li>
+<li><p>Pagamenti</p></li>
+<li><p>Raccomandazioni personalizzate</p></li>
+</ul>
+</div></blockquote>
+<p>Per quanto riguarda le <strong>applicazioni basate su agenti situati</strong> (ovvero agenti che operano
+in ambienti fisici o digitali specifici, percependo e agendo nel contesto), l’approccio a microservizi può essere vantaggioso:</p>
+<ul class="simple">
+<li><p><strong>Modularità</strong>: ogni agente o componente del sistema può essere modellato come un microservizio indipendente.</p></li>
+<li><p><strong>Distribuzione geografica</strong>: microservizi possono essere dislocati vicino agli agenti fisici per ridurre latenza e migliorare l’efficienza.</p></li>
+<li><p><strong>Autonomia</strong>: ogni agente può avere microservizi autonomi per la percezione, la decisione e l’azione.</p></li>
+<li><p><strong>Interoperabilità</strong>: i microservizi, grazie all’uso di API standardizzate, facilitano la comunicazione tra agenti eterogenei.</p></li>
+<li><p><strong>Manutenzione e aggiornamento</strong>: è possibile aggiornare singoli agenti/microservizi senza interrompere l’intero sistema.</p></li>
+</ul>
+<p>Ad esempio: In una rete di robot autonomi per la logistica:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Un microservizio si occupa della navigazione locale (evitare ostacoli).</p></li>
+<li><p>Un altro microservizio gestisce la comunicazione con la centrale.</p></li>
+<li><p>Un terzo microservizio pianifica percorsi ottimali.</p></li>
+</ul>
+</div></blockquote>
+<section id="agenti-software-situati">
+<h2>Agenti Software Situati<a class="headerlink" href="#agenti-software-situati" title="Permalink to this heading">¶</a></h2>
+<p>Gli agenti software situati sono entità computazionali che:</p>
+<ul class="simple">
+<li><p><strong>Percepiscono il loro ambiente</strong>: Ricevono input dal loro contesto circostante, che potrebbe essere una rete, un file system, un’interfaccia utente o persino altri componenti software.</p></li>
+<li><p><strong>Agiscono sul loro ambiente</strong>: In base alle loro percezioni e al loro stato interno, possono compiere azioni che modificano il loro ambiente. Ciò potrebbe comportare l’invio di messaggi, la modifica di dati, l’interazione con un utente o l’attivazione di altri processi.</p></li>
+<li><p><strong>Sono integrati in un ambiente dinamico</strong>: L’ambiente in cui operano non è statico; cambia nel tempo, spesso indipendentemente dalle azioni dell’agente.</p></li>
+<li><p><strong>Esibiscono un comportamento influenzato dalla loro situazione</strong>: Le loro azioni non sono determinate unicamente da regole pre-programmate, ma anche dal loro contesto attuale e dalla storia delle interazioni all’interno dell’ambiente.</p></li>
+</ul>
+<p>Il concetto di agenti situati è nato dalle critiche all’Intelligenza Artificiale (IA) tradizionale, che spesso si concentrava sulla risoluzione di problemi astratti, distaccata dai vincoli del mondo reale. L’IA situata sottolinea che il comportamento intelligente emerge dalla continua interazione tra un agente e il suo ambiente.</p>
+<p>Caratteristiche chiave degli agenti situati:</p>
+<ul class="simple">
+<li><p><span class="blue">Reattività</span>: Rispondono in modo tempestivo ai cambiamenti nel loro ambiente.</p></li>
+<li><p><span class="blue">Proattività</span>: Possono prendere iniziativa e perseguire obiettivi.</p></li>
+<li><p><span class="blue">Autonomia</span>: Operano senza un controllo esterno costante.</p></li>
+<li><p><span class="blue">Socialità</span>: Possono interagire con altri agenti e con gli esseri umani.</p></li>
+</ul>
+<p>Esempi di agenti situati nel software:</p>
+<ul class="simple">
+<li><p><span class="brown">Robot autonomi</span>: Software che controlla robot fisici che navigano e interagiscono con il mondo reale attraverso sensori e attuatori.</p></li>
+<li><p><span class="brown">Assistenti intelligenti</span>: Agenti virtuali che percepiscono l’input dell’utente (voce, testo), accedono alle informazioni ed eseguono compiti per conto dell’utente.</p></li>
+<li><p><span class="brown">Sistemi di gestione della rete</span>: Agenti che monitorano il traffico di rete, rilevano anomalie e riconfigurano i dispositivi di rete in risposta alle mutevoli condizioni.</p></li>
+<li><p><span class="brown">Sistemi multi-agente</span>: Insiemi di agenti situati che collaborano o competono per raggiungere obiettivi comuni o individuali in un ambiente condiviso.</p></li>
+</ul>
+<p>Si sottolinea l’importanza dell’ambiente, dell’interazione e del contesto nel plasmare il comportamento.</p>
+<p>Lo studio sia degli agenti situati è cruciale per comprendere come emergono il comportamento intelligente
+e l’azione significativa in contesti complessi del mondo reale.</p>
+<p>Ha implicazioni significative per la progettazione di sistemi software più efficaci e adattivi
+e per la comprensione del comportamento umano nei sistemi socio-tecnici.</p>
+<section id="un-meta-modello-di-riferimento-per-agenti-situati">
+<h3>Un (meta)modello di riferimento per agenti situati<a class="headerlink" href="#un-meta-modello-di-riferimento-per-agenti-situati" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Sensori (input)</p></li>
+<li><p>Modello (Controllo)</p></li>
+<li><p>Attuatori (output)</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/SituatedAgentMetamodel.PNG"><img alt="_images/SituatedAgentMetamodel.PNG" class="align-center" src="_images/SituatedAgentMetamodel.PNG" style="width: 85%;" /></a>
+<ul class="simple">
+<li><p><strong>Agente</strong>: Entità autonoma che percepisce, decide e agisce in un ambiente.</p></li>
+<li><p><strong>Ambiente</strong>: Contesto esterno in cui l’agente è situato; dinamico e parzialmente osservabile.</p></li>
+<li><p><strong>Percezione</strong>: Processo di acquisizione di dati sensoriali dall’ambiente.</p></li>
+<li><p><strong>Azione</strong>: Comportamento che altera lo stato dell’ambiente o l’agente stesso.</p></li>
+<li><p><strong>Comunicazione</strong>: Scambio di informazioni tra agenti per coordinamento o cooperazione.</p></li>
+</ul>
+</section>
+<section id="progetti-da-realizzare">
+<h3>Progetti da realizzare<a class="headerlink" href="#progetti-da-realizzare" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="slide3">PLed</span></p>
+<p><span class="remark">DONE</span> <a class="reference internal" href="RaspberryCode2025.html#rasp2025ledalone"><span class="std std-ref">rasp2025ledalone</span></a></p>
+</td>
+<td><p>Un actor che gestisce i Dispatch <code class="docutils literal notranslate"><span class="pre">turnOn</span></code> e <code class="docutils literal notranslate"><span class="pre">``turnOff</span></code> per accendere/spegnere un Led connesso
+a un RaspberryPi, emettendo  <span class="remark">tutti i diversi tipi di eventi</span> esprimibili nel <a class="reference internal" href="QakActors25Linguaggio.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="slide3">PSonar</span></p>
+<p>Project: <code class="docutils literal notranslate"><span class="pre">sonarLed2025</span></code>  <span class="worktodo">TOCOMPLETE</span>  <a class="reference internal" href="RaspApplCode24.html#progetto-sonarqak24"><span class="std std-ref">Progetto sonarqak24</span></a></p>
+</td>
+<td><p>Un actor che gestisce un Sonar connesso
+a un RaspberryPi, rendendo disponibile a componenti interessatti (locali o remoti)  la distanza rilevata.
+Se la distanza è inferione a un valore prefissato <code class="docutils literal notranslate"><span class="pre">LIMIT</span></code> deve accendere il Led</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="slide3">PArea</span></p>
+<p>Project: <code class="docutils literal notranslate"><span class="pre">evalarea</span></code> <span class="worktodo">TODO</span></p>
+</td>
+<td><p>Un actor che comanda un DDR robot in modo da calcolare il valore (in cm <sup>2</sup>) dell’area di una stanza
+retttangplare vuota. Il root deve interrompere la propria azione quando la distanza rilevata dal <code class="docutils literal notranslate"><span class="pre">sonarLed2025</span></code>
+è inferione a un valore prefissato <code class="docutils literal notranslate"><span class="pre">LIMIT</span></code> e ripredenre l’azione quando la distanza rilevata supera <code class="docutils literal notranslate"><span class="pre">LIMIT</span></code></p>
+<p>Come possibile progetto prelinimare si veda <a class="reference internal" href="BoundaryWalk24.html#boundarywalk24"><span class="std std-ref">BoundaryWalk24</span></a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="slide2">Ogni progetto svolto deve essere</span></p>
+<ol class="arabic simple">
+<li><p>depositato sul repository GIT persoonale</p></li>
+<li><p>opportunamente descitto nella sezione <strong>userDocs</strong></p></li>
+<li><p>riportato nella sezione <strong>README</strong> del repository GIT</p></li>
+<li><p>comunicato via mail al docente :</p>
+<ul class="simple">
+<li><p><span class="blue">prima del 24 Aprile</span> se si intende discuterlo nella Sprint-review</p></li>
+<li><p>entro le <span class="blue">ore 10 del 28 Aprile</span>  altrimenti</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="robot-reali-e-virtuali">
+<h3>Robot reali e virtuali<a class="headerlink" href="#robot-reali-e-virtuali" title="Permalink to this heading">¶</a></h3>
+<p>Per il problema <strong>PArea</strong>, il committente rende disponibile software
+relativo all’usp di DDR robot fisici e Virtuali.</p>
+<p>Questi prodotti sooftware costituiscono un insieme di livelli che nascondono
+progressivamente la conoscenza sui dettagli di implementazione del robot,
+per culminare in un micro-servizio che offre un’interfaccia semplice per l’uso di robot
+sia fisici che virtuali.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="./_static/devsDdr.html">devsDdr.html</a></p></td>
+<td><p>Materiale utile alla costruzione di un DDR robot con RaspberryPi.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="VirtualRobot23.html#virtualrobot23"><span class="std std-ref">VirtualRobot23</span></a></p></td>
+<td><p>un robot virtuale in un ambiente di simulazione, con esempi <a class="reference internal" href="VirtualRobotUsage24.html#virtualrobotusage24"><span class="std std-ref">VirtualRobotUsage24</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="VrobotLLMoves24.html#id1"><span class="std std-ref">VrobotLLMoves24</span></a></p>
+<p>(<em>LL=Logical Level</em>)</p>
+</td>
+<td><p>un POJO che funga da supporto per un actor qak (<code class="docutils literal notranslate"><span class="pre">owner</span></code>) in modo che l’owner
+possa inviare al robot comandi logici di movimento (<a class="reference internal" href="VrobotLLMoves24.html#ivrobotllmoves"><span class="std std-ref">IVrobotLLMoves</span></a>)
+e ricevere eventi connessi ai messaggi
+<a class="reference internal" href="VrobotLLMoves24.html#vrll24-informazioni-da-wenv"><span class="std std-ref">messaggi inviati da WENv</span></a> su WebSocket,
+quali <a class="reference internal" href="VirtualRobot23.html#messaggio-di-stato"><span class="std std-ref">Messaggio di stato</span></a> e <span class="xref std std-ref">Messaggio dall’ambiente</span>.</p>
+<p>Introduce la nuova operazione <a class="reference internal" href="VrobotLLMoves24.html#step"><span class="std std-ref">step</span></a>, che muove in avanti il robot per un tempo dato</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Vrqak24.html#vrqak24"><span class="std std-ref">Vrqak24</span></a></p></td>
+<td><p>un micoro-servizio di acesso all’uso del <a class="reference internal" href="VirtualRobot23.html#virtualrobot23"><span class="std std-ref">VirtualRobot23</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="BasicRobot24.html#basicrobot24"><span class="std std-ref">BasicRobot24</span></a></p></td>
+<td><p>un micoro-servizio ervizio che offre un modo di operare con DDR-roboys
+in modo indipendente dalla tecnologia con cui è realizzato il robot (virtuale o reale).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">SituatedActors</a><ul>
+<li><a class="reference internal" href="#agenti-software-situati">Agenti Software Situati</a><ul>
+<li><a class="reference internal" href="#un-meta-modello-di-riferimento-per-agenti-situati">Un (meta)modello di riferimento per agenti situati</a></li>
+<li><a class="reference internal" href="#progetti-da-realizzare">Progetti da realizzare</a></li>
+<li><a class="reference internal" href="#robot-reali-e-virtuali">Robot reali e virtuali</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="RaspberryCode2025.html"
+                          title="previous chapter">RaspberryCode2025</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="VirtualRobot23.html"
+                          title="next chapter">VirtualRobot23</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/SituatedActors.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="VirtualRobot23.html" title="VirtualRobot23"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="RaspberryCode2025.html" title="RaspberryCode2025"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">SituatedActors</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>
