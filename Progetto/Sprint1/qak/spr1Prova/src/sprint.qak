@@ -1,0 +1,333 @@
+System sprint 
+
+//messaggi tra ServiceGUI e CStorage 
+
+//richiesta ticket
+Request depositRequest : depositRequest(TICKET)
+Reply accept : accept(TICKET) for depositRequest
+Reply reject : reject(NO_PARAM) for depositRequest
+
+//richiesta vallidità ticket 
+Request checkmyticket : checkmyticket(TICKET) 
+Reply ticketcheck : ticketcheck(BOOL) for checkmyticket
+
+//libera truck driver
+Dispatch truckDriver : truckDriver (NO_PARAM)
+
+//messaggi tra CStorage e CRoom
+
+//spazio disponibile? 
+Request fwrequest : fwrequest(NO_PARAM)
+Reply fwYES : fwYES (NO_PARAM) for fwrequest
+Reply fwNO : fwNO (NO_PARAM) for fwrequest
+
+//aggiorna spazio 
+Request load_CR : load_CR(NO_PARAM)
+
+Request delete_Reservation: delete_Reservation(NO_PARAM)
+
+//messaggi TransportTrolley e CStorage 
+
+//prendi il carico da indoor
+Request takecharge : takecharge(NO_PARAM)
+Reply chargetaken : chargetaken(NO_PARAM) for takecharge 
+
+//scarica in coldRoom
+//Dispatch goRefr : goRefr(NO_PARAM)
+
+//scaricato in ColdRoom
+Dispatch liberoTT: liberoTT(NO_PARAM)
+
+//vai in HOME 
+Dispatch goHome : goHome(NO_PARAM)
+
+//----contesto----
+Context ctxservicearea ip [host="localhost" port=8040]
+//----------------
+
+QActor coldstorageservice context ctxservicearea {
+	
+	[#
+		var TICKETTIME =10;
+		var Token= "_" 
+		var InitialToken ="T"
+		var Ticket =""
+		
+		var T_acc=0
+		var T_rif=0
+		
+		var busy = false 
+		var valido = false
+	#]
+	
+	State s0 initial {
+		println("COLDSTORAGE: attivo") color magenta 
+	}Goto s1 
+		
+	State s1 {//attesa messaggio
+		println("COLDSTORAGE: attendo un messaggio.") color magenta
+	}Transition t0 whenRequest depositRequest -> check
+				whenRequest checkmyticket -> checktheticket
+				whenMsg liberoTT-> libera 
+
+	State checktheticket {
+			onMsg(checkmyticket : checkmyticket(TICKET)){
+				[#
+					valido = false
+					var Ticket =payloadArg(0)
+					var Ticketvalid= false ;
+					var StartTime= Ticket.split( Token, ignoreCase= true, limit=0).get(1).toInt()
+					var Now = java.util.Date().getTime()/1000
+					if(Now<StartTime +TICKETTIME){ //se è valido
+						Ticketvalid = true
+						valido = true
+					}	
+					
+				#]
+				println("COLDSTORAGE : controllo il ticket di SAGUI, ticket valido? $Ticketvalid") color red 
+				println("COLDSTORAGE : now $Now < StartTime $StartTime + $TICKETTIME = $Ticketvalid") color red 
+				replyTo checkmyticket with ticketcheck : ticketcheck($Ticketvalid)
+			}
+		} Goto svuotaAlloc if [# !valido#] else taking
+		
+		State svuotaAlloc{
+			//chiedere a coldRoom di togliere la prenotazione
+			request coldroom -m delete_Reservation : delete_Reservation(NO_PARAM)
+			
+			println("COLDSTORAGE : chiedo a coldroom di togliere la prenotazione.") color magenta			
+		}Goto s1
+		
+	State check{
+		onMsg(depositRequest : depositRequest(Ticket)){
+		
+		println("COLDSTORAGE : chiedo a coldroom se c'è spazio.") color magenta
+		request coldroom -m fwrequest : fwrequest(NO_PARAM)
+		
+		}
+	}Transition t1 whenReply fwYES -> returnticket
+					whenReply fwNO -> reject
+	State reject {
+		println("COLDSTORAGE : non c'è spazio, richiesta rifiutata") color red
+		[# 
+			T_rif++
+		#]
+		replyTo depositRequest with reject : reject( NO_PARAM )
+	} Goto s1
+	
+	State returnticket { //crea ticket
+		
+		[#  Ticket = "T".plus(Token)
+			
+			var Now = java.util.Date().getTime()/1000
+			
+			Ticket = Ticket.plus( Now ).plus(Token).plus( T_acc)
+			T_acc++
+			
+			#]
+			println("COLDSTORAGE : Consegno ticket, numero $T_acc") color green
+            replyTo depositRequest with accept : accept( $Ticket )
+	} Goto s1 
+	
+		State taking {
+			[#  busy=true #]
+			println("COLDSTORAGE: chiamo transporttrolley in INDOOR, busy= $busy") color magenta
+	        
+			request transporttrolley -m takecharge : takecharge(NO_PARAM)
+			
+		} Goto viaDriver
+		
+		State viaDriver{
+				
+			println("COLDSTORAGE: truck driver può andare.") color magenta
+			forward serviceaccessgui -m truckDriver : truckDriver(NO_PARAM)
+			
+		}Goto riempi
+		
+		State riempi{
+			
+		request coldroom -m load_CR : load_CR(NO_PARAM)
+		println("COLDSTORAGE: coldRoom deve togliere l'allocazione e confermare lo spazio.") color magenta
+		
+		
+		} Goto s1 
+	
+	State libera {
+		//aspetta di sapere che TT ha caricato CR e poi lo manda a casa
+		
+		onMsg (liberoTT : liberoTT(NO_PARAM)){
+			//se ci sono altre richieste no altrimenti liberalo
+			
+			[# if(busy==true ) busy=false #]
+			println("COLDSTORAGE: transporttrolley deve andare in HOME. busy= $busy") color magenta
+			forward transporttrolley -m goHome : goHome(NO_PARAM)
+		}
+	} Goto s1
+}
+
+QActor coldroom context ctxservicearea {
+	
+	[#
+		var Peso = 0 //dentro frigo
+		var MAXW = 60
+		var FW= 15
+		var P_alloc=0
+	#]
+	
+	State s0 initial {
+			//printCurrentMessage 
+			println("COLDROOM:  attivo, peso attuale in frigo = $Peso") color cyan
+			
+		}Goto s1
+		
+		State s1{
+			//attesa
+			println("COLDROOM: aspetto richieste da CStorage.") color cyan
+			
+		}Transition t0 whenRequest fwrequest -> controllaPeso  //per avere ticket
+						whenRequest load_CR -> s2
+						whenRequest delete_Reservation -> delete_Reservation
+						
+		State delete_Reservation{
+			[# P_alloc-=FW  #]
+			println("COLDROOM : Elimino prenotazione. Peso allocato in frigo: $P_alloc") color green 
+					
+		}Goto s0
+		
+		State controllaPeso {
+			onMsg(fwrequest : fwrequest(NO_PARAM)){
+				
+				if [# Peso+ FW <= MAXW #]{
+					[# P_alloc+=FW  #]
+					println("COLDROOM : Spazio disponibile! Prenotazione avvenuta. Peso allocato in frigo: $P_alloc") color green 
+					replyTo fwrequest with fwYES : fwYES (NO_PARAM)
+				}else{
+				println("COLDROOM: non c'è spazio, rifiuta.") color red
+				replyTo fwrequest with fwNO : fwNO( NO_PARAM )
+				}
+				println("COLDROOM : il Peso totale in frigo è: $Peso") color cyan 
+					
+			}
+		}Goto s1
+		
+		State s2 {
+			[# 
+				P_alloc-=FW  
+				Peso= Peso+FW 
+			#]
+			println("COLDROOM s2: Peso totale in frigo: $Peso e lo spazio allocato ora è: $P_alloc") color cyan 
+				
+		}Goto s1
+}
+
+
+QActor transporttrolley context ctxservicearea {
+	
+	State s0 initial {
+			println("TRANSPORTTROLLEY:  attivo!") color blue
+			
+		} Goto s1 
+		
+		State s1{
+			println("TRANSPORTTROLLEY:  attendo messaggi da CStorage.") color blue
+			
+		} Transition t0 whenRequest takecharge -> carica
+		
+	State carica {
+		
+		onMsg(takecharge : takecharge(NO_PARAM)) {
+			println("TRANSPORTTROLLEY: Prendo il carico. Vado in COLDROOM. ") color blue
+			replyTo takecharge with chargetaken : chargetaken( NO_PARAM )
+			
+		}
+		
+	}Transition wait whenTime 3000 -> raggiuntoCR 
+					
+	
+	State raggiuntoCR {
+		//informare CStorage-- vedere se tornare a casa o prendere altra consegna 
+		
+		println("TRANSPORTTROLLEY: ho caricato il frigo.") color blue
+		
+		forward coldstorageservice -m liberoTT : liberoTT(NO_PARAM)
+		
+	
+	}Transition t1 whenRequest takecharge -> carica
+					whenMsg goHome ->vaiCasa
+	
+	State vaiCasa {
+		onMsg(goHome: goHome(NO_PARAM)){
+			println("TRANSPORTTROLLEY: vado in HOME.") color blue
+		
+		}
+	}Goto s1
+	
+}
+
+
+QActor  serviceaccessgui context ctxservicearea {
+	
+	[# 
+		var Ticket= " "
+		var Tvalido= false 
+	#]
+	
+	State s0 initial {
+			println("ACCESSGUI : attivo.") color yellow 
+			
+		} Goto s1
+		
+		State s1 {
+			println("ACCESSGUI : chiedo un ticket.") color yellow 
+			request coldstorageservice -m depositRequest : depositRequest(Ticket)
+			
+		}Transition t0 whenReply accept ->indoor
+						whenReply reject -> riprova
+						
+		State riprova {
+			println("ACCESSGUI: rifiutato") color red
+			
+		} Transition wait whenTime 6000 -> s1 
+		
+		State indoor {
+			onMsg(accept : accept(TICKET)){
+				[# Ticket = payloadArg(0)#]
+				println("ACCESSGUI: ticket accettato, Ticket : $Ticket ") color green 
+			}
+		} Transition t1 whenTime 3000 -> giveticket 
+			
+		State giveticket{
+			println("ACCESSGUI: consegno ticket $Ticket")color yellow
+			[#
+		    var  Duration= Math.floor(Math.random() *7500).toLong()
+		    delay(Duration)
+		    #]
+			request coldstorageservice -m checkmyticket : checkmyticket($Ticket)
+		} Transition t2 whenReply ticketcheck -> checkresponse 
+		
+		State checkresponse {
+			
+			onMsg (ticketcheck : ticketcheck(BOOL)){
+				[# Tvalido = payloadArg(0).toBoolean() #]
+				
+			}
+			println("ACCESSGUI: ticket accettato? $Tvalido") color yellow 
+			
+		} Goto s1 if [#!Tvalido#] else unloading 
+		
+		State unloading {
+			println("ACCESSGUI: effettua scarico!") color yellow 
+			
+		
+		} Transition t3 whenMsg truckDriver -> truck
+		
+		State truck{
+			//printCurrentMessage
+			onMsg(truckDriver : truckDriver(NO_PARAM)){
+				println("ACCESSGUI: ho finito vado via!") color yellow 
+				
+			}
+		} Transition t3 whenTime 200 -> s1 
+}
+
+
+

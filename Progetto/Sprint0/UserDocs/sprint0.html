@@ -1,0 +1,480 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<!--
+<link rel="stylesheet" type="text/css" href="../css/issStyle1.css">
+<script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+<style type="text/css">
+    body
+    {
+        margin-left:  30px;
+        margin-right: 30px;
+    };
+
+    P
+    {
+        font-family: Tahoma;
+        font-size: 15pt;
+    };
+
+    a, a:visited, a:active, a:link, a:hover {
+        text-decoration: underline;
+        color: #545454;
+        background-color: transparent;
+        font-size: 93%;
+    }
+
+    a:hover {
+        background-color: #cccccc;
+    }
+
+
+    hr {
+        clear: both;
+        height: 1px;
+        color: #242424;
+        background-color: transparent;
+    }
+
+    h1, h2, h3 {
+        color: #242424;
+        clear: left;
+        font: 100% Tahoma, Helvetica, Arial, sans-serif;
+        margin-bottom: 0.5em;
+        padding-top: 0.5em;
+        border-radius: 10px;
+        padding: 5px;
+    }
+
+    top {
+        width: 100%;
+    }
+
+
+    #i {
+        color: #ff1010;
+    }
+    tt{
+        font-family: "Arial";
+        font-size: 90%;
+        color: #006600;
+    }
+    em{
+        font-family: "Arial";
+        font-size: 80%;
+        font-weight: bold;
+        border-style:solid;
+        border-color: #abe876;
+        color: #1632cc;
+    }
+    bc{
+        font-family: "Arial";
+        font-size: 90%;
+        font-weight: bold;
+        color: #990000;
+        background-color: #fcf8c7;
+    }
+    ks{
+        font-family: "Arial";
+        font-weight: bold;
+        color: #0000CD	;
+        font-size: 90%;
+    }
+    kc{
+        font-family: "Arial";
+        font-weight: bold;
+        color: #008000	;
+        font-size: 90%;
+    }
+    pre{
+        font-family: "Consolas";
+        font-size: 85%;
+        background-color: #f5f5f5;
+        border: 1.5px solid silver;
+        padding: 5px;
+    }
+    m{
+        font-family: "Helvetica";
+        line-height: 100%;
+         font-size: 75%;
+    }
+    div.body{
+
+        font-size: 18px;
+    }
+    k{
+        color: #990000;
+        font-weight: bold;
+        font-size: 90%;
+    }
+    h1 {
+        font-size: 150%;
+        background-color: #b2c0ff;
+        padding: 10px;
+    }
+
+    h2 {
+        background-color: #9ed8ff;
+        font-size: 130%;
+    }
+
+    h3 {
+        background-color: #e6ccff;
+        font-size: 100%;
+    }
+    h4 {
+        background-color: #ccffcc;
+        font-size: 100%;
+        width: 95%;
+        border-radius: 5px;
+        padding: 2px;
+    }
+    h5 {
+        background-color: #d5ffb0;
+        font-size: 100%;
+
+    }
+    div.req{
+        background-color: #d9ffb3;
+        font-size: 18px;
+        width: 700px;
+        border: 3px solid green;
+        padding: 15px;
+        margin: 10px;
+    }
+    div.remark{
+        background-color: #E3F2FD;
+        border: 1.5px solid #d5f2ed;
+        padding: 15px;
+        margin: 10px;
+        border-radius: 25px;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    ol, ul, li {
+      margin: 0;
+      margin-left: 10px;
+      padding: 0;
+      padding-bottom: 5px;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+    }
+
+    img {
+        border: 1.5px solid #d5f2ed
+
+    }
+
+    a, a:visited, a:active, a:link, a:hover {
+        text-decoration: underline;
+        color: #545454;
+        background-color: transparent;
+    }
+
+    div.wrapdesc{
+        width: 90%;
+        margin: auto;
+    }
+
+    div.imagedesc{
+        width: 85%;
+        margin: auto;
+    }
+</style>
+
+<head>
+
+    <title>Spring0 Cold Storage Service</title></head>
+
+<body>
+<div id="top">
+    <h1>Spring0 Cold Storage Service<font size="5"></font> </h1>
+</div>
+
+<div class="body">
+    <h2>Introduction</h2>
+
+    <div >
+        <p>
+        Gli obiettivi dello Spring0 sono individuare la struttura principale, le macro-entità del sistema e le loro interazioni,
+        oltre che definire un piano di lavoro per gli sprint successivi.</p>
+        Serve ad analizzare i requisiti forniti dal committente per eliminare ogni ambiguità, per poter delineare la struttura
+        dei macro-componenti.
+
+    </div>
+
+
+    <h2>Requirements</h2>
+
+
+    <div class="remark">
+        A company intends to build a ColdStorageService, composed of a set of elements:
+
+        <ol class="arabic">
+            <li><p>a service area (rectangular, flat) that includes:</p>
+                <ul class="simple">
+                    <li><p>an INDOOR port, to enter food (fruits, vegetables, etc. )</p></li>
+                    <li><p>a ColdRoom container, devoted to store food, upto MAXW kg .</p></li>
+                </ul>
+                <p>The ColdRoom is positioned within the service area, as shown in the following picture:</p>
+                <blockquote>
+                    <div><a class="reference internal image-reference" href="../img/ColdStorageServiceRoomAnnoted.PNG"><img alt="../img/ColdStorageServiceRoomAnnoted.PNG" class="align-center" src="../img/ColdStorageServiceRoomAnnoted.PNG" style="width: 60%;" /></a>
+                    </div></blockquote>
+            </li>
+            <li><p>a DDR robot working as a transport trolley, that is intially situated in its HOME location.
+                The transport trolley has  the form of a square of side length RD.</p>
+                <p>The transport trolley is used to perform a deposit action that consists in the following phases:</p>
+                <ol class="arabic simple">
+                    <li><p>pick up a food-load from a Fridge truck located on the <span class="brown">INDOOR</span></p></li>
+                    <li><p>go from the <cite>INDOOR</cite> to the <span class="brown">PORT</span> of the <span class="blue">ColdRoom</span></p></li>
+                    <li><p>deposit the food-load in the <span class="blue">ColdRoom</span></p></li>
+                </ol>
+            </li>
+            <li><p>a ServiceAcessGUI that allows an human being to see the current current weigth of the material stored
+                in the ColdRoom and to send to the <span class="blue">ColdStorageService</span> a request to store new FW kg
+                of food.
+                If the request is accepted, the services return a ticket that expires after a prefixed amount of time
+                (TICKETTIME secs) and provides a field to enter the  ticket number when a Fridge truck is at the
+                <span class="brown">INDOOR</span> of the service.</p></li>
+            <li><p>a ServiceStatusGUI that allows a Service-manager(an human being) to
+                supervises the state of the service.</p></li>
+
+        </ol>
+        <section id="alarm-requirements">
+            <h2>Alarm requirements</h2>
+            <p>The system includes a <span class="blue">Sonar</span> and a <span class="blue">Led</span> connected to a RaspnerryPi.</p>
+            <p>The Sonar is used as an ‘alarm device’: when it measures a distance less than a prefixed value DLIMT,
+                the transport trolley must be stopped; it will be resumed when Sonar detects again a distance higher
+                than DLIMT.</p>
+            <p>The Led is used as a warning devices according to the following scheme:</p>
+            <blockquote>
+                <div><ul class="simple">
+                    <li><p>the <cite>Led</cite> is <strong>off</strong> when the  <cite>transport trolley</cite> is at <cite>HOME</cite></p></li>
+                    <li><p>the <cite>Led</cite> <strong>blinks</strong> while the <cite>transport trolley</cite> is moving</p></li>
+                    <li><p>the <cite>Led</cite> is <strong>on</strong> when <cite>transport trolley</cite> is stopped.</p></li>
+                </ul>
+                </div></blockquote>
+
+        </section>
+
+        <section id="service-users-story">
+            <h2>Service users story<a class="headerlink">¶</a></h2>
+            <p>The story of the <span class="blue">ColdStorageService</span> can be summarized as follows:</p>
+            <ol class="arabic simple">
+                <li><p>A <cite>Fridge truck</cite> driver uses the <em>ServiceAcessGUI</em> to send
+                    a request to store  its load of <strong>FW</strong> kg. If the request is accepted, the driver drives its truck
+                    to the <span class="brown">INDOOR</span> of the service, before the ticket exipration time <strong>TICKETTIME</strong>.</p></li>
+                <li><p>When the truck is at the <span class="brown">INDOOR</span> of the service, the driver uses the <em>ServiceAcessGUI</em> to
+                    enter the ticket number and waits until the message <strong>charge taken</strong>   (sent by the <cite>ColdStorageService</cite>)
+                    appears on the <em>ServiceAcessGUI</em>. At this point, the truck should leave the <span class="brown">INDOOR</span>.</p></li>
+                <li><p>When the service accepts a ticket, the <cite>transport trolley</cite> reaches the <span class="brown">INDOOR</span>, picks up the food,
+                    sends the <strong>charge taken</strong> message and then goes to the <span class="blue">ColdRoom</span> to store the food.</p></li>
+                <li><p>When the deposit action is terminated, the <span class="blue">transport trolley</span> accepts another ticket (if any)
+                    or returns to <span class="brown">HOME</span>.</p></li>
+                <li><p>While the <span class="blue">transport trolley</span> is moving, the <a class="reference internal" href="#alarm-requirements"><span class="std std-ref">Alarm requirements</span></a> should be satisfied.
+                    However, the <span class="blue">transport trolley</span> should not be stopped if some prefixed amount
+                    of time (<strong>MINT</strong> msecs) is not passed from the previous stop.</p></li>
+                <li><p>A <em>Service-manager</em> migtht use the <span class="blue">ServiceStatusGUI</span> to see:</p>
+                    <ul class="simple">
+                        <li><p>the <strong>current state</strong> of the <span class="blue">transport trolley</span> and it <strong>position</strong> in the room;</p></li>
+                        <li><p>the <strong>current weigth</strong> of the material stored in the <span class="blue">ColdRoom</span>;</p></li>
+                        <li><p>the <strong>number of store-requests rejected</strong> since the start of the service.</p></li>
+                    </ul>
+
+                    <p>The development of the <span class="blue">ServiceStatusGUI</span> is optional.
+                        However, it is <span class="remark">required</span> if the working team is composed of 3 person.
+                    </p>
+
+        <ol class="arabic simple">
+            <ul class="simple">
+
+        </ul> </div>
+    <h2>Requirement analysis</h2>
+    
+    <h2>Analisi dei requisiti</h2>
+
+    <p>Chiariamo quali sono i componenti di questa applicazione in base a ciò che possiamo estrapolare dal testo
+    fornito dal committene (cercando di seguire le direttive presenti in <a href="https://github.com/anatali/issLab23/blob/main/iss23Material/html/Template23.html" target="_blank">Template23</a> e
+        <a href="https://github.com/anatali/issLab23/blob/main/Appl1/userDocs/Appl1HTTPSprint2ImpostazioneEsempio.html" target="_blank">Appl1HTTPSprint2ImpostazioneEsempio</a>).</p>
+
+    <p>Oltre alla consegna il committente ci ha fornito la WEnv descritta in <a href="https://github.com/anatali/issLab23/blob/main/iss23Material/html/VirtualRobot23.html" target="_blank">VirtualRobot23</a>
+       e in <a href="https://github.com/anatali/issLab23/blob/main/it.unibo.virtualRobot2023/userDocs/VirtualRobot2021.html" target="_blank">VirtualRobot21</a> che rappresenta l'ambiente dove la nostra applicazione eseguirà.</p>
+    
+       <h4>Service Area</h4>
+       <p>Service Area: Area di forma rettangolare che rappresenta la nostra scena,
+    nella quale il DDR robot può agire.</p>
+    <p>
+    Usiamo il diametro RU del Transport Trolley che conosciamo come unità di misura per determinare l'area di questo rettangolo,
+    sfruttando l'idea di 'Step' che il robot può effettuare in essa.
+      </p>  
+      <p>Di conseguenza definiamo una griglia della stanza prendendo ispirazione da <a href="https://github.com/anatali/issLab23/blob/main/iss23Material/html/BasicRobot23.html" target="_blank">BasicRobot23</a> planner.
+    </p>
+    <p>Creiamo il piano cartesiano pensando l'origine nell'angolo in alto a sinistra del rettangolo Service Area e
+        definiamo l'insieme delle coordinate (x,y)</p>
+    <p>Nella mappa identifichiamo:
+        <lu>
+            <li>r come la posizione del robot.</li>
+            <li>x come gli ostacoli che il robot ha incontrato.</li>
+            <li>1 come le celle che il robot ha percorso e può percorrere per muoversi nella ServiceArea.</li>
+        </lu>
+    </p>
+    
+    <div><a href="../img/grigliaServiceArea.png"><img alt="../img/grigliaServiceArea.png" class="align-center" src="../img/grigliaServiceArea.png"  style="width: 30%;" /></a>
+    </div>
+    <p>Definita la Service area in questo modo possiamo ora definire le altre componenti presenti in questo spazio,
+    basandoci sulla griglia creata.</p>
+    
+    <p>Identifichiamo HOME come: (0,0)</p>
+
+    <p>Identifichiamo INDOOR come: (0,4) </p>
+
+    <h4>ColdRoom</h4>
+    <p>La ColdRoom è un container che rappresenta un frigorifero di capienza uguale a MAXW kg, che possiede una porta dalla quale
+        è possibile effettuare il carico del cibo. </p> 
+        <p>Definito in posizione: (4,1) , (5,1) , (4,2) e (5,2)</p>
+
+    <p>Identifichiamo la porta della COLDROOM come lato inferiore del container COLDROOM: (4,2) e (5,2)</p>
+
+    <h4>DDR robot</h4>
+    <p>Il DDR robot (Differential Drive Robot) è fornito dal committente, definito in <a href="https://github.com/anatali/issLab23/blob/main/iss23Material/html/BasicRobot23.html" target="_blank">BasicRobot23</a> , rappresenta un attore
+    che permette al Transport Trolley il movimento nella Service Area.</p>
+
+    <p>Dalla documentazione vediamo che i tipi di formati di messaggi che il basicRobot sfrutta sono:</p>
+    <div><a href="../img/messaggiBasicRobot.png"><img alt="../img/messaggiBasicRobot.png" class="align-center" src="../img/messaggiBasicRobot.png"  style="width: 60%;" /></a>
+    </div>
+
+    <h4>Transport Trolley </h4>
+    <p>Il Transport Trolley è un attore legato al DDR robot, perché sfrutta quest'ultimo per spostarsi dentro la ServiceArea.</p>
+
+    <p>La posizione del Transport Trolley verrà identificata tramite il sistema di coordinate per ServiceArea, perché
+        è utile sapere la posizione di esso per capire il percorso che sta segnando nella scena.</p>
+
+    <p>FW è il carico di cibo, in kg, che il robot preleva in INDOOR e deposita in ColdRoom. </p>
+
+    <p>TicketTime indica il lasso di tempo, in secondi, nel quale il Ticket risulta valido, che noi indichiamo come 15000.</p>
+
+    <p>Il Ticket è un intero assegnato al Truck Driver, insieme al timer TICKETTIME,
+    da valutare, che verrà accettato o rifiutato.</p>
+
+    <h4>ServiceAccessGUI </h4>
+    <p> ServiceAccessGUI permette al Truck driver di presentare richieste per scaricare
+    la quantità di cibo FW che porta, questa interfaccia quindi ci permetterà anche di richiedere Ticket e controllare
+    la disponibilità di spazio nel ColdRoom.</p>
+
+    <h4>ColdStorageService </h4>
+    <p>ColdStorageService è un attore che gestirà i Ticket, controllandone la validità, quindi riceve le richieste dal Truck Driver.
+        Questa interfaccia potrà quindi anche comunicare con il Trolley per indicargli la necessità di venire a prendere il carico FW che si sta scaricando.</p>
+
+        <h4>ServiceStatusGUI </h4>
+    <p>ServiceStatusGUI ci permette di supervisionare lo state of service. <p>
+    </p>Comunica quindi con ColdStorage per informarlo dello spazio disponibile nel ColdRoom. </p>
+
+    <p>Per state of service si intende: la disponibilità di spazio nella ColdRoom, la posizione delTransport Trolley e lo stato del Transport Trolley (ovvero se è già impegnato in una consegna o no).</p>
+
+    <h4>Attore e POJO </h4>
+    <p>La definizione di Attore è descritta in  <a href="https://github.com/anatali/issLab23/blob/main/iss23Material/html/QakActors23.html" target="_blank">QakActors23</a></p>
+
+    <p>La definizione di POJO è descritta in <a href="https://github.com/anatali/issLab23/blob/main/iss23Material/html/Appl1-HTTPSprint2.html" target="_blank">Appl1-HTTPSprint2.html</a> </p>
+
+    <p>Il seguente modello dell'architettura è generato dal codice a questo link : <a href="./qak/coldstorage25/src/coldstorage25.qak" target="_blank">coldstorage25.qak</a> </p>
+    <div><a href="../img/coldstorage25arch.png"><img alt="../img/coldstorage25arch.png" class="align-center" src="../img/coldstorage25arch.png" style="width: 30%;" style="height: 20%;"/></a>
+
+<h2>Problem analysis</h2>
+<p>L'Analisi del problema ci aiuta a chiarire le problematiche implicate dai requisiti e fornire informazioni su costi/tempi/risorse
+    serve per capire quali sono le maggiori problematiche da affrontare, le tecnologie da usare e le risorse (umane e temporali) necessarie. 
+    Inoltre gettano le basi per impostare il primo SPRINT di sviluppo e quindi per costruire
+    un primo ‘prototipo’funzionante del sistema da estendere poi in modo incrementale con gli SPRINT succesivi dopo una opportuna SPRINT-review con il committente.
+    terminate Analisi dei requisiti e del Problema dovremmo avere un modello del sistema, ovvero una prima ARCHITETTURA LOGICA.</p>
+
+<p>Con il committente si sono individuate alcune problematiche:</p>
+    <ul>
+        <li>Il problema del load-time lungo.</li>
+        <li>Il problema del driver distratto (non coerente, rispetto alle due fasi: scarico preceduto da prenotazione).</li>
+        <li>Il problema del driver malevolo.</li>
+        <li>Il problema di garantire che una risposta venga sempre inviata sempre solo a chi ha fatto la richiesta, anche quando la richiesta è inviata da un ‘alieno’ come una pagine HTML</li>
+    </ul>
+
+
+
+    <h4 data-heading="Il problema del load-time lungo">Il problema del load-time lungo</h4>
+    <p>Il problema del load-time lungo è stato affrontato da Arnaudo/Munari con l’idea di inviare due messaggi di ‘risposta’ (una per dire al driver che il ticket inviato è valido e una per inviare chargeTaken.
+        A questo scopo hanno fatto uso diretto della connessione TCP stabilita da una versione prototipale dell’accessGui fatta come GUI JAVA.<br>
+        Per consentire questa possibilità anche a livello di modellazione qak, in&nbsp;<em>ActorBasicFsm</em>&nbsp;è stato introdotto il metodo&nbsp;storeCurrentRequest()&nbsp;che permette di ricordare la richiesta corrente
+        (cancellata da una&nbsp;<strong style="color:#ef7089">replyTo</strong>). Questo però è un trucco/meccanismo che potrebbe risultare pericoloso.<br>
+    
+        Meglio&nbsp;affrontare il problema dal punto di vista logico, impostando una interazione a DUE-FASI tra driver e service (compito che può svolgere la&nbsp;<em>serviceAcessGui</em>).</p>
+    <ul>
+        <li>FASE1: il driver invia il ticket e attenda una risposta (immediata) come ad esempio&nbsp;<code>ticketaccepted/ticketrejected</code></li>
+        <li>FASE2: il driver invia la richiesta&nbsp;<code>loaddone</code>&nbsp;e attenda la risposta (<code>chargeTaken</code>&nbsp;o fallimento per cause legate al servizio)</li>
+    </ul>
+    <h4 data-heading="Il problema del driver distratto">Il problema del driver distratto</h4>
+    <p>Questo problema ha indotto il committente ad affermare che:<br>
+        quando un agente esterno (driver) invia il ticket per indurre il servizio a scaricare il truck, si&nbsp;SUPPPONE GARANTITO&nbsp;che il carico del truck sia UGUALE al carico indicato nella prenotazione.<br>
+        Ciò in quanto non vi sono sensori (bilance , etc) che possano fornire il valore del carico effettivo sul Truck.</p>
+    
+    <h4 data-heading="Il problema del driver malevolo">Il problema del driver malevolo</h4>
+    
+    <p>Per il problema del driver malevolo¶ si fa l’ipotesi che nessun driver cerchi di imbrogliare (rubando ticket, etc.)
+    </p>
+    
+    <h4 data-heading="Il problema dell’allarme ignorato">Il problema dell’allarme ignorato</h4>
+    <p>
+    Il problema dell’allarme ignorato
+    
+    Riguarda il requisito:
+    
+    the transport trolley should not be stopped if some prefixed amount of time (MINT msecs) is not passed from the previous stop
+    
+    Si è concordato che il tempo MINT viene conteggiato dopo che il transport trolley è stato riattivato dallo stato di fermo in cui è stato posto in seguito ad un comando di stop (ricevuto per via di Alarm requirements).
+    </p>
+    
+<h2>Test plans</h2>
+<p>Bisogna verificare che il sistema dei Ticket funzioni correttamente, quindi che i ticket vengano accettati o rifiutati in base alla disponibilità di spazio in ColdRoom e al valore di TICKETTIME.
+Ciò ci fa anche capire che bisogna verificare che lo scarico di FW avvenga correttamente in ColdRoom (ovvero che questo si riempia effettivamente dopo che il Transport Trolley scarica FW).</p>
+
+
+<h2>Project</h2>
+
+    <p>si pensa di dividere il lavoro il 3 Sprint:</p>
+
+   <p>
+    Nel primo Sprint1 si pensa di concentrarsi sulla gestione del core della applicazione, quindi nell'avere una logica funzionante per
+    la gestione dei Ticket, e un Transport Trolley che risponda correttamente ai comandi.</p>
+    <p>Di conseguenza si è portati a pensare che sia necessaria la visualizzazione della ServiceAccessGUI (responsabile dell'interazione tra Truck Driver, ColdStorageService e TransportTrolley).</p>
+
+</div>
+
+<h2>Testing</h2>
+
+
+<h2>Deployment</h2>
+
+
+<h2>Maintenance</h2>
+
+<!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+
+<br/><br/>
+</div>
+
+<div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
+    <p>By Cristina Napoli email: cristinaanna.napoli@studio.unibo.it,</p>
+    <!--<img src="./io.jpg" alt="mbot" width="15%" height="15%">-->
+    <p><td><img width="180" alt="io.jpg" src="../../../io.jpg" class="internal-embed"></td></p>
+    <p>GIT repo: <a href="https://github.com/kuri0317/issLab23Mio" target="_blank">https://github.com/kuri0317/issLab23Mio</a> </p>
+</div>
+</body>
+</html>
