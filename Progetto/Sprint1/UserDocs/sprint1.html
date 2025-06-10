@@ -193,17 +193,17 @@ div.imagedesc{
     
 <body>
 <div id="top">
-<h1>LABORATORIO DI INGEGNERIA DEI SISTEMI SOFTWARE <font size="5"></font> </h1>
+<h1>COLD STORAGE SERVICE SPRINT1 - Cristina Napoli<font size="5"></font> </h1>
 </div>  
 
 <div class="body"> 
 <h2>Introduction</h2>
  <p>Dopo aver chiarito la consegna del committente procediamo col realizzare uno Sprint1 seguendo le linee guida di  <a href="https://github.com/anatali/issLab23/blob/main/iss23Material/html/Appl1-HTTPSprint1.html" target="_blank">Appl1-HTTPSprint1.html</a> 
- e prendendo in considerazione ciò che è stato discusso nello <a href="../../Sprint0/UserDocs/sprint0.html" target="_blank">Sprint0</a></p>
+ e prendendo in considerazione ciò che è stato discusso nello <a href="../../Sprint0/UserDocs/sprint0.html" target="_blank">Sprint0</a> .</p>
 
  <p>Lo Sprint1 mira a produrre una prima versione del core applicativo funzionante.</p>
 
- <p>In base a ciò che abbiamo scritto nello sprint0 possiamo dedurre che il goal di questo sprint1 sarà:
+ <p>In base a ciò che abbiamo scritto nello sprint0 possiamo dedurre che il <strong> goal</strong> di questo Sprint1 sarà:
     <lu>
         <li>la creazione del componente ColdStorage (che abbiamo identificato come attore),
         che gestirà la generazione e validazione dei ticket, con una logica funzionante.
@@ -216,14 +216,14 @@ div.imagedesc{
         </li>
     </lu>
     <p>
-    Una idea per l'architettura di questo sprint, è la seguente:
+    Una idea per l'architettura di questo Sprint, è la seguente:
     <p><a href="../img/sprintarch.png"><img alt="../img/sprintarch.png" class="align-center" src="../img/sprintarch.png"  style="width: 50%;" /></a></p> 
     </p>
 </p>
  
 
 <h2>Requirement analysis</h2>
- 
+ <p>Già discussi nello <a href="../../Sprint0/UserDocs/sprint0.html" target="_blank">Sprint0</a>.</p>
 
 </div>
 
@@ -232,18 +232,18 @@ div.imagedesc{
     ed anche per capire quali sono le maggiori problematiche da affrontare, le tecnologie da usare e le risorse necessarie. 
 </p>
     <p>
-        Cerchiamo di capire le problematiche legate alla creazione di questi componenti.
+        Cerchiamo allora di capire le problematiche legate alla creazione di questi componenti.
     </p>
     <p>
         <li>
-            ColdStorageService: deve essere in grado di comunicare con ServiceAccessGUI ed anche con ColdRoom per conoscere lo spazio disponibile.
+            <strong>ColdStorageService</strong>: deve essere in grado di comunicare con ServiceAccessGUI ed anche con ColdRoom per conoscere lo spazio disponibile.
             Deve gestire e generare i ticket, quindi sarà a conoscenza del numero di ticket generati, rifiutati 
             e accettati.
             Inoltre dovrà anche comunicare con il TransportTrolley per chiamarlo presso l'INDOOR quando si necessita di effettuare una consegna, o mandarlo in HOME se non ci sono consegne, quindi sapere quale posizione 
             il Trolley sta occupando nella ServiceArea al momento, per capire se è libero o occupato da un altra consegna. 
         </li>
         <li>
-            TransportTrolley: deve gestire una richiesta di scarico alla volta, seguendo degli step ben precisi:
+            <strong>TransportTrolley</strong>: deve gestire una richiesta di scarico alla volta, seguendo degli step ben precisi:
             <ul>
                 <li>
                    Quando riceve una richiesta, perché un truck driver deve effettuare la sua consegna, entra in stato 'occupato' e si sposta da Home a Indoor.
@@ -269,17 +269,17 @@ div.imagedesc{
             </p>
         </li>
         <li>
-            ColdRoom: Deve tenere aggiornata l'informazione dello spazio disponibile nel frigorifero e controllare che non superi la soglia MAXW.
+            <strong>ColdRoom</strong>: Deve tenere aggiornata l'informazione dello spazio disponibile nel frigorifero e controllare che non superi la soglia MAXW.
             Per questo comunica con ColdStorageService per informarlo dello spazio disponibile al momento della richiesta e permettergli di validare i ticket, allocando lo spazio.
         
         </li>
         <li> 
-            ServiceAccessGUI MockObj: comunica con ColdStorageService per ottenere i ticket, inoltre riceve l'informazione di successo
+            <strong>ServiceAccessGUI MockObj</strong>: comunica con ColdStorageService per ottenere i ticket, inoltre riceve l'informazione di successo
             della consegna all'Indoor, per liberare il Truck Driver.
         </li>
     </p>
 
-    <p>Nello Sprint2 si pensa di: 
+    <p>Nello <strong>Sprint2</strong> si pensa di: 
         <ul>
             <li>
                 Gestire la logica degli Allarmi.
@@ -363,8 +363,6 @@ div.imagedesc{
             COLDSTORAGE: attendo un messaggio.
             TRANSPORTTROLLEY: vado in HOME.
             .......
-            ......
-            .....
             ...
             TRANSPORTTROLLEY: vado in HOME.
             TRANSPORTTROLLEY:  attendo messaggi da CStorage.
@@ -394,7 +392,6 @@ div.imagedesc{
             COLDSTORAGE: truck driver può andare.
             TRANSPORTTROLLEY: Prendo il carico. Vado in COLDROOM. 
             .....
-            ...
             ACCESSGUI : chiedo un ticket. [45s]
             COLDSTORAGE : chiedo a coldroom se c'è spazio.
             COLDROOM: non c'è spazio, rifiuta.
@@ -406,62 +403,94 @@ div.imagedesc{
             COLDSTORAGE: attendo un messaggio.
             TRANSPORTTROLLEY: vado in HOME.
             ....
-            <==========---> 83% EXECUTING [51s]
-            > :run
             </code></pre>
         </div>
-        (essendo molto lungo la copia è stata accorciata, il codice è disponibile nella repo e può essere eseguito.)
+        (essendo molto lungo il risultato la copia è stata accorciata, il codice è disponibile nella repo al link precedente.)
     </p>
     <p>
-        Spieghiamo il comportamento dei vari messaggi, indicati nell'architettura precedente.
+        Spieghiamo il comportamento dei vari messaggi, indicati nell'architettura in figura sopra.
         <ul>
             <li>
-                depositRequest: Serve a ServiceAccessGUI per richiedere un ticket da ColdStorageService, che potrà rispondere con accept o reject.
+                <strong>depositRequest</strong>: Serve a ServiceAccessGUI per richiedere un ticket da ColdStorageService, che potrà rispondere con accept o reject.
             </li>
             <li>
-                fwrequest: è la richiesta che ColdStorageService invia a ColdRoom per sapere se c'è lo spazio necessario a poter accettare la richiesta 
+                <strong>fwrequest</strong>: è la richiesta che ColdStorageService invia a ColdRoom per sapere se c'è lo spazio necessario a poter accettare la richiesta 
                 di ServiceAccessGUI. A questa richiesta riceverà una risposta fwYES o fwNO.
             </li>
             <li>
-                checkmyticket: è una richiesta che ServiceAccessGUI invia a ColdStorageService con il ticket che ha ricevuto in precedenza. 
+                <strong>checkmyticket</strong>: è una richiesta che ServiceAccessGUI invia a ColdStorageService con il ticket che ha ricevuto in precedenza. 
                 ColdStorageService controllerà il timer del ticket, rispondendo con ticketcheck.
             </li>
             <li>
-                delete_Reservation: è una richiesta che ColdStorageService invia a ColdRoom nel caso in cui il ticket di ServiceAccessGUI risulta scaduto.
+                <strong>delete_Reservation</strong>: è una richiesta che ColdStorageService invia a ColdRoom nel caso in cui il ticket di ServiceAccessGUI risulta scaduto.
                 Serve a cancellare la prenotazione liberando lo spazio che si era allocato in frigo.
             </li>
             <li>
-                truckDriver: un Dispatch che indica al truckDriver che può andare via, perché la consegna è andata a buon fine, il ticket era valido quindi non ha più niente da cui preoccuparsi.
+                <strong>truckDriver</strong>: un Dispatch che indica al truckDriver che può andare via, perché la consegna è andata a buon fine, il ticket era valido quindi non ha più niente da cui preoccuparsi.
             </li>
             <li>
-                load_CR: Quando il ticket viene accettato ColdStorageService deve informare ColdRoom, così che possa inserire lo spazio prenotato in spazio effettivamente da riempire.
+                <strong>load_CR</strong>: Quando il ticket viene accettato ColdStorageService deve informare ColdRoom, così che possa inserire lo spazio prenotato in spazio effettivamente da riempire.
             </li>
             <li>
-                takecharge: interazione tra ColdStorageService e TransportTrolley che indica a quest'ultimo di venire in INDOOR a prendere il carico che è stato consegnato, 
+                <strong>takecharge</strong>: interazione tra ColdStorageService e TransportTrolley che indica a quest'ultimo di venire in INDOOR a prendere il carico che è stato consegnato, 
                 per portarlo in ColdRoom. Il TransportTrolley risponderà con chargetaken quando sarà in INDOOR e avrà preso il carico.
             </li>
             <li>
-                liberoTT: è un Dispatch che TransportTrolley manda a ColdStorageService per informarlo di aver effettivamente caricato ColdRoom e sapere se è libero o 
+                <strong>liberoTT</strong>: è un Dispatch che TransportTrolley manda a ColdStorageService per informarlo di aver effettivamente caricato ColdRoom e sapere se è libero o 
                 se deve prendere altre consegne. 
             </li>
             <li>
-                goHome: è il Dispatch che ColdStorageService invia al TransportTrolley per indicargli che non ci sono altre consegne e deve andare in HOME.
+                <strong>goHome</strong>: è il Dispatch che ColdStorageService invia al TransportTrolley per indicargli che non ci sono altre consegne e deve andare in HOME.
             </li>
             
         </ul>
     </p>
     <p>
-
         Una volta concordato col committente il funzionamento di questa logica, si pensa di passare al comportamento effettivo del TransportTrolley, che al momento è solo ipotetico e va 
         anche migliorato nelle sue funzioni di gestione dello stato.  
     </p>
     <p>
-        Il trolley dovrà comunicare effettivamente con BasicRobot e produrre nella ScenaWebGL il movimento dello stesso, da HOME a INDOOR, da INDOOR a COLDROOM e da COLDROOM 
+        Prima di tutto il trolley dovrà comunicare effettivamente con BasicRobot e produrre nella ScenaWebGL il movimento dello stesso, da HOME a INDOOR, da INDOOR a COLDROOM e da COLDROOM 
         a HOME.
-
+    </p>
+    <p>
         Risolto e concordato anche questo test si pensa di aggiungere la gestione dei casi in cui si hanno più richieste mentre il trolley è occupato.
 
         Alla fine di tutti questi test si avrà un core funzionante dell'applicazione e si potrà procedere con la discussione dello Sprint2.
+    </p>
+
+    <p>
+        Come detto precedentemente cerchiamo come di gestire il movimento del BasicRobot facendolo comunicare con il TransportTrolley.
+        Intanto creiamo un QActor del TransportTrolley con l'unico scopo di comunicara col BasicRobot mandandogli messaggi (che siano richieste, dispatch ecc.)
+        Per fare ciò ci rendiamo conto che conviene vedere il BasicRobot come un Attore Esterno, come spiegato in: 
+        <a href="https://github.com/anatali/issLab23/blob/main/iss23Material/html/QakActors23Demo.html#external-caller1" target="_blank">QakActors23Demo.html#external-caller1</a>
+        anche perchè i messaggi con il quale è possibile interagire col BasicRobot sono già stati forniti dal committente e li avevamo indicati nello Sprint0.
+    </p>
+
+    <p>
+        Ecco perché con il codice a questo link <a href="../qak/prRobo/src/provaT.qak" target="_blank">provaT.qak</a> mandiamo dei comandi 
+        di movimento al BasicRobot. 
+        <ul>In ordine:
+            <li>
+                da HOME a INDOOR
+            </li>
+            <li>
+                da INDOOR a COLDROOM 
+            </li>
+            <li>
+                da COLDROOM a HOME 
+            </li>
+        </ul>
+        con le coordinate che avevamo indicato nello Sprint0. (Rispettivamente:(0,0),(0,4),(4,3))
+       
+    </p>
+    <p>
+        Per poter vedere i risultati di questo test è necessario prima far partire <a href="../../../unibo.basicrobot23" target="_blank">basicrobot23.yaml</a>
+        con il comando: <strong>docker compose -f basicrobot23.yaml  up </strong>
+       
+    </p>
+    <p>
+        Successivamente si può far partire  <a href="../qak/prRobo/src/provaT.qak" target="_blank">provaT.qak</a> e osservare il comportamento del robot nella scena.
     </p>
 <h2>Project</h2> 
  
