@@ -35,65 +35,67 @@ Context ctxbasicrobot ip [host="127.0.0.1" port=8020]
 
 QActor transporttrolley context ctxservicearea {
 	
-	
-	State s0 initial {
-		
-		println("TRANSPORTTROLLEY:  engage basicrobot") color yellow  
-		request basicrobot -m engage : engage(transporttrolley,330)
+	State s0 initial{
+		    println("TRANSPORTTROLLEY:  engage basicrobot") color yellow 
+            //ingaggiamo il robot
+		    request basicrobot -m engage : engage(transporttrolley,330)
 	}Transition t0	whenReply engagedone -> engaged
 	
-	State engaged {
-		
-		println("TRANSPORTTROLLEY: basicrobot engaged") color yellow	
-			
-	} Goto atHome
+	    State engaged {
+		    println("TRANSPORTTROLLEY: basicrobot engaged") color yellow	
+			    
+	    } Goto atHome
 	
-	State atHome{
-		
-		println("TRANSPORTTROLLEY: basicrobot at Home") color yellow
-		request basicrobot -m moverobot : moverobot (0,0)
-		
-	}Transition t0 whenReply moverobotdone -> goingatIndoor
+	    State atHome{
+		    
+            //indichiamo il robot in 0,0
+		    println("TRANSPORTTROLLEY: basicrobot at Home") color yellow
+		    request basicrobot -m moverobot : moverobot (0,0)
+	    }Transition t0 whenReply moverobotdone -> goingatIndoor
 	
 	State goingatIndoor {
 
 		println("TRANSPORTTROLLEY:  vado all'INDOOR") color yellow
-			request basicrobot -m moverobot : moverobot (0,4)
+		request basicrobot -m moverobot : moverobot(0,4)
 	}Goto atIndoor
 	
-	State atIndoor {
-		println("TRANSPORTTROLLEY:  sono in INDOOR") color yellow
-		println("TRANSPORTTROLLEY: carico il cibo") color yellow
-	}Transition t 	whenTime 30 -> loadDone		// simula azione di carico
-	
-	State loadDone {		
-		println("TRANSPORTTROLLEY: cibo caricato") color yellow
-		
-	}Goto goingColdroom
-	
+	    State atIndoor {
+		    println("TRANSPORTTROLLEY:  sono in INDOOR") color yellow
+		    println("TRANSPORTTROLLEY: carico il cibo") color yellow
+	    }Transition t 	whenTime 30 -> loadDone		// simula azione di carico
+	    
+	    State loadDone {		
+		    println("TRANSPORTTROLLEY: cibo caricato") color yellow
+		    
+	    }Goto goingColdroom
+
+
+
 	State goingColdroom {
 		
-		println("$name | vado verso la cold room") color yellow
-		request basicrobot -m moverobot : moverobot (4,3) 
-	}Transition t0 whenReply moverobotdone -> atColdroom
+		    println("TRANSPORTTROLLEY: vado verso coldroom") color yellow
+		    request basicrobot -m moverobot : moverobot (4,3) 
+	    }Transition t0 whenReply moverobotdone -> atColdroom
 	
 	State atColdroom {
 		
 		println("TRANSPORTTROLLEY: sono in Cold Room") color yellow	
-		request basicrobot -m moverobot : moverobot (0,0)	
+		request basicrobot -m moverobot : moverobot(0,0)	
 	}
 	Transition t0 whenTime 100 -> goinHome	
-	
 	
 	State goinHome{
 		println("TRANSPORTTROLLEY: sono in HOME") color yellow
 		
 	} Goto quit 
 	
+
+
 	State quit {
 		forward basicrobot -m disengage : disengage(transporttrolley)
 		[# System.exit(0) #]
 	}
 }
 
+//contesto esterno del robot
 ExternalQActor basicrobot context ctxbasicrobot

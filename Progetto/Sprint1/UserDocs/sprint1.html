@@ -296,6 +296,8 @@ div.imagedesc{
     <p>Si pensa di dividere i test in sezioni, iniziando con il testare prima il funzionamento della logica della consegna e validazione dei ticket 
         da parte di ColdStorageService, e quindi avere anche una logica della gestione del peso nella ColdRoom funzionante. 
     </p>
+
+    <h4>test1</h4>
     <p>A questo proposito si propone come soluzione il codice qak seguente <a href="../qak/spr1Prova/src/sprint.qak" target="_blank">sprint.qak</a>
         che ha prodotto questi risultati: 
         
@@ -446,8 +448,7 @@ div.imagedesc{
         </ul>
     </p>
     <p>
-        Una volta concordato col committente il funzionamento di questa logica, si pensa di passare al comportamento effettivo del TransportTrolley, che al momento è solo ipotetico e va 
-        anche migliorato nelle sue funzioni di gestione dello stato.  
+        Una volta concordato col committente il funzionamento di questa logica, si pensa di passare al comportamento effettivo del TransportTrolley.   
     </p>
     <p>
         Prima di tutto il trolley dovrà comunicare effettivamente con BasicRobot e produrre nella ScenaWebGL il movimento dello stesso, da HOME a INDOOR, da INDOOR a COLDROOM e da COLDROOM 
@@ -458,7 +459,7 @@ div.imagedesc{
 
         Alla fine di tutti questi test si avrà un core funzionante dell'applicazione e si potrà procedere con la discussione dello Sprint2.
     </p>
-
+    <h4>test2</h4>
     <p>
         Come detto precedentemente cerchiamo come di gestire il movimento del BasicRobot facendolo comunicare con il TransportTrolley.
         Intanto creiamo un QActor del TransportTrolley con l'unico scopo di comunicara col BasicRobot mandandogli messaggi (che siano richieste, dispatch ecc.)
@@ -492,6 +493,32 @@ div.imagedesc{
     <p>
         Successivamente si può far partire  <a href="../qak/prRobo/src/provaT.qak" target="_blank">provaT.qak</a> e osservare il comportamento del robot nella scena.
     </p>
+
+    <h4>test3</h4>
+    <p> Per testare il comportamento del BasicRobot unitamente alla logica precedentemente espressa è possibile visionare  <a href="../qak/prova1UT/src/provaut.qak" target="_blank">provaut.qak</a> .</p>
+    <p> L'achitettura di questo sistema è la seguente: 
+    <a href="../qak/prova1UT/provautarch.png"><img alt="../qak/prova1UT/provautarch.png" class="align-center" src="../qak/prova1UT/provautarch.png"  style="width: 70%;" /></a></p>
+
+    <p> Qui sono stati aggiunti degli altri messaggi di Request quali: </p>
+
+    <ul>
+            <li>
+                <strong>frigofull</strong>: Serve a ColdRoom per informare ColdStorageService che non c'è più spazio disponibile.
+            </li>
+            <li>
+                <strong>quit</strong>:che ColdStorageService invia al TransportTrolley per indicare che l'esecuzione è terminata e deve liberare il BasicRobot.
+                di ServiceAccessGUI. A questa richiesta riceverà una risposta fwYES o fwNO.
+            </li>
+            
+    </ul>
+    
+    <p>Più i messaggi che avvengono tra il TransportTrolley ed il BasicRobot che avevamo già indicato nello Sprint0.</p>
+
+    <p>
+        Anche questa volta per vedere i risultati è necessario prima far partire <a href="../../../unibo.basicrobot23" target="_blank">basicrobot23.yaml</a>
+        con il comando: <strong>docker compose -f basicrobot23.yaml  up </strong>
+    </p>
+    <p> E successivamente far partire <a href="../qak/prova1UT/src/provaut.qak" target="_blank">provaut.qak</a> da eclipse.</p>
 <h2>Project</h2> 
  
 </div>
