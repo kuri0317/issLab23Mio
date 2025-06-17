@@ -85,7 +85,6 @@ QActor coldstorageservice context ctxservicearea {
 		var Ticket =""
 		
 		var T_acc=0
-		var T_rif=0
 		
 		var busy = false 
 		var valido = false
@@ -140,9 +139,7 @@ QActor coldstorageservice context ctxservicearea {
 					whenReply fwNO -> reject
 	State reject {
 		println("COLDSTORAGE : non c'è spazio, richiesta rifiutata") color red
-		[# 
-			T_rif++
-		#]
+		
 		replyTo depositRequest with reject : reject( NO_PARAM )
 	} Goto s1
 	
@@ -152,7 +149,7 @@ QActor coldstorageservice context ctxservicearea {
 			
 			var Now = java.util.Date().getTime()/1000
 			
-			Ticket = Ticket.plus( Now ).plus(Token).plus( T_acc)
+			Ticket = Ticket.plus( Now ).plus(Token).plus(T_acc)
 			T_acc++
 			
 			#]
