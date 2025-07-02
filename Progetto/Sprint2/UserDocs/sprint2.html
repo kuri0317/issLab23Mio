@@ -1,0 +1,348 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <!--
+<link rel="stylesheet" type="text/css" href="../css/issStyle1.css">
+<script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+<style type="text/css">
+body
+{
+    margin-left:  30px;
+    margin-right: 30px;
+};
+
+P
+{
+    font-family: Tahoma;
+    font-size: 10pt;
+};
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+	font-size: 93%;
+}
+
+a:hover {
+    background-color: #cccccc;
+}
+
+
+hr {
+    clear: both;
+    height: 1px;
+    color: #242424;
+    background-color: transparent;
+}
+
+h1, h2, h3 {
+    color: #242424;
+    clear: left;
+    font: 100% Tahoma, Helvetica, Arial, sans-serif;
+    margin-bottom: 0.5em;
+    padding-top: 0.5em;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+top {
+	width: 100%;
+}
+
+
+#i {
+    color: #ff1010;
+}
+tt{
+	font-family: "Arial";
+    font-size: 90%;
+	color: #006600;
+}
+em{
+	font-family: "Arial";
+    font-size: 80%;
+	font-weight: bold;
+	border-style:solid;
+	border-color: #abe876;
+    color: #1632cc;
+}
+bc{
+	font-family: "Arial";
+	font-size: 90%;
+	font-weight: bold;
+    color: #990000;
+	background-color: #fcf8c7;
+}
+ks{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #0000CD	;
+	font-size: 90%;
+}
+kc{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #008000	;
+	font-size: 90%;
+}
+pre{
+	font-family: "Consolas";
+	font-size: 85%;
+	background-color: #f5f5f5;
+	border: 1.5px solid silver;
+	padding: 5px;
+}
+m{
+	font-family: "Helvetica";
+	line-height: 100%;
+ 	font-size: 75%;
+}
+div.body{
+	 
+    font-size: 18px;
+}
+k{
+    color: #990000;
+	font-weight: bold;
+	font-size: 90%;
+}
+h1 {
+    font-size: 150%;
+    background-color: #b2c0ff;
+	padding: 10px;
+}
+
+h2 {
+    background-color: #9ed8ff;
+    font-size: 130%;
+}
+
+h3 {
+	background-color: #e6ccff;
+    font-size: 100%;
+}
+h4 {
+    background-color: #ccffcc;
+    font-size: 100%;
+	width: 95%;
+	border-radius: 5px;
+	padding: 2px;
+}
+h5 {
+    background-color: #d5ffb0;
+    font-size: 100%;
+
+}
+div.req{
+	background-color: #d9ffb3;
+    font-size: 18px;
+	width: 700px;
+    border: 3px solid green;
+    padding: 15px;
+    margin: 10px;
+}
+div.remark{
+	background-color: #E3F2FD;
+    border: 1.5px solid #d5f2ed;
+    padding: 15px;
+    margin: 10px;
+	border-radius: 25px;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+ol, ul, li {
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+  padding-bottom: 5px;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+img {
+	border: 1.5px solid #d5f2ed
+
+}
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+}
+
+div.wrapdesc{
+	width: 90%;
+	margin: auto;
+}
+
+div.imagedesc{
+	width: 85%;
+	margin: auto;
+}
+</style>
+    
+<head><title>Sprint2</title></head>
+    
+<body>
+<div id="top">
+<h1>COLD STORAGE SERVICE SPRINT2 - Cristina Napoli<font size="5"></font> </h1>
+</div>  
+
+<div class="body"> 
+<h2>Introduction</h2>
+ <p>Con rifemento allo <a href="../../Sprint1/UserDocs/sprint1.html" target="_blank">Sprint1</a> parte uno e <a href="../../Sprint1-2/UserDocs/sprint1_2.html" target="_blank">Sprint1</a> parte due
+    adesso introduciamo lo Sprint2.</p>
+
+ <p>Lo Sprint2 mira a generare il sistema degli allarmi, descritto nei Requirement analizzati precedentemente nello 
+    <a href="../../Sprint0/UserDocs/sprint0.html" target="_blank">Sprint0</a> che chiedevano la realizzazione di un Led e di un Sonar.
+</p>
+
+<h2>Requirement analysis</h2>
+ <p>Già discussi nello <a href="../../Sprint0/UserDocs/sprint0.html" target="_blank">Sprint0</a>.</p>
+</div>
+
+<h2>Problem analysis</h2>
+
+<p>Non avendo un Raspberry fisico con il committente abbiamo deciso di simulare il funzionamento degli allarmi tramite classi Java e attori qak.</p>
+<p>Nella cartella <a href="../codici/led" target="_blank">led</a> troviamo l'applicazione atta a simulare gli allarmi, mentre in <a href="../codici/coldstorage/" target="_blank">coldstorage</a> troviamo il progetto modificato per rispondere ai nuovi comandi dei sistemi di allarmi creati.</p>
+
+<p>Nella cartella led gestiamo il <a href="../codici/led/src/led.qak" target="_blank">led.qak</a> come un attore QActor, che indicheremo come esterno al nostro coldstorage, che risponderà a dei Dispatch generati dall'attore transporttrolley.
+    Il Sonar invece viene gestito come una classe java <a href="../codici/led/src/main/java/sonar.java" target="_blank">sonar.java</a> in grado di comunicare via TCP con il nostro coldstorage e inviare Event e Dispatch al transporttrolley per simulare un ostacolo nel suo percorso.
+</p>
+<h2>Test plans</h2> 
+<p>Gli scenari da verificare sono:
+    <lu>
+        <li>
+            Che il coldtorage risponda correttamente ai messaggi del Sonar, fermandosi durante il suo percorso e riprendendolo senza errori una volta rimosso l'ostacolo.
+        </li>
+        <li>
+            Che il led sia in grado di creare una finestra con led e rispondere ai messaggi del coldstorage.
+            <lu>Il led deve:
+                <li>essere spento (grigio) quando il transporttrolley si trova in posizione HOME.</li>
+                <li>lampeggiare con luce verde quando è in transito nella la servicearea.</li>
+                <li>essere di colore rosso quando si ferma per un ostacolo o per caricare o scaricare la consegna.</li>
+            </lu>
+
+            A questo proposito con il committente abbiamo deciso di chiarire che nel caso in cui il transporttrolleysia in HOME ma abbia di fronte un ostacolo se arriva una richiesta la luce del led deve diventare rossa, a indicare che il transporttrolley deve andare all'INDOOR ma al momento non riesce.
+            
+        </li>
+    </lu>
+</p>
+    
+<h2>Project</h2> 
+ 
+    <p>
+    L'architettura per il progetto dello sprint2 è la seguente:
+    <p><a href="../codici/coldstorage/coldstoragearch.png"><img alt="../codici/coldstorage/coldstoragearch.png"class="align-center" src="../codici/coldstorage/coldstoragearch.png" style="width: 75%;" /></a></p> 
+   
+    <p>Per il led è stato creato un file <a href="../codici/led/src/led.qak" target="_blank">led.qak</a> per definire il nuovo attore e il nuovo contesto ed una classe <a href="../codici/led/src/main/java/Led.java" target="_blank">Led.java</a> per generare la finestra del led.   
+    </p>
+    <p>Per il sonar è stata creata una classe java <a href="../codici/led/src/main/java/sonar.java" target="_blank">sonar.java</a>.</p>
+
+    <p>che si presenta con un il menù seguente:</p>
+    <div class="code-container">
+        <pre><code class="language-qak">
+            === Menu Cold Storage ===
+            1 - Robot incontra ostacolo
+            2 - Ostacolo rimosso
+            0 - Esci
+            Scelta: 
+        </code></pre>
+    </div>
+    <p>In cui è possibile simulare la comparsa di un ostacolo davanti il basicrobot23 e la scomparsa di tale ostacolo successivamente.</p>
+    <p>
+        Per poter generare i test del progetto è necessario prima far partire <a href="../../../unibo.basicrobot23" target="_blank">basicrobot23</a>
+        con il comando: <strong>docker compose -f basicrobot23.yaml  up </strong>
+    </p>
+    <p>
+        Successivamente far partire <a href="../codici/coldstorage/src/coldstorage.qak" target="_blank">coldstorage.qak</a> ed in un altro terminale far partire  <a href="../codici/led/src/led.qak" target="_blank">led.qak</a> da eclipse col comando: <strong>./gradlew run </strong>
+    </p>
+    <p> In altri due terminali far partire rispettivamente la classe <a href="../codici/sprint1/src/main/java/serviceaccessgui.java" target="_blank">serviceaccessgui.java</a> con il comando:  <strong>./gradlew runserviceaccessgui </strong> e la classe <a href="../codici/led/src/main/java/sonar.java" target="_blank">sonar.java</a> con il comando <strong>./gradlew runSonar </strong> </p>
+
+</div>
+
+<h2>Testing</h2> 
+
+<p>Testiamo di seguito il comportamento del sonar: </p>
+ 
+        <div class="code-container">
+            <pre><code class="language-qak">
+            COLDSTORAGE: ColdRoom deve togliere l'allocazione e confermare lo spazio.
+            COLDROOM s2: Peso totale in frigo: 15 e lo spazio allocato ora è: 0
+            COLDROOM: aspetto richieste da CStorage.
+                        %%%  ActorBasic transporttrolley | emit msg(alarm,event,transporttrolley,none,alarm(X),36)  towards ctxbasicrobot via proxy
+                        %%%  ActorBasic transporttrolley | emit msg(alarm,event,transporttrolley,none,alarm(X),36)  towards ctxled via proxy
+            TRANSPORTTROLLEY: basicrobot ha incontrato un ostacolo
+            COLDSTORAGE: attendo un messaggio.26s]
+            TRANSPORTTROLLEY: sto prendendo il carico.
+            ....
+            ..
+        </code></pre>
+        </div>
+        <p>Vediamo che nel momento in cui il sonar riceve <cite>'1'</cite> come comando invia al transporttrolley un evento di <cite>stop </cite>che gli consente di inviare al basicrobot il comando <cite>alarm</cite> che ferma il transporttrolley.</p>
+
+        <p>successivamente una volta ricevuto <cite>'2'</cite> il sonar invia un messaggio di <cite>resume</cite> che permette al transporttrolley di uscire dallo stato di stop e riprendere la sua operazione dove l'aveva lasciata: 
+
+<p>Testando la simulazione con anche il led vedremo apparire la finestra con il led che inizialmente sarà di colore grigio, nel momento in cui riceverà i comandi di <cite>inmoto, ledOn o ledOff</cite> il colore
+del led cambierà stato. Di seguito il codice generato dell'attore led durante la prova della simulazione:</p>
+        <div class="code-container">
+            <pre><code class="language-qak">
+        LED in s0 
+        led attende messaggi 
+        LED : Ricevuto ledOff! Spengo
+        LED spento
+        LED : Ricevuto inmoto! Cambio stato0s]
+        LED : Ricevuto ledOn! Cambio stato26s]
+        LED acceso
+        Lampeggio interrotto
+        LED : Ricevuto inmoto! Cambio stato2s]
+        LED : Ricevuto ledOn! Cambio stato32s]
+        LED acceso
+        ....
+        ...
+        ..
+            </code></pre>
+        </div>
+        sia il led che il sonar rispondono correttamente ai comandi ricevuti dovuti la simulazione.
+        </p>
+<h2>Deployment</h2> 
+
+ 
+<h2>Next Steps</h2> 
+ 
+
+    <p>Nello <strong>Sprint3</strong> si pensa di: 
+        <ul>
+            <li>
+                Gestire la creazione della ServiceAccessGui.
+            </li>
+            
+            
+        </ul>
+    </p>
+<!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+	      	
+<br/><br/> 	
+</div>  
+
+<div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
+    By Cristina Napoli email: cristinaanna.napoli@studio.unibo.it,
+    <!--<img src="./io.jpg" alt="mbot" width="15%" height="15%">-->
+    <p><td><img width="180" alt="io.jpg" src="../../../io.jpg" class="internal-embed"></td></p>
+    <p>GIT repo: <a href="https://github.com/kuri0317/issLab23Mio" target="_blank">https://github.com/kuri0317/issLab23Mio</a> </p>
+</body>
+</html>

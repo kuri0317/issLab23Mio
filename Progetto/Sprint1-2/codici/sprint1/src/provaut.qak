@@ -26,7 +26,6 @@ Request load_CR : load_CR(NO_PARAM)
 
 Request delete_Reservation: delete_Reservation(NO_PARAM)
 
-Request frigofull : frigofull(NO_PARAM)
 
 //messaggi TransportTrolley e CStorage 
 
@@ -82,7 +81,6 @@ QActor coldstorageservice context ctxservicearea {
 		var Token= "_" 
 		var InitialToken ="T"
 		var Ticket =""
-		
 		var T_acc=0
 		
 		var busy = false 	//variabile che indica se il trolley è libero o occupato
@@ -98,7 +96,7 @@ QActor coldstorageservice context ctxservicearea {
 	}Transition t0 whenRequest depositRequest -> check
 				whenRequest checkmyticket -> checktheticket
 				whenMsg liberoTT-> libera 
-				whenRequest frigofull -> esci
+				whenRequest quit -> esci
 
 	State checktheticket {			//controlla se il ticket è valido in base al timer
 			onMsg(checkmyticket : checkmyticket(TICKET)){
@@ -112,11 +110,10 @@ QActor coldstorageservice context ctxservicearea {
 						Ticketvalid = true
 						valido = true
 					}	
-					
 				#]
 				println("COLDSTORAGE : controllo il ticket di SAGUI, ticket valido? $Ticketvalid") color red 
 				println("COLDSTORAGE : now $Now < StartTime $StartTime + $TICKETTIME = $Ticketvalid") color red 
-				replyTo checkmyticket with ticketcheck : ticketcheck($Ticketvalid)
+				replyTo checkmyticket with ticketcheck : $Ticketvalid
 			}
 		} Goto svuotaAlloc if [# !valido#] else taking //se valido si va in taking se non valido si elimina la prenotazione dello spazio in frigo
 		
@@ -145,7 +142,6 @@ QActor coldstorageservice context ctxservicearea {
 	State returnticket { //crea ticket quando è stato controllato lo spazio in frigo
 		
 		[#  Ticket = "T".plus(Token)
-			
 			var Now = java.util.Date().getTime()/1000
 			
 			Ticket = Ticket.plus( Now ).plus(Token).plus( T_acc)
@@ -231,11 +227,7 @@ QActor coldroom context ctxservicearea {
 				println("COLDROOM: non c'è spazio, rifiuta.")  color red 
 				replyTo fwrequest with fwNO : fwNO( NO_PARAM )
 				}
-				if [#Peso>= MAXW#]{		//quando il frigo è pieno allora si può indicare l'uscita dal sistema
-					//indicare che è pieno
-					println("COLDROOM :  frigo PIENO.")  color red 
-					request coldstorageservice -m frigofull : frigofull (NO_PARAM)
-				}
+				
 				println("COLDROOM : il Peso totale in frigo è: $Peso") color cyan    // ad ogni interazione controlliamo lo spazio in frigo
 			}
 		}Goto s1
@@ -397,5 +389,4 @@ QActor  serviceaccesgui context ctxservicearea {
 
 //indicare BasicRobot come Attore esterno
 ExternalQActor basicrobot context ctxbasicrobot
-
 

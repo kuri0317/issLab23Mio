@@ -204,18 +204,17 @@ div.imagedesc{
  <p>Lo Sprint1 ora mira a produrre un core applicativo funzionante che integisce con l'utente, creiamo la classe <a href="../codici/sprint1/src/main/java/serviceaccessgui.java" target="_blank">serviceaccessgui.java</a> che:
     <lu>
         <li>avviandola mostri all'utente un menù con delle scelete tra: 
-            <lu>
-                <li>
-                    1 : richiedere un ticket 
-                </li>
-                <li>
-                    2 : chiedere la convalida del ticket 
-                </li>
-                <li>
-                    0 : uscire 
-                </li>
-            </lu>
-        </li>
+           <div class="code-container">
+            <pre><code class="language-qak">
+            === Menu Cold Storage ===
+            1 - Richiedi ticket deposito
+            2 - Verifica ultimo ticket
+            3 - Verifica ticket specifico
+            4 - Mostra ticket attivi
+            0 - Esci
+            Scelta: 
+            </code></pre>
+        </div>
       per poter generare diversi tipi di test in maniera più semplice e rendere il programma interattivo.
     </lu>
     </p>
@@ -230,7 +229,18 @@ div.imagedesc{
 <h2>Problem analysis</h2>
 
 <h2>Test plans</h2> 
-
+<p>I test da controllare sono i casi:
+    <lu>
+        <li>
+            Che i Ticket vengano generati, accettati o rifiutati e mostrati correttamente all'utente.
+        </li>
+        <li>
+            Che i ticket ottenuti siano correttamente validati o eliminati.
+            
+        </li>
+        <li>Che sia possibile richiedere più ticket contempora di seguito, e validarli in tempi differenti.</li>
+    </lu>
+</p>
     
 <h2>Project</h2> 
  
@@ -241,41 +251,7 @@ div.imagedesc{
     <p>Al seguente link <a href="../codici/sprint1/src/provaut.qak" target="_blank">sprint.qak</a> è presente il nuovo codice qak del progetto, mentre
         <a href="../codici/sprint1/src/main/java/serviceaccessgui.java" target="_blank">serviceaccessgui.java</a> è la classe java da far partire insieme al progetto.
    
-        <div class="code-container">
-            <pre><code class="language-qak">
-            
-            === Menu Cold Storage ===
-            1 - Richiedi ticket deposito
-            2 - Verifica validità ticket
-            0 - Esci
-            Scelta: 
-            <<======Invio richiesta ticket...2s]
-            Ticket accettato: accept(T_1750152658_1)
-
-            === Menu Cold Storage ===
-            1 - Richiedi ticket deposito
-            2 - Verifica validità ticket
-            0 - Esci
-            Scelta: 
-            <=======Verifico ticket: accept(T_1750152658_1)
-            Ticket valido? NO
-
-            === Menu Cold Storage ===
-            1 - Richiedi ticket deposito
-            2 - Verifica validità ticket
-            0 - Esci
-            Scelta: 
-
-            </code></pre>
-        </div>
     </p>
-    <p>
-        <h5>Spiegazione Messaggi</h5>
-        <ul>
-           
-        </ul>
-    </p>
-    
     <p>
         Per poter generare i test del progetto è necessario prima far partire <a href="../../../unibo.basicrobot23" target="_blank">basicrobot23</a>
         con il comando: <strong>docker compose -f basicrobot23.yaml  up </strong>
@@ -288,8 +264,133 @@ div.imagedesc{
 </div>
 
 <h2>Testing</h2> 
- 
 
+<p>Il primo test si può vedere di seguito: </p>
+ 
+        <div class="code-container">
+            <pre><code class="language-qak">
+                            
+                === Menu Cold Storage ===
+                1 - Richiedi ticket deposito
+                2 - Verifica ultimo ticket
+                3 - Verifica ticket specifico
+                4 - Mostra ticket attivi
+                0 - Esci
+                Scelta: 
+                <=======Invio richiesta ticket...]
+                Ticket accettato: accept(T_1750324452_0)
+                Ticket attivi: 1
+
+                === Menu Cold Storage ===
+                1 - Richiedi ticket deposito
+                2 - Verifica ultimo ticket
+                3 - Verifica ticket specifico
+                4 - Mostra ticket attivi
+                0 - Esci
+                Scelta: 
+                <=======Verifico ticket: accept(T_1750324452_0)
+                Ticket valido? SI
+                Ticket rimosso dalla lista
+
+                === Menu Cold Storage ===
+                1 - Richiedi ticket deposito
+                2 - Verifica ultimo ticket
+                3 - Verifica ticket specifico
+                4 - Mostra ticket attivi
+                0 - Esci
+                Scelta: 
+                <<======Invio richiesta ticket...6s]
+                Ticket accettato: accept(T_1750324473_1)
+                Ticket attivi: 1
+
+                === Menu Cold Storage ===
+                1 - Richiedi ticket deposito
+                2 - Verifica ultimo ticket
+                3 - Verifica ticket specifico
+                4 - Mostra ticket attivi
+                0 - Esci
+                Scelta: 
+                <<======Verifico ticket: accept(T_1750324473_1)
+                Ticket valido? NO
+                Ticket rimosso dalla lista
+                ...........
+                <=======Verifico ticket: accept(T_1750325267_3)
+                Ticket valido? SI
+                Ticket rimosso dalla lista
+
+                === Menu Cold Storage ===
+                1 - Richiedi ticket deposito
+                2 - Verifica ultimo ticket
+                3 - Verifica ticket specifico
+                4 - Mostra ticket attivi
+                0 - Esci
+                Scelta: 
+                <=======Invio richiesta ticket...s]
+                <<==========---> 83% EXECUTING [1m 5s]
+                Richiesta rifiutata     //osserviamo che appena il frigo è pieno la richiesta di un ticket è rifiutata
+            </code></pre>
+        </div>
+        <p> Osserviamo un ticket che viene generato, quando possibile, e che poi un ticket venga validato e uno che risulta invalido</p>
+
+        <p>Controlliamo anche sia possibile chiedere più di un ticket e richiedere la validazione successivamente : 
+
+        <div class="code-container">
+            <pre><code class="language-qak">
+                                        
+            === Menu Cold Storage ===
+            1 - Richiedi ticket deposito
+            2 - Verifica ultimo ticket
+            3 - Verifica ticket specifico
+            4 - Mostra ticket attivi
+            0 - Esci
+            Scelta: 
+            <<======Invio richiesta ticket...s]
+            Ticket accettato: accept(T_1750324658_2)
+            Ticket attivi: 1
+
+            === Menu Cold Storage ===
+            1 - Richiedi ticket deposito
+            2 - Verifica ultimo ticket
+            3 - Verifica ticket specifico
+            4 - Mostra ticket attivi
+            0 - Esci
+            Scelta: 
+            <=======Invio richiesta ticket...]
+            Ticket accettato: accept(T_1750324660_3)
+            Ticket attivi: 2
+
+            === Menu Cold Storage ===
+            1 - Richiedi ticket deposito
+            2 - Verifica ultimo ticket
+            3 - Verifica ticket specifico
+            4 - Mostra ticket attivi
+            0 - Esci
+            Scelta: 
+            <<==========---> 83% EXECUTING [12s]
+            Ticket disponibili:
+            1 - accept(T_1750324658_2)
+            2 - accept(T_1750324660_3)
+
+            === Menu Cold Storage ===
+            1 - Richiedi ticket deposito
+            2 - Verifica ultimo ticket
+            3 - Verifica ticket specifico
+            4 - Mostra ticket attivi
+            0 - Esci
+            Scelta: 
+            <==========---> 83% EXECUTING [20s]
+            Ticket disponibili:
+            1 - accept(T_1750324658_2)
+            2 - accept(T_1750324660_3)
+            Scegli il numero del ticket da validare (0 per annullare): 
+            <==========---> 83% EXECUTING [23s]                        Verifico ticket: accept(T_1750324658_2)
+            Ticket valido? NO
+            Ticket rimosso dalla lista
+
+            </code></pre>
+        </div>
+
+        </p>
 <h2>Deployment</h2> 
 
  
@@ -299,10 +400,10 @@ div.imagedesc{
     <p>Nello <strong>Sprint2</strong> si pensa di: 
         <ul>
             <li>
-                Gestire la logica degli Allarmi.
+                Gestire la creazione e la logica degli Allarmi.
             </li>
             <li>
-                Gestire la logica di Sonar e Led.
+                Creare i componenti Sonar e Led.
             </li>
             
         </ul>

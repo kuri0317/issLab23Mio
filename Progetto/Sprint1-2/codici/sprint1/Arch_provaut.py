@@ -33,7 +33,6 @@ with Diagram('provautArch', show=False, outformat='png', graph_attr=graphattr) a
      with Cluster('ctxbasicrobot', graph_attr=nodeattr):
           basicrobot=Custom('basicrobot(ext)','./qakicons/externalQActor.png')
      coldstorageservice >> Edge(color='magenta', style='solid', decorate='true', label='<takecharge<font color="darkgreen"> chargetaken</font> &nbsp; quit &nbsp; >',  fontcolor='magenta') >> transporttrolley
-     coldroom >> Edge(color='magenta', style='solid', decorate='true', label='<frigofull &nbsp; >',  fontcolor='magenta') >> coldstorageservice
      transporttrolley >> Edge(color='magenta', style='solid', decorate='true', label='<engage<font color="darkgreen"> engagedone engagerefused</font> &nbsp; moverobot<font color="darkgreen"> moverobotdone moverobotfailed</font> &nbsp; >',  fontcolor='magenta') >> basicrobot
      coldstorageservice >> Edge(color='magenta', style='solid', decorate='true', label='<delete_Reservation &nbsp; fwrequest<font color="darkgreen"> fwYES fwNO</font> &nbsp; load_CR &nbsp; >',  fontcolor='magenta') >> coldroom
      coldstorageservice >> Edge(color='blue', style='solid',  decorate='true', label='<goHome &nbsp; >',  fontcolor='blue') >> transporttrolley

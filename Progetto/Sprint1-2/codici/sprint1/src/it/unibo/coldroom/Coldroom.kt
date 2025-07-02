@@ -81,10 +81,6 @@ class Coldroom ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 								 ){CommUtils.outred("COLDROOM: non c'è spazio, rifiuta.")
 								answer("fwrequest", "fwNO", "fwNO(NO_PARAM)"   )  
 								}
-								if( Peso>= MAXW 
-								 ){CommUtils.outred("COLDROOM :  frigo PIENO.")
-								request("frigofull", "frigofull(NO_PARAM)" ,"coldstorageservice" )  
-								}
 								CommUtils.outcyan("COLDROOM : il Peso totale in frigo è: $Peso")
 						}
 						//genTimer( actor, state )
