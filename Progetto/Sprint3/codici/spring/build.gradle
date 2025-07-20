@@ -1,0 +1,50 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.5' // cambio versione per java 17 (era questa prima-> '3.5.3')
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'unibo'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+    flatDir { dirs '../unibolibs' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+     //Added for WebSocket
+ 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+ //JSON
+ 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+ //CUSTOM unibo
+ 
+ 	implementation name: 'uniboInterfaces'
+	implementation name: '2p301'
+	implementation name: 'unibo.qakactor23-5.0'
+    implementation name: 'unibo.basicomm23-1.0'
+    
+    //adding for coap
+    implementation 'org.eclipse.californium:californium-core:3.5.0'
+	implementation 'org.eclipse.californium:element-connector:3.5.0'
+    implementation 'org.eclipse.californium:scandium:3.5.0'  // Per 
+    
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

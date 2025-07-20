@@ -215,6 +215,7 @@ QActor coldroom context ctxservicearea {
 		//attesa
 		println("COLDROOM: aspetto richieste da CStorage.") color cyan
 		
+		
 	}Transition t0 whenRequest fwrequest -> controllaPeso  //per avere ticket
 					whenRequest load_CR -> s2
 					whenRequest delete_Reservation -> delete_Reservation
@@ -246,6 +247,7 @@ QActor coldroom context ctxservicearea {
 		[# 
 			P_alloc-=FW  
 			Peso= Peso+FW 
+			
 		#]
 		println("COLDROOM s2: Peso totale in frigo: $Peso e lo spazio allocato ora è: $P_alloc") color cyan 
 			

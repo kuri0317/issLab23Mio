@@ -25,8 +25,4 @@ with Diagram('ledArch', show=False, outformat='png', graph_attr=graphattr) as di
   with Cluster('env'):
      sys = Custom('','./qakicons/system.png')
 ### see https://renenyffenegger.ch/notes/tools/Graphviz/attributes/label/HTML-like/index
-     with Cluster('ctxled', graph_attr=nodeattr):
-          led=Custom('led','./qakicons/symActorWithobjSmall.png')
-     with Cluster('ctxservicearea', graph_attr=nodeattr):
-          transporttrolley=Custom('transporttrolley(ext)','./qakicons/externalQActor.png')
 diag

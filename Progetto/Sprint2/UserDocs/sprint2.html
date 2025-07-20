@@ -196,8 +196,7 @@ div.imagedesc{
 
 <div class="body"> 
 <h2>Introduction</h2>
- <p>Con rifemento allo <a href="../../Sprint1/UserDocs/sprint1.html" target="_blank">Sprint1</a> parte uno e <a href="../../Sprint1-2/UserDocs/sprint1_2.html" target="_blank">Sprint1</a> parte due
-    adesso introduciamo lo Sprint2.</p>
+ <p>Con rifemento allo <a href="../../Sprint1/UserDocs/sprint1.html" target="_blank">Sprint1</a> parte uno e <a href="../../Sprint1-2/UserDocs/sprint1_2.html" target="_blank">Sprint1</a> parte due adesso introduciamo lo Sprint2.</p>
 
  <p>Lo Sprint2 mira a generare il sistema degli allarmi, descritto nei Requirement analizzati precedentemente nello 
     <a href="../../Sprint0/UserDocs/sprint0.html" target="_blank">Sprint0</a> che chiedevano la realizzazione di un Led e di un Sonar.
@@ -209,29 +208,37 @@ div.imagedesc{
 
 <h2>Problem analysis</h2>
 
-<p>Non avendo un Raspberry fisico con il committente abbiamo deciso di simulare il funzionamento degli allarmi tramite classi Java e attori qak.</p>
-<p>Nella cartella <a href="../codici/led" target="_blank">led</a> troviamo l'applicazione atta a simulare gli allarmi, mentre in <a href="../codici/coldstorage/" target="_blank">coldstorage</a> troviamo il progetto modificato per rispondere ai nuovi comandi dei sistemi di allarmi creati.</p>
+<p>Non avendo un Raspberry fisico, con il committente abbiamo concordato di simulare il funzionamento degli allarmi.</p>
+<p>Nella cartella <a href="../codici/led" target="_blank">led</a> troviamo l'applicazione per a simulare gli allarmi, mentre in <a href="../codici/coldstorage/" target="_blank">coldstorage</a> troviamo il progetto modificato per rispondere ai nuovi comandi dei sistemi di allarmi creati.</p>
 
-<p>Nella cartella led gestiamo il <a href="../codici/led/src/led.qak" target="_blank">led.qak</a> come un attore QActor, che indicheremo come esterno al nostro coldstorage, che risponderà a dei Dispatch generati dall'attore transporttrolley.
-    Il Sonar invece viene gestito come una classe java <a href="../codici/led/src/main/java/sonar.java" target="_blank">sonar.java</a> in grado di comunicare via TCP con il nostro coldstorage e inviare Event e Dispatch al transporttrolley per simulare un ostacolo nel suo percorso.
+<p>All'interno della cartella led vediamo il <a href="../codici/led/src/led.qak" target="_blank">led.qak</a> costruito come un QActor, che indicheremo esterno alla nostra applicazione e che risponderà a dei Dispatch generati dall'attore <strong>transporttrolley</strong>.</p>    
+<p>Lo simuliamo tramite una finestra java che mostra una lampadina colorata, questa dovrà cambiare colore in base ai messaggi ricevuti.</p> 
+<p>Il Sonar invece viene gestito come una classe java <a href="../codici/led/src/main/java/sonar.java" target="_blank">sonar.java</a> che crea un oggetto java in grado di comunicare via TCP con il ColdStorageService e inviare Event e Dispatch al <strong>transporttrolley</strong> per simulare l'apparizione di ostacolo.
 </p>
+
+<p>Per non andare ad intaccare il codice dell'applicazione ColdStorageService, abbiamo deciso di separare questi componenti, led e sonar, rendendoli più versatili e riutilizzabili, se necessario, anche in altri scenari, per avere una architettura a componenti distribuiti, molto più versatile e sempre Java-based.</p>
+<p>I motivi per i quali abbiamo deciso di creare il led come un QActor è per la semplicità della gestione e della comunicazione coi precedenti componenti, la gestione in questo modo risulta più versatile e funzionale, necessitiamo di recepire dei comandi dall'attore <strong>TransportTrolley</strong> e rendendo entrambi attori possiamo farli comunicare tramite COAP e TCP. 
+Il Sonar lo abbiamo inteso come uno <cite>Java Object</cite> per la semplicità data dalla comunicazione TCP col sistema e per poterlo rendere ancora più funzionale e slegato dal nostro sistema, necessitavamo solo di inviare dei comandi all'attore <strong>TransportTrolley</strong> senza ricevere risposte o altri tipi di messaggio.</p>
+
 <h2>Test plans</h2> 
 <p>Gli scenari da verificare sono:
     <lu>
         <li>
-            Che il coldtorage risponda correttamente ai messaggi del Sonar, fermandosi durante il suo percorso e riprendendolo senza errori una volta rimosso l'ostacolo.
+            Che il ColdStorageService risponda correttamente ai messaggi del Sonar, fermandosi durante il suo percorso e riprendendolo senza errori una volta rimosso l'ostacolo.
         </li>
         <li>
             Che il led sia in grado di creare una finestra con led e rispondere ai messaggi del coldstorage.
-            <lu>Il led deve:
-                <li>essere spento (grigio) quando il transporttrolley si trova in posizione HOME.</li>
-                <li>lampeggiare con luce verde quando è in transito nella la servicearea.</li>
-                <li>essere di colore rosso quando si ferma per un ostacolo o per caricare o scaricare la consegna.</li>
-            </lu>
-
+        </li> 
+        <li>
+        <ul>Il led deve:
+            <li>essere spento (grigio) quando il transporttrolley si trova in posizione HOME.</li>
+            <li>lampeggiare con luce verde quando è in transito nella la servicearea.</li>
+            <li>essere di colore rosso quando si ferma per un ostacolo o per caricare o scaricare la consegna.</li>
+        </ul>
+        </li>
             A questo proposito con il committente abbiamo deciso di chiarire che nel caso in cui il transporttrolleysia in HOME ma abbia di fronte un ostacolo se arriva una richiesta la luce del led deve diventare rossa, a indicare che il transporttrolley deve andare all'INDOOR ma al momento non riesce.
             
-        </li>
+        
     </lu>
 </p>
     
@@ -243,31 +250,21 @@ div.imagedesc{
    
     <p>Per il led è stato creato un file <a href="../codici/led/src/led.qak" target="_blank">led.qak</a> per definire il nuovo attore e il nuovo contesto ed una classe <a href="../codici/led/src/main/java/Led.java" target="_blank">Led.java</a> per generare la finestra del led.   
     </p>
-    <p>Per il sonar è stata creata una classe java <a href="../codici/led/src/main/java/sonar.java" target="_blank">sonar.java</a>.</p>
-
-    <p>che si presenta con un il menù seguente:</p>
+    <p>Per il sonar è al seguente link <a href="../codici/led/src/main/java/sonar.java" target="_blank">sonar.java</a> e presenta all'avvio il menù:</p>
     <div class="code-container">
         <pre><code class="language-qak">
             === Menu Cold Storage ===
-            1 - Robot incontra ostacolo
+            1 - Sonar rileva ostacolo
             2 - Ostacolo rimosso
             0 - Esci
             Scelta: 
         </code></pre>
     </div>
-    <p>In cui è possibile simulare la comparsa di un ostacolo davanti il basicrobot23 e la scomparsa di tale ostacolo successivamente.</p>
-    <p>
-        Per poter generare i test del progetto è necessario prima far partire <a href="../../../unibo.basicrobot23" target="_blank">basicrobot23</a>
-        con il comando: <strong>docker compose -f basicrobot23.yaml  up </strong>
-    </p>
-    <p>
-        Successivamente far partire <a href="../codici/coldstorage/src/coldstorage.qak" target="_blank">coldstorage.qak</a> ed in un altro terminale far partire  <a href="../codici/led/src/led.qak" target="_blank">led.qak</a> da eclipse col comando: <strong>./gradlew run </strong>
-    </p>
-    <p> In altri due terminali far partire rispettivamente la classe <a href="../codici/sprint1/src/main/java/serviceaccessgui.java" target="_blank">serviceaccessgui.java</a> con il comando:  <strong>./gradlew runserviceaccessgui </strong> e la classe <a href="../codici/led/src/main/java/sonar.java" target="_blank">sonar.java</a> con il comando <strong>./gradlew runSonar </strong> </p>
-
+    <p>In cui è possibile simulare la comparsa di un ostacolo davanti il Sonar e la scomparsa di tale ostacolo successivamente.</p>
+    
 </div>
 
-<h2>Testing</h2> 
+<h2>Testing e spiegazione dei messaggi</h2> 
 
 <p>Testiamo di seguito il comportamento del sonar: </p>
  
@@ -285,9 +282,9 @@ div.imagedesc{
             ..
         </code></pre>
         </div>
-        <p>Vediamo che nel momento in cui il sonar riceve <cite>'1'</cite> come comando invia al transporttrolley un evento di <cite>stop </cite>che gli consente di inviare al basicrobot il comando <cite>alarm</cite> che ferma il transporttrolley.</p>
+        <p>Vediamo che nel momento in cui il sonar riceve <cite>'1'</cite> come comando il sonar emette un evento di <cite>stop </cite>che, quando recepito dal transporttrolley, consente a questo di inviare al basicrobot un comando <cite>alarm</cite> che ferma il robot.</p>
 
-        <p>successivamente una volta ricevuto <cite>'2'</cite> il sonar invia un messaggio di <cite>resume</cite> che permette al transporttrolley di uscire dallo stato di stop e riprendere la sua operazione dove l'aveva lasciata: 
+        <p>Successivamente una volta ricevuto <cite>'2'</cite> il sonar invia un Dispatch <cite>resume</cite> che permette al transporttrolley di uscire dallo stato di ''stopping'' e riprendere la sua operazione dove l'aveva lasciata.
 
 <p>Testando la simulazione con anche il led vedremo apparire la finestra con il led che inizialmente sarà di colore grigio, nel momento in cui riceverà i comandi di <cite>inmoto, ledOn o ledOff</cite> il colore
 del led cambierà stato. Di seguito il codice generato dell'attore led durante la prova della simulazione:</p>
@@ -313,7 +310,15 @@ del led cambierà stato. Di seguito il codice generato dell'attore led durante l
         </p>
 <h2>Deployment</h2> 
 
- 
+ <p>
+        Per poter generare i test del progetto è necessario prima far partire <a href="../../../unibo.basicrobot23" target="_blank">basicrobot23</a>
+        con il comando: <strong>docker compose -f basicrobot23.yaml  up </strong>
+    </p>
+    <p>
+        Successivamente far partire <a href="../codici/coldstorage/src/coldstorage.qak" target="_blank">coldstorage.qak</a> ed in un altro terminale far partire  <a href="../codici/led/src/led.qak" target="_blank">led.qak</a> da eclipse col comando: <strong>./gradlew run </strong>
+    </p>
+    <p> In altri due terminali far partire rispettivamente la classe <a href="../codici/sprint1/src/main/java/serviceaccessgui.java" target="_blank">serviceaccessgui.java</a> con il comando:  <strong>./gradlew runserviceaccessgui </strong> e la classe <a href="../codici/led/src/main/java/sonar.java" target="_blank">sonar.java</a> con il comando <strong>./gradlew runSonar </strong> </p>
+
 <h2>Next Steps</h2> 
  
 
@@ -341,7 +346,6 @@ del led cambierà stato. Di seguito il codice generato dell'attore led durante l
 
 <div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
     By Cristina Napoli email: cristinaanna.napoli@studio.unibo.it,
-    <!--<img src="./io.jpg" alt="mbot" width="15%" height="15%">-->
     <p><td><img width="180" alt="io.jpg" src="../../../io.jpg" class="internal-embed"></td></p>
     <p>GIT repo: <a href="https://github.com/kuri0317/issLab23Mio" target="_blank">https://github.com/kuri0317/issLab23Mio</a> </p>
 </body>

@@ -189,11 +189,11 @@
 
 <head>
 
-    <title>Cold Storage Service Spring0 - Cristina Napoli</title></head>
+    <title>Spring0 Cold Storage Service - Cristina Napoli</title></head>
 
 <body>
 <div id="top">
-    <h1>Spring0 Cold Storage Service<font size="5"></font> </h1>
+    <h1>Spring0 Cold Storage Service - Cristina Napoli<font size="5"></font> </h1>
 </div>
 
 <div class="body">
@@ -295,8 +295,6 @@
             <ul class="simple">
 
         </ul> </div>
-    <h2>Requirement analysis</h2>
-    
     <h2>Analisi dei requisiti</h2>
 
     <p>Chiariamo quali sono i componenti di questa applicazione in base a ciò che possiamo estrapolare dal testo
@@ -307,7 +305,7 @@
        e in <a href="https://github.com/anatali/issLab23/blob/main/it.unibo.virtualRobot2023/userDocs/VirtualRobot2021.html" target="_blank">VirtualRobot21</a> che rappresenta l'ambiente dove la nostra applicazione eseguirà.</p>
     
        <h4>Service Area</h4>
-       <p>Service Area: Area di forma rettangolare che rappresenta la nostra scena,
+       <p>Area di forma rettangolare che rappresenta la nostra scena,
     nella quale il DDR robot può agire.</p>
     <p>
     Usiamo il diametro RU del Transport Trolley che conosciamo come unità di misura per determinare l'area di questo rettangolo,
@@ -363,13 +361,13 @@
     da valutare, che verrà accettato o rifiutato.</p>
 
     <h4>ServiceAccessGUI </h4>
-    <p> ServiceAccessGUI permette al Truck driver di presentare richieste per scaricare
+    <p> La ServiceAccessGUI permette al Truck driver di presentare richieste per scaricare
     la quantità di cibo FW che porta, questa interfaccia quindi ci permetterà anche di richiedere Ticket e controllare
     la disponibilità di spazio nel ColdRoom.</p>
 
     <h4>ColdStorageService </h4>
-    <p>ColdStorageService è un attore che gestirà i Ticket, controllandone la validità, quindi riceve le richieste dal Truck Driver.
-        Questa interfaccia potrà quindi anche comunicare con il Trolley per indicargli la necessità di venire a prendere il carico FW che si sta scaricando.</p>
+    <p>ColdStorageService è un servizio che gestirà i Ticket, controllandone la validità, di conseguenza riceve le richieste dal Truck Driver.
+        Questa interfaccia potrà anche comunicare con il Trolley per indicargli la necessità di venire a prendere il carico FW che si sta scaricando.</p>
 
         <h4>ServiceStatusGUI </h4>
     <p>ServiceStatusGUI ci permette di supervisionare lo state of service. <p>
@@ -382,16 +380,16 @@
 
     <p>La definizione di POJO è descritta in <a href="https://github.com/anatali/issLab23/blob/main/iss23Material/html/Appl1-HTTPSprint2.html" target="_blank">Appl1-HTTPSprint2.html</a> </p>
 
-    <p>Il seguente modello dell'architettura è generato dal codice a questo link : <a href="../codice/coldstorage25/src/coldstorage25.qak" target="_blank">coldstorage25.qak</a> </p>
+    
+<h2>Analisi</h2>
+<p>Il seguente modello dell'architettura è generato dal codice a questo link : <a href="../codice/coldstorage25/src/coldstorage25.qak" target="_blank">coldstorage25.qak</a> </p>
     <div><a href="../img/coldstorage25arch.png"><img alt="../img/coldstorage25arch.png" class="align-center" src="../img/coldstorage25arch.png" style="width: 30%;" style="height: 20%;"/></a>
 
-<h2>Problem analysis</h2>
-<p>L'Analisi del problema ci aiuta a chiarire le problematiche implicate dai requisiti e fornire informazioni su costi/tempi/risorse
-    serve per capire quali sono le maggiori problematiche da affrontare, le tecnologie da usare e le risorse (umane e temporali) necessarie. 
-    Inoltre gettano le basi per impostare il primo SPRINT di sviluppo e quindi per costruire
-    un primo ‘prototipo’funzionante del sistema da estendere poi in modo incrementale con gli SPRINT succesivi dopo una opportuna SPRINT-review con il committente.
-    terminate Analisi dei requisiti e del Problema dovremmo avere un modello del sistema, ovvero una prima ARCHITETTURA LOGICA.</p>
+<p>Come mostrato nell'Architettura in figura, decidiamo di definire i 4 componenti precedentemente identificati come degli <cite>Attori QAK</cite>, in quanto rispecchiano i requisiti di un attore definiti nel link 
+    precedente e perché così facendo si ritiene che dal punto di vista progettuale diventi più semplice implementare le interazioni tra gli stessi.</p>
+<p> Si mira inizialmente a implementare una architettura comprensibile, semplice e funzionale. </p>
 
+<h2>Problem analysis</h2>
 <p>Con il committente si sono individuate alcune problematiche:</p>
     <ul>
         <li>Il problema del load-time lungo.</li>
@@ -434,29 +432,19 @@
     Si è concordato che il tempo MINT viene conteggiato dopo che il transport trolley è stato riattivato dallo stato di fermo in cui è stato posto in seguito ad un comando di stop (ricevuto per via di Alarm requirements).
     </p>
     
-<h2>Test plans</h2>
-<p>Bisogna verificare che il sistema dei Ticket funzioni correttamente, quindi che i ticket vengano accettati o rifiutati in base alla disponibilità di spazio in ColdRoom e al valore di TICKETTIME.
-Ciò ci fa anche capire che bisogna verificare che lo scarico di FW avvenga correttamente in ColdRoom (ovvero che questo si riempia effettivamente dopo che il Transport Trolley scarica FW).</p>
 
+<h2>Next Steps</h2> 
 
-<h2>Project</h2>
-
-    <p>si pensa di dividere il lavoro il 3 Sprint:</p>
+   <p>Si pensa di dividere il lavoro il 3 Sprint:</p>
 
    <p>
     Nel primo Sprint1 si pensa di concentrarsi sulla gestione del core della applicazione, quindi nell'avere una logica funzionante per
     la gestione dei Ticket, e un Transport Trolley che risponda correttamente ai comandi.</p>
-    <p>Di conseguenza si è portati a pensare che sia necessaria la visualizzazione della ServiceAccessGUI (responsabile dell'interazione tra Truck Driver, ColdStorageService e TransportTrolley).</p>
+
+    <p>Si pensa sia necessaria la visualizzazione di un aversione Mock della ServiceAccessGUI (responsabile dell'interazione tra Truck Driver, ColdStorageService e TransportTrolley).</p>
 
 </div>
 
-<h2>Testing</h2>
-
-
-<h2>Deployment</h2>
-
-
-<h2>Maintenance</h2>
 
 <!-- USEFUL
 <table style="width:100%" border="1">

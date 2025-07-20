@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <title>Cold Storage Service</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .ticket-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        
+        .ticket-item.removing {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        
+        .status {
+            font-style: italic;
+        }
+        
+        .pending {
+            color: orange;
+        }
+        
+        .validation-feedback {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .validation-item {
+            padding: 8px;
+            margin: 5px 0;
+            border-left: 4px solid;
+        }
+        
+        .validation-valid {
+            border-left-color: #28a745;
+            background: #e6f7e6;
+        }
+        
+        .validation-invalid {
+            border-left-color: #dc3545;
+            background: #fce8e8;
+        }
+        
+        .validation-pending {
+            border-left-color: #ffc107;
+            background: #fff8e6;
+        }
+        .validation-item {
+        transition: all 0.3s ease;
+    }
+    
+    .validation-item.fade-out {
+        opacity: 0;
+        transform: translateY(-10px);
+        max-height: 0;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .validation-item {
+        animation: fadeIn 0.3s ease-out;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cold Storage Service</h1>
+        
+        <!-- Cold Room Status -->
+        <div class="status-panel">
+            <h2>Cold Room Status</h2>
+            <div class="progress-container">
+                <div class="progress-bar" id="coldroomProgress"></div>
+                <div class="progress-text">
+                    <span id="currentWeight">0</span> / 
+                    <span id="maxWeight">60</span> kg
+                </div>
+            </div>
+        </div>
+
+        <!-- Ticket Section -->
+        <div class="ticket-section">
+            <button id="requestBtn">Request Ticket</button>
+            <button id="checkAllBtn">Verify All Tickets</button>
+            
+            <div id="ticketsContainer">
+                <!-- Tickets will appear here -->
+            </div>
+            
+            <div class="ticket-check">
+                <input type="text" id="ticketInput" placeholder="Insert ticket">
+                <button id="checkBtn">Verify Single Ticket</button>
+            </div>
+        
+	        <div class="validation-feedback">
+	        	<h3>Risultati Validazione</h3>
+	        <div id="validationResults"></div>
+	    </div>
+
+        <!-- Message Area -->
+        <div id="messageArea" class="message-area"></div>
+    </div>
+    
+    <div class="webgl-container">
+    <iframe id="webglViewer" src="http://localhost:8090/" title="Visualizzatore 3D"></iframe>
+	</div>
+
+    <script src="connect.js"></script>
+</body>
+</html>

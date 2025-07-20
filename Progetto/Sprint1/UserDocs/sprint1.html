@@ -206,7 +206,7 @@ div.imagedesc{
         <li>la creazione del componente <strong>ColdStorage</strong>,
         che gestirà la generazione e validazione dei ticket, con una logica funzionante.
         </li>
-        <li>la creazione di una versione mockObj di <strong>ServiceAccessGUI</strong>, che dovrà essere in grado di inviare e ricevere le richieste da/verso il <strong>ColdStorageService</strong>.
+        <li>la creazione di una versione <cite>mockObj</cite> di <strong>ServiceAccessGUI</strong>, che dovrà essere in grado di inviare e ricevere le richieste da/verso il <strong>ColdStorageService</strong>.
         </li>
         <li>la creazione del <strong>TransportTrolley</strong> funzionante, che dovrà essere in grado di muoversi nella ServiceArea.
         </li>
@@ -223,16 +223,16 @@ div.imagedesc{
 </div>
 
 <h2>Problem analysis</h2>
- <p>Analizziamo il problema per capire quali sono le maggiori problematiche da affrontare, le tecnologie da usare e le risorse necessarie. </p>
+ <p>Analizziamo i vari componenti di seguito.</p>
     <p>
         <li>
-            <strong>ColdStorageService</strong>: deve essere in grado di comunicare con <cite>ServiceAccessGUI</cite> e con <cite>ColdRoom </cite>per conoscere lo spazio disponibile.
+            <strong>ColdStorageService</strong>: sarà un <cite>QActor</cite> che deve essere in grado di comunicare con <cite>ServiceAccessGUI</cite> e con <cite>ColdRoom </cite>per conoscere lo spazio disponibile.
             Deve gestire e generare i ticket, quindi sarà a conoscenza del numero di ticket rifiutati e accettati.
             Inoltre dovrà anche comunicare con il <cite>TransportTrolley</cite> per chiamarlo presso l'INDOOR quando si necessita di effettuare una consegna, o mandarlo in HOME se non ci sono consegne,
             per capire se è libero o occupato. 
         </li>
         <li>
-            <strong>TransportTrolley</strong>: deve gestire una richiesta di scarico alla volta, seguendo degli step ben precisi:
+            <strong>TransportTrolley</strong>: sarà un <cite>QActor </cite>che deve gestire una richiesta di scarico alla volta, seguendo degli step ben precisi:
             <ul>
                 <li>
                    Quando riceve una richiesta entra in stato 'occupato' e si sposta da HOME a INDOOR.
@@ -255,12 +255,12 @@ div.imagedesc{
             </p>
         </li>
         <li>
-            <strong>ColdRoom</strong>: Deve tenere aggiornata l'informazione dello spazio disponibile nel frigorifero e controllare che non superi la soglia MAXW.
+            <strong>ColdRoom</strong>: sarà un <cite>QActor</cite> che deve tenere aggiornata l'informazione dello spazio disponibile nel frigorifero e controllare che non superi la soglia MAXW.
             Comunica con <cite>ColdStorageService</cite> per informarlo dello spazio disponibile al momento della richiesta e permettergli di validare i ticket, allocando lo spazio.
         
         </li>
         <li> 
-            <strong>ServiceAccessGUI MockObj</strong>: comunica con <cite>ColdStorageService</cite> per ottenere i ticket, inoltre riceve l'informazione di successo
+            <strong>ServiceAccessGUI MockObj</strong>: contrariamente a come indicavamo nel precedente Sprint, adesso questo componente sarà un <cite>mockObj</cite> che comunica con <cite>ColdStorageService</cite> per ottenere i ticket, la sua funzione di attore si riduce al ricevere l'informazione di successo
             della consegna, per liberare il <cite>Truck Driver</cite>.
         </li>
     </p>
@@ -289,19 +289,15 @@ div.imagedesc{
         </ul>
 
     </p>
-    <p>
-        Alla fine di tutti questi passi si avrà un core funzionante dell'applicazione e si potrà procedere con la discussione dello Sprint2.
-    </p>
-
     
-<h2>Project</h2> 
+<h2>Testing</h2> 
  
-    <h4>Gestione Ticket e Peso</h4>
+    <h4>Gestione Ticket e Peso - primo passo</h4>
      <p>
-    Una idea per l'architettura del primo passo dello Sprint1, è la seguente:
+    L'architettura del primo passo dello Sprint1, è la seguente:
     <p><a href="../img/sprintarch.png"><img alt="../img/sprintarch.png" class="align-center" src="../img/sprintarch.png"  style="width: 50%;" /></a></p> 
    
-    <p>Al seguente link <a href="../codici/sprint1-logica/src/sprint.qak" target="_blank">sprint.qak</a>
+    <p>Il seguente link <a href="../codici/sprint1-logica/src/sprint.qak" target="_blank">sprint.qak</a> porta al codice della progettazione del primo punto,
         che ha prodotto questi risultati: 
         
         <div class="code-container">
@@ -449,7 +445,7 @@ div.imagedesc{
         </ul>
     </p>
     
-    <h4>Interazione Trolley e BasicRobot</h4>
+    <h4>Interazione Trolley e BasicRobot - secondo passo</h4>
     <p>
         In questo passo vogliamo gestire il movimento del <strong>BasicRobot</strong> facendolo comunicare con il <strong>TransportTrolley</strong>,
         creiamo un QActor del <strong>TransportTrolley</strong> con l'unico scopo di comunicare col <strong>BasicRobot</strong>.
@@ -457,7 +453,7 @@ div.imagedesc{
     <p>Decidiamo che conviene vedere il <strong>BasicRobot</strong> come un Attore Esterno, come spiegato in: 
         <a href="https://github.com/anatali/issLab23/blob/main/iss23Material/html/QakActors23Demo.html#external-caller1" target="_blank">QakActors23Demo.html#external-caller1</a>
         anche perchè i messaggi con il quale è possibile interagire col <strong>BasicRobot</strong> sono già stati forniti dal committente e li avevamo indicati nello Sprint0.
-    </p>
+        Così facendo possiamo continuare a mantenere una gestione semplice e funzionale del progetto. </p>
 
     <p>
         Nel codice a questo link <a href="../codici/interazione-robot/src/provaT.qak" target="_blank">provaT.qak</a> studiamo come mandare i comandi 
@@ -485,7 +481,7 @@ div.imagedesc{
         Successivamente far partire  <a href="../codici/interazione-robot/src/provaT.qak" target="_blank">interazione robot</a> da eclipse e osservare il comportamento del robot nella scena.
     </p>
 
-    <h4>Gestire il movimento del robot in base alla logica dell'applicazione</h4>
+    <h4>Gestire il movimento del robot in base alla logica dell'applicazione - terzo passo</h4>
     <p> L'achitettura di questo sistema è la seguente: 
     <a href="../img/provautarch.png"><img alt="../img/provautarch.png" class="align-center" src="../img/provautarch.png"  style="width: 70%;" /></a></p>
 
@@ -511,12 +507,6 @@ div.imagedesc{
     <p> E successivamente far partire <a href="../codici/coldstorage/src/provaut.qak" target="_blank">coldstorage.qak</a> da eclipse.</p>
 
 </div>
-
-<h2>Testing</h2> 
- 
-
-<h2>Deployment</h2> 
-
  
 <h2>Next Steps</h2> 
  

@@ -189,7 +189,7 @@ div.imagedesc{
     
 <head>
    
-<title>Sprint1</title></head>
+<title>Sprint1 parte 2</title></head>
     
 <body>
 <div id="top">
@@ -200,10 +200,20 @@ div.imagedesc{
 <h2>Introduction</h2>
  <p>Prendendo in considerazione ciò che è stato discusso nello <a href="../../Sprint0/UserDocs/sprint0.html" target="_blank">Sprint0</a> e nello 
      <a href="../../Sprint1/UserDocs/sprint1.html" target="_blank">Sprint1 Primo</a>.</p>
+ 
+<p>Lo Sprint1 secondo mira a produrre un core applicativo funzionante che integisce con l'utente. </p>
 
- <p>Lo Sprint1 ora mira a produrre un core applicativo funzionante che integisce con l'utente, creiamo la classe <a href="../codici/sprint1/src/main/java/serviceaccessgui.java" target="_blank">serviceaccessgui.java</a> che:
+<h2>Requirement analysis</h2>
+ <p>Già discussi nello <a href="../../Sprint0/UserDocs/sprint0.html" target="_blank">Sprint0</a>.</p>
+
+</div>
+
+<h2>Problem analysis</h2>
+
+   <p> 
+    Per fare ciò decidiamo insieme al committente che è utile, ai fini di un testing più agevole, creare una classe java da usare come MockObj per la <a href="../codici/sprint1/src/main/java/serviceaccessgui.java" target="_blank">serviceaccessgui.java</a>, che:
     <lu>
-        <li>avviandola mostri all'utente un menù con delle scelete tra: 
+        <li>all'avvio mostri all'utente il menù seguente: 
            <div class="code-container">
             <pre><code class="language-qak">
             === Menu Cold Storage ===
@@ -215,18 +225,10 @@ div.imagedesc{
             Scelta: 
             </code></pre>
         </div>
-      per poter generare diversi tipi di test in maniera più semplice e rendere il programma interattivo.
+      gestendo la generazione di diversi tipi di test in maniera più semplice ed agevole, rendendo il programma interattivo e funzionale.
     </lu>
     </p>
 </p>
- 
-
-<h2>Requirement analysis</h2>
- <p>Già discussi nello <a href="../../Sprint0/UserDocs/sprint0.html" target="_blank">Sprint0</a>.</p>
-
-</div>
-
-<h2>Problem analysis</h2>
 
 <h2>Test plans</h2> 
 <p>I test da controllare sono i casi:
@@ -245,11 +247,11 @@ div.imagedesc{
 <h2>Project</h2> 
  
     <p>
-    Questo nuovo progetto ha prodotto questa nuova architettura:
+    Queste migliorie ci hanno portato alla architettura in figura:
     <p><a href="../img/provautarch.png"><img alt="../img/provautarch.png" class="align-center" src="../img/provautarch.png" style="width: 50%;" /></a></p> 
    
-    <p>Al seguente link <a href="../codici/sprint1/src/provaut.qak" target="_blank">sprint.qak</a> è presente il nuovo codice qak del progetto, mentre
-        <a href="../codici/sprint1/src/main/java/serviceaccessgui.java" target="_blank">serviceaccessgui.java</a> è la classe java da far partire insieme al progetto.
+    <p>Al seguente link <a href="../codici/sprint1/src/provaut.qak" target="_blank">sprint.qak</a> è presente il codice qak del progetto migliorato, mentre
+        <a href="../codici/sprint1/src/main/java/serviceaccessgui.java" target="_blank">serviceaccessgui.java</a> è il codice java della classe discussa in precedenza, da far partire insieme al progetto per generare i test.
    
     </p>
     <p>
@@ -265,7 +267,7 @@ div.imagedesc{
 
 <h2>Testing</h2> 
 
-<p>Il primo test si può vedere di seguito: </p>
+<p>Come primo test ci assicuriamo che la classe generata risponda correttamente ai comandi inviati dall'utente, interagendo con l'Attore <strong>ColdStorageService</strong>, di seguito osserviamo i risultati: </p>
  
         <div class="code-container">
             <pre><code class="language-qak">
@@ -330,9 +332,9 @@ div.imagedesc{
                 Richiesta rifiutata     //osserviamo che appena il frigo è pieno la richiesta di un ticket è rifiutata
             </code></pre>
         </div>
-        <p> Osserviamo un ticket che viene generato, quando possibile, e che poi un ticket venga validato e uno che risulta invalido</p>
+        <p>Osserviamo che i ticket che vengono generati o rifiutati correttamente, e successivamente il ticket generato venga validato o respinto correttamente.</p>
 
-        <p>Controlliamo anche sia possibile chiedere più di un ticket e richiedere la validazione successivamente : 
+        <p>Controlliamo anche sia possibile chiedere più di un ticket e richiedere la validazione di uno successivamente: 
 
         <div class="code-container">
             <pre><code class="language-qak">
@@ -389,9 +391,8 @@ div.imagedesc{
 
             </code></pre>
         </div>
-
+        Il sistema risponde correttamente alle aspettative.
         </p>
-<h2>Deployment</h2> 
 
  
 <h2>Next Steps</h2> 
