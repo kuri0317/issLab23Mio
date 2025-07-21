@@ -53,9 +53,9 @@ class Transporttrolley ( name: String, scope: CoroutineScope, isconfined: Boolea
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t013",targetState="goIndoor",cond=whenRequest("takecharge"))
-					transition(edgeName="t014",targetState="quit",cond=whenRequest("quit"))
-					transition(edgeName="t015",targetState="stopping",cond=whenEvent("stop"))
+					 transition(edgeName="t014",targetState="goIndoor",cond=whenRequest("takecharge"))
+					transition(edgeName="t015",targetState="quit",cond=whenRequest("quit"))
+					transition(edgeName="t016",targetState="stopping",cond=whenEvent("stop"))
 				}	 
 				state("goIndoor") { //this:State
 					action { //it:State
@@ -72,12 +72,16 @@ class Transporttrolley ( name: String, scope: CoroutineScope, isconfined: Boolea
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t116",targetState="carica",cond=whenReply("moverobotdone"))
-					transition(edgeName="t117",targetState="stopping",cond=whenEvent("stop"))
+					 transition(edgeName="t117",targetState="carica",cond=whenReply("moverobotdone"))
+					transition(edgeName="t118",targetState="stopping",cond=whenEvent("stop"))
 				}	 
 				state("carica") { //this:State
 					action { //it:State
 						 StatoRobo= "caricando"  
+						
+								println("TRANSPORTTROLLEY: sto prendendo il carico.")
+							    var  Duration= Math.floor(Math.random() *200).toLong()
+							    delay(Duration)
 						CommUtils.outblue("TRANSPORTTROLLEY:dico al led di essere ON. ")
 						forward("ledOn", "ledOn(NO_PARAM)" ,"led" ) 
 						//genTimer( actor, state )
@@ -111,12 +115,16 @@ class Transporttrolley ( name: String, scope: CoroutineScope, isconfined: Boolea
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t218",targetState="raggiuntoCR",cond=whenReply("moverobotdone"))
-					transition(edgeName="t219",targetState="stopping",cond=whenEvent("stop"))
+					 transition(edgeName="t219",targetState="raggiuntoCR",cond=whenReply("moverobotdone"))
+					transition(edgeName="t220",targetState="stopping",cond=whenEvent("stop"))
 				}	 
 				state("raggiuntoCR") { //this:State
 					action { //it:State
 						 StatoRobo= "inCR"  
+						
+								println("TRANSPORTTROLLEY: sto prendendo il carico.")
+							    var  Duration= Math.floor(Math.random() *200).toLong()
+							    delay(Duration)
 						CommUtils.outblue("TRANSPORTTROLLEY: dico al led di essere On.")
 						forward("ledOn", "ledOn(NO_PARAM)" ,"led" ) 
 						//genTimer( actor, state )
@@ -139,10 +147,10 @@ class Transporttrolley ( name: String, scope: CoroutineScope, isconfined: Boolea
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t320",targetState="goIndoor",cond=whenRequest("takecharge"))
-					transition(edgeName="t321",targetState="vaiCasa",cond=whenDispatch("goHome"))
-					transition(edgeName="t322",targetState="quit",cond=whenRequest("quit"))
-					transition(edgeName="t323",targetState="stopping",cond=whenEvent("stop"))
+					 transition(edgeName="t321",targetState="goIndoor",cond=whenRequest("takecharge"))
+					transition(edgeName="t322",targetState="vaiCasa",cond=whenDispatch("goHome"))
+					transition(edgeName="t323",targetState="quit",cond=whenRequest("quit"))
+					transition(edgeName="t324",targetState="stopping",cond=whenEvent("stop"))
 				}	 
 				state("vaiCasa") { //this:State
 					action { //it:State
@@ -159,16 +167,15 @@ class Transporttrolley ( name: String, scope: CoroutineScope, isconfined: Boolea
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t424",targetState="s1",cond=whenReply("moverobotdone"))
-					transition(edgeName="t425",targetState="quit",cond=whenRequest("quit"))
-					transition(edgeName="t426",targetState="stopping",cond=whenEvent("stop"))
+					 transition(edgeName="t425",targetState="s1",cond=whenReply("moverobotdone"))
+					transition(edgeName="t426",targetState="quit",cond=whenRequest("quit"))
+					transition(edgeName="t427",targetState="stopping",cond=whenEvent("stop"))
 				}	 
 				state("stopping") { //this:State
 					action { //it:State
 						discardMessages = true
 						delay(500)  
 						forward("ledOn", "ledOn(NO_PARAM)" ,"led" ) 
-						forward("cmd", "cmd(h)" ,"basicrobot" ) 
 						emit("alarm", "alarm(X)" ) 
 						CommUtils.outblue("TRANSPORTTROLLEY: basicrobot ha incontrato un ostacolo")
 						//genTimer( actor, state )
@@ -176,17 +183,17 @@ class Transporttrolley ( name: String, scope: CoroutineScope, isconfined: Boolea
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t527",targetState="s1",cond=whenDispatchGuarded("resume",{ StatoRobo== "Home"  
+					 transition(edgeName="t528",targetState="s1",cond=whenDispatchGuarded("resume",{ StatoRobo== "Home"  
 					}))
-					transition(edgeName="t528",targetState="goIndoor",cond=whenDispatchGuarded("resume",{ StatoRobo== "goIndoor"  
+					transition(edgeName="t529",targetState="goIndoor",cond=whenDispatchGuarded("resume",{ StatoRobo== "goIndoor"  
 					}))
-					transition(edgeName="t529",targetState="carica",cond=whenDispatchGuarded("resume",{ StatoRobo== "caricando"  
+					transition(edgeName="t530",targetState="carica",cond=whenDispatchGuarded("resume",{ StatoRobo== "caricando"  
 					}))
-					transition(edgeName="t530",targetState="caricato",cond=whenDispatchGuarded("resume",{ StatoRobo== "goCR"  
+					transition(edgeName="t531",targetState="caricato",cond=whenDispatchGuarded("resume",{ StatoRobo== "goCR"  
 					}))
-					transition(edgeName="t531",targetState="raggiuntoCR",cond=whenDispatchGuarded("resume",{ StatoRobo== "inCR"  
+					transition(edgeName="t532",targetState="raggiuntoCR",cond=whenDispatchGuarded("resume",{ StatoRobo== "inCR"  
 					}))
-					transition(edgeName="t532",targetState="vaiCasa",cond=whenDispatchGuarded("resume",{ StatoRobo== "goHome"  
+					transition(edgeName="t533",targetState="vaiCasa",cond=whenDispatchGuarded("resume",{ StatoRobo== "goHome"  
 					}))
 				}	 
 				state("quit") { //this:State

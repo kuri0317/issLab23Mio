@@ -12,6 +12,8 @@ reply( fwYES, fwYES(NO_PARAM) ).  %%for fwrequest
 reply( fwNO, fwNO(NO_PARAM) ).  %%for fwrequest
 request( load_CR, load_CR(NO_PARAM) ).
 request( delete_Reservation, delete_Reservation(NO_PARAM) ).
+request( getCurrentWeight, getCurrentWeight(NO_PARAM) ).
+reply( currentWeight, currentWeight(PESO) ).  %%for getCurrentWeight
 request( takecharge, takecharge(NO_PARAM) ).
 reply( chargetaken, chargetaken(NO_PARAM) ).  %%for takecharge
 dispatch( liberoTT, liberoTT(NO_PARAM) ).

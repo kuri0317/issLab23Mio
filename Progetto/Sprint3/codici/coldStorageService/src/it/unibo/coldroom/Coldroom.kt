@@ -56,6 +56,21 @@ class Coldroom ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 					 transition(edgeName="t010",targetState="controllaPeso",cond=whenRequest("fwrequest"))
 					transition(edgeName="t011",targetState="s2",cond=whenRequest("load_CR"))
 					transition(edgeName="t012",targetState="delete_Reservation",cond=whenRequest("delete_Reservation"))
+					transition(edgeName="t013",targetState="sendWeight",cond=whenRequest("getCurrentWeight"))
+				}	 
+				state("sendWeight") { //this:State
+					action { //it:State
+						if( checkMsgContent( Term.createTerm("getCurrentWeight(NO_PARAM)"), Term.createTerm("getCurrentWeight(NO_PARAM)"), 
+						                        currentMsg.msgContent()) ) { //set msgArgList
+								CommUtils.outcyan("COLDROOM: invio peso corrente a SpringBoot $Peso")
+								answer("getCurrentWeight", "currentWeight", "currentWeight($Peso)"   )  
+						}
+						//genTimer( actor, state )
+					}
+					//After Lenzi Aug2002
+					sysaction { //it:State
+					}	 	 
+					 transition( edgeName="goto",targetState="s1", cond=doswitch() )
 				}	 
 				state("delete_Reservation") { //this:State
 					action { //it:State
@@ -77,7 +92,7 @@ class Coldroom ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 								CommUtils.outgreen("COLDROOM : Spazio disponibile! Prenotazione avvenuta. Peso allocato in frigo: $P_alloc")
 								answer("fwrequest", "fwYES", "fwYES(NO_PARAM)"   )  
 								}
-								if( Peso+ FW >= MAXW 
+								if( Peso+ FW > MAXW 
 								 ){CommUtils.outred("COLDROOM: non c'è spazio, rifiuta.")
 								answer("fwrequest", "fwNO", "fwNO(NO_PARAM)"   )  
 								}

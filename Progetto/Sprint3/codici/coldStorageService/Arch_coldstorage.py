@@ -40,7 +40,7 @@ with Diagram('coldstorageArch', show=False, outformat='png', graph_attr=graphatt
      transporttrolley >> Edge(color='magenta', style='solid', decorate='true', label='<engage<font color="darkgreen"> engagedone engagerefused</font> &nbsp; moverobot<font color="darkgreen"> moverobotdone moverobotfailed</font> &nbsp; >',  fontcolor='magenta') >> basicrobot
      coldstorageservice >> Edge(color='magenta', style='solid', decorate='true', label='<delete_Reservation &nbsp; fwrequest<font color="darkgreen"> fwYES fwNO</font> &nbsp; load_CR &nbsp; >',  fontcolor='magenta') >> coldroom
      coldstorageservice >> Edge(color='blue', style='solid',  decorate='true', label='<goHome &nbsp; >',  fontcolor='blue') >> transporttrolley
-     transporttrolley >> Edge(color='blue', style='solid',  decorate='true', label='<setdirection &nbsp; cmd &nbsp; disengage &nbsp; >',  fontcolor='blue') >> basicrobot
+     transporttrolley >> Edge(color='blue', style='solid',  decorate='true', label='<setdirection &nbsp; disengage &nbsp; >',  fontcolor='blue') >> basicrobot
      transporttrolley >> Edge(color='blue', style='solid',  decorate='true', label='<liberoTT &nbsp; >',  fontcolor='blue') >> coldstorageservice
      transporttrolley >> Edge(color='blue', style='solid',  decorate='true', label='<ledOff &nbsp; inmoto &nbsp; ledOn &nbsp; >',  fontcolor='blue') >> led
      coldstorageservice >> Edge(color='blue', style='solid',  decorate='true', label='<truckDriver &nbsp; >',  fontcolor='blue') >> serviceaccesgui

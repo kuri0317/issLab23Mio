@@ -435,26 +435,53 @@ div.imagedesc{
             message to client: ticket/T_1753037323_1
         </code></pre>
         </div>
+<p>vediamo anche la possibilità di richiedere più ticket insieme:</p>
+<p><a href="../img/richiestaMultipla.png"><img alt=".../img/richiestaMultipla.png"class="align-center" src="../img/richiestaMultipla.png" style="width: 50%;" /></a></p> 
+
  <p>notiamo anche che se cerchiamo di validare senza aver inserito nessun ticket ci viene mostrato un toast di errore:  </p>
  <p><a href="../img/ticketAssente.png"><img alt=".../img/ticketAssente.png"class="align-center" src="../img/ticketAssente.png" style="width: 50%;" /></a></p> 
 
  <p>quando chiediamo la vaidazione di un ticket o di una serie di ticket possiamo ricevere una risposta positiva o negativa: </p>
   <p><a href="../img/ticketValido.png"><img alt=".../img/ticketValido.png"class="align-center" src="../img/ticketValido.png" style="width: 50%;" /></a></p> 
 <p><a href="../img/ticketInvalido.png"><img alt=".../img/ticketInvalido.png"class="align-center" src="../img/ticketInvalido.png" style="width: 50%;" /></a></p> 
-
+<p>
+        <div class="code-container">
+            <pre><code class="language-qak">
+                msg received: checkmyticket/T_1753086237_2
+                newRequest: reqf5adc3d59267
+                sentAtCStorage, msg sent: msg(checkmyticket,request,springServer,coldstorageservice,checkmyticket(T_1753086237_2),20)
+                response arrived: msg(ticketcheck,reply,coldstorageservice,springServer,true,82)
+                response=true       //MESSAGGIO VALIDO
+                Transformed response: ticketcheck/T_1753086237_2|true
+                message to client: ticketcheck/T_1753086237_2|true
+                msg received: checkmyticket/T_1753086238_3
+                newRequest: reqf5adc3d59267
+                sentAtCStorage, msg sent: msg(checkmyticket,request,springServer,coldstorageservice,checkmyticket(T_1753086238_3),21)
+                response arrived: msg(ticketcheck,reply,coldstorageservice,springServer,false,96)
+                response=false      //MESSAGGIO NON VALIDO
+                Transformed response: ticketcheck/T_1753086238_3|false
+                message to client: ticketcheck/T_1753086238_3|false
+            </code></pre>
+        </div>
+    </p>
 <p> Inoltre validando i nostri ticket possiamo vedere la barra della ColdRoom che si riempie: </p>
 <p><a href="../img/provaCaricamentoColdRoom.png"><img alt=".../img/provaCaricamentoColdRoom.png"class="align-center" src="../img/provaCaricamentoColdRoom.png" style="width: 50%;" /></a></p> 
 <p>E nel momento in cui la coldRoom risulta piena non sarà possibile richiedere altri ticket: </p>
 <p><a href="../img/richiestaRifiutataColdRoomPiena.png"><img alt=".../img/richiestaRifiutataColdRoomPiena.png"class="align-center" src="../img/richiestaRifiutataColdRoomPiena.png" style="width: 50%;" /></a></p> 
-<p>DI conseguenza notiamo che il Server funziona correttamente, ricevendo e inviando le informazioni necessarie.</p>
-<p></p>
+
+</p>
+    <p>Esempio risposta caricamento peso:
         <div class="code-container">
             <pre><code class="language-qak">
-        
+                sentAtCStorage, msg sent: msg(getCurrentWeight,request,springServer,coldroom,getCurrentWeight(NO_PARAM),8)
+                response arrived: msg(currentWeight,reply,coldroom,springServer,currentWeight(15),55)
+                response=currentWeight(15)
+                message to all clients: weight/15.0
+                Updated weight to: 15.0
             </code></pre>
         </div>
     </p>
-
+<p>Di conseguenza notiamo che il Server funziona correttamente, ricevendo e inviando le informazioni necessarie.</p>
 <h2>Deployment</h2> 
     <p>
         Per poter generare i test o provare il sistema è necessario prima far partire <a href="../../../unibo.basicrobot23" target="_blank">basicrobot23</a>
