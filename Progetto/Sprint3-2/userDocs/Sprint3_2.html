@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <!--
+<link rel="stylesheet" type="text/css" href="../css/issStyle1.css">
+<script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+<style type="text/css">
+body
+{
+    margin-left:  30px;
+    margin-right: 30px;
+};
+
+P
+{
+    font-family: Tahoma;
+    font-size: 10pt;
+};
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+	font-size: 93%;
+}
+
+a:hover {
+    background-color: #cccccc;
+}
+
+
+hr {
+    clear: both;
+    height: 1px;
+    color: #242424;
+    background-color: transparent;
+}
+
+h1, h2, h3 {
+    color: #242424;
+    clear: left;
+    font: 100% Tahoma, Helvetica, Arial, sans-serif;
+    margin-bottom: 0.5em;
+    padding-top: 0.5em;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+top {
+	width: 100%;
+}
+
+
+#i {
+    color: #ff1010;
+}
+tt{
+	font-family: "Arial";
+    font-size: 90%;
+	color: #006600;
+}
+em{
+	font-family: "Arial";
+    font-size: 80%;
+	font-weight: bold;
+	border-style:solid;
+	border-color: #abe876;
+    color: #1632cc;
+}
+bc{
+	font-family: "Arial";
+	font-size: 90%;
+	font-weight: bold;
+    color: #990000;
+	background-color: #fcf8c7;
+}
+ks{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #0000CD	;
+	font-size: 90%;
+}
+kc{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #008000	;
+	font-size: 90%;
+}
+pre{
+	font-family: "Consolas";
+	font-size: 85%;
+	background-color: #f5f5f5;
+	border: 1.5px solid silver;
+	padding: 5px;
+}
+m{
+	font-family: "Helvetica";
+	line-height: 100%;
+ 	font-size: 75%;
+}
+div.body{
+	 
+    font-size: 18px;
+}
+k{
+    color: #990000;
+	font-weight: bold;
+	font-size: 90%;
+}
+h1 {
+    font-size: 150%;
+    background-color: #b2c0ff;
+	padding: 10px;
+}
+
+h2 {
+    background-color: #9ed8ff;
+    font-size: 130%;
+}
+
+h3 {
+	background-color: #e6ccff;
+    font-size: 100%;
+}
+h4 {
+    background-color: #ccffcc;
+    font-size: 100%;
+	width: 95%;
+	border-radius: 5px;
+	padding: 2px;
+}
+h5 {
+    background-color: #d5ffb0;
+    font-size: 100%;
+
+}
+div.req{
+	background-color: #d9ffb3;
+    font-size: 18px;
+	width: 700px;
+    border: 3px solid green;
+    padding: 15px;
+    margin: 10px;
+}
+div.remark{
+	background-color: #E3F2FD;
+    border: 1.5px solid #d5f2ed;
+    padding: 15px;
+    margin: 10px;
+	border-radius: 25px;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+ol, ul, li {
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+  padding-bottom: 5px;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+img {
+	border: 1.5px solid #d5f2ed
+
+}
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+}
+
+div.wrapdesc{
+	width: 90%;
+	margin: auto;
+}
+
+div.imagedesc{
+	width: 85%;
+	margin: auto;
+}
+</style>
+    
+<head><title>Sprint3 parte 2</title></head>
+    
+<body>
+<div id="top">
+<h1>COLD STORAGE SERVICE SPRINT3 PARTE 2 - Cristina Napoli<font size="5"></font> </h1>
+</div>  
+
+<div class="body"> 
+<h2>Introduction</h2>
+ <p>Con rifemento allo sprint precedente, <a href="../../Sprint3/userDocs/Sprint3.html" target="_blank">Sprint3</a> lo sprint 3 parte 2 mira a migliorare 
+    l'interazione tra l'attore <strong>ColdRoom</strong> della nostra applicazione ColdStorageService ed il server Web. 
+   </p>
+   
+
+<h2>Requirement analysis</h2>
+ <p>Già discussi nello <a href="../../Sprint0/UserDocs/sprint0.html" target="_blank">Sprint0</a>.</p>
+</div>
+
+<h2>Problem analysis</h2>
+
+<p>Discutendo con il committente, abbiamo deciso che risulti più congeniale creare una connessione COAP l'attore e il Server Web, per fare in modo che sia l'attore stesso
+     ad inviare gli aggiornamenti del suo stato. In questo modo:
+    <lu>
+        <li>Risparmiamo le richieste multiple da parte del Server all'applicazione.</li>
+        <li>Il flusso della comunicazione risulta più pulito, chiaro, semplice e funzionale.</li>
+        <li>Risolviamo il problema di alcuni utenti che si ritrovavano ad avere delle informazioni poco fresche se non eseguivano aggiornamenti della pagina.</li>
+    </lu>
+</p>
+<h2>Project</h2>
+<p>Come già detto utilizziamo la connessione COAP per:
+    <lu>
+        <li>Integrarci meglio con l'applicazione coldStorageService, che ne fa uso per le interazioni tra i suoi QActor.</li>
+        <li>Semplicità di sviluppo.</li>
+    
+    </lu>
+</p>
+
+<p>Ci colleghiamo dal server Web alla porta 8040 questa volta gestendo una connessione COAP, e gestendo un Observer per l'attore <cite>ColdRoom</cite>, come di seguito: </p>
+<div class="code-container">
+        <pre><code class="language-javascript">
+             // CoAP Observation (per coldroom)
+        
+        try {
+            this.coapConn = new CoapConnection("127.0.0.1:8040", "ctxservicearea/coldroom");
+            System.out.println("CoAP observer setup on port 8040 for ctxservicearea/coldroom");
+            
+            // Configura per aggiornamenti del peso
+            setupCoapObserver();
+        } catch (Exception e) {
+            System.err.println("CoAP connection failed: " + e.getMessage());
+        }
+    }
+    
+    private void setupCoapObserver() {
+        try {
+            coapConn.observeResource(new CoapHandler() {
+                @Override
+                public void onLoad(CoapResponse response) {
+                    if(response != null && response.isSuccess()) {
+                        String payload = response.getResponseText().trim();
+                        System.out.println("CoAP Update received - Raw payload: " + payload);
+                        
+                        try {
+                            float weight = Float.parseFloat(payload);
+                            serviceAccessGUI.updateColdRoomState(weight, 60.0f); // MAX_WEIGHT = 60
+                        } catch (NumberFormatException e) {
+                            System.err.println("Error parsing weight value: " + payload);
+                        }
+                    }
+                }
+
+                @Override
+                public void onError() {
+                    System.err.println("CoAP observation error");
+                }
+            });
+        } catch (Exception e) {
+            System.err.println("Observer setup failed: " + e.getMessage());
+        }
+    }
+        </code></pre>
+    </div>
+<p>L'architettura del Server è uguale allo sprint precedente, la riproponiamo: </p>
+
+    <p><a href="../img/ArchServer.png"><img alt="../img/ArchServer.png"class="align-center" src="../img/ArchServer.png" style="width: 50%;" /></a></p> 
+<p>Mentre l'architettura dell'applicazione diventa la seguente: </p>
+ <p><a href="../codici/coldStorageService/coldstoragearch.png"><img alt="../codici/coldStorageService/coldstoragearch.png"class="align-center" src="../codici/coldStorageService/coldstoragearch.png" style="width: 80%;" /></a></p> 
+   
+ <p>La pagina proposta all'utente: </p>
+    <p><a href="../img/coldStoragePage.png"><img alt="../img/coldStoragePage.png"class="align-center" src="../img/coldStoragePage.png" style="width: 70%;" /></a></p> 
+  
+    <p>Per quanto riguarda lo stato della <cite>ColdRoom</cite> vediamo nel codice le richieste di aggiornamento del peso sono state eliminate, sostituite da una richiesta del tipo:</p>
+    
+    <div class="code-container">
+        <pre><code class="language-java">
+                
+            protected void sendWeightUpdate(int peso) {
+                String msg = "weightUpdate(" + peso + ")";
+                IApplMessage weightMsg = CommUtils.buildDispatch(
+                        "coldroom", "updateWeight", "updateWeight(" + peso + ")", "handler");
+                
+                try {
+                    tcp_connection.forward(weightMsg);
+                } catch (Exception e) {
+                    System.err.println("Error sending weight update: " + e.getMessage());
+                }
+            }
+        </code></pre>
+    </div>
+    <p>mentre all'interno dell'attore <cite>ColdRoom </cite>avviene la lieve modifica seguente: </p> 
+
+    <div class="code-container">
+        <pre><code class="language-java">
+            	State s2 {		//quando una prenotazione risulta valida si riaggiornano le variabili 
+                    [# 
+                        P_alloc-=FW  
+                        Peso= Peso+FW 
+                    #]
+                    updateResource[# "$Peso" #]
+                    println("COLDROOM: Peso aggiornato a $Peso")
+                    
+                }Goto s1
+        </code></pre>
+    </div>
+    <p>per rendere la risorsa <cite>Peso</cite> visibile al Server Spring.</p>
+    <p>L'utente, come in precedenza, vedrà gli aggiornamenti dello stato della ColdRoom tramite una barra di caricamento: </p>
+    <p><a href="../img/provaCaricamentoColdRoom.png"><img alt="../img/provaCaricamentoColdRoom.png"class="align-center" src="../img/provaCaricamentoColdRoom.png" style="width: 70%;" /></a></p> 
+
+<h2>Test plans</h2> 
+<p>I test sono uguali ai precedenti e possono essere provati facendo partire le applicazioni come descritto nella sezione 'Deployment'</p>
+<h2>Deployment</h2> 
+    <p>
+        Per poter generare i test o provare il sistema è necessario prima far partire <a href="../../../unibo.basicrobot23" target="_blank">basicrobot23</a>
+        con il comando: <strong>docker compose -f basicrobot23.yaml  up </strong>
+    </p>
+    <p>
+        Successivamente far partire <a href="../codici/coldStorageService/src/coldstorage.qak" target="_blank">coldstorage.qak</a> ed in un altro terminale far partire  <a href="../codici/allarmi/src/led.qak" target="_blank">led.qak</a> da eclipse col comando: <strong>./gradlew run </strong>
+    </p>
+    <p> In un altro terminale far partire la classe <a href="../codici/led/src/main/java/sonar.java" target="_blank">sonar.java</a> con il comando <strong>./gradlew runSonar </strong> per poter simulare il comportamento del Sonar,</p>
+    <p> e nell'Editor Eclipse fare partire il Server SpringBoot, aprendo la cartella <a href="../codici/spring/" target="_blank">spring</a> e inviando il coomando <strong>./gradlew bootrun</strong> .</p>
+
+ 
+<h2>Next Steps</h2> 
+ 
+
+<!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+	      	
+<br/><br/> 	
+</div>  
+
+<div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
+    By Cristina Napoli email: cristinaanna.napoli@studio.unibo.it,
+    <p><td><img width="180" alt="io.jpg" src="../../../io.jpg" class="internal-embed"></td></p>
+    <p>GIT repo: <a href="https://github.com/kuri0317/issLab23Mio" target="_blank">https://github.com/kuri0317/issLab23Mio</a> </p>
+</body>
+</html>

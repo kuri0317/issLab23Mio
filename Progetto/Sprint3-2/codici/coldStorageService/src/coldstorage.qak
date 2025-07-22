@@ -1,0 +1,395 @@
+System coldstorage
+//SPRINT 3PT2
+//messaggi tra ServiceGUI e CStorage 
+
+//richiesta ticket, mandata dalla classe serviceaccessgui
+Request depositRequest : depositRequest(NO_PARAM)
+Reply accept : accept(TICKET) for depositRequest
+Reply reject : reject(NO_PARAM) for depositRequest
+
+//richiesta vallidità ticket mandata dalla classe serviceaccessgui
+Request checkmyticket : checkmyticket(TICKET) 
+Reply ticketcheck : ticketcheck(BOOL) for checkmyticket
+
+//messaggi tra CStorage e CRoom
+
+//spazio disponibile nel frigorifero? 
+Request fwrequest : fwrequest(NO_PARAM)
+Reply fwYES : fwYES (NO_PARAM) for fwrequest
+Reply fwNO : fwNO (NO_PARAM) for fwrequest
+
+//aggiorna spazio 
+Request load_CR : load_CR(NO_PARAM)
+Request delete_Reservation: delete_Reservation(NO_PARAM)
+
+//per spring
+//Request getCurrentWeight : getCurrentWeight(NO_PARAM)
+//Reply currentWeight : currentWeight(PESO) for getCurrentWeight
+
+//messaggi TransportTrolley e CStorage 
+
+//prendi il carico da indoor
+Request takecharge : takecharge(NO_PARAM)
+Reply chargetaken : chargetaken(NO_PARAM) for takecharge 
+
+//scaricato in ColdRoom
+Dispatch liberoTT: liberoTT(NO_PARAM)
+
+//vai in HOME 
+Dispatch goHome : goHome(NO_PARAM)
+//per uscire dal programma una volta che il frigorifero è stato riempito
+Request quit : quit(NO_PARAM)
+
+//messaggi sonar
+Event stop: stop(NO_PARAM)
+Dispatch resume: resume(NO_PARAM)
+
+//Messaggi BasicRobot----------------------------------------------------------------------
+Request 	engage				: 	engage(OWNER,STEPTIME)
+Reply 		engagedone			:	engagedone(ARG) for engage
+Reply 		engagerefused		: 	engagerefused(ARG) for engage
+
+Dispatch 	disengage			: 	disengage(ARG)
+
+Dispatch 	cmd					:	cmd(MOVE)  
+Dispatch 	end					: 	end(ARG)
+Request 	step				: 	step(TIME)
+Reply 		stepdone			: 	stepdone(V) for step     
+Reply 		stepfailed			: 	stepfailed(DURATION, CAUSE) for step
+ 
+Request 	doplan				: 	doplan(PATH,OWNER,STEPTIME)
+Reply 		doplandone			: 	doplandone(ARG) for doplan
+Reply 		doplanfailed		:	doplanfailed(ARG) for doplan
+
+Request 	moverobot			:	moverobot(TARGETX, TARGETY)
+Reply 		moverobotdone		: 	moverobotok(ARG) for moverobot
+Reply 		moverobotfailed		: 	moverobotfailed(PLANDONE,PLANTODO) for moverobot
+
+Dispatch 	setrobotstate		: 	setpos(X,Y,D)
+Dispatch 	setdirection		: 	dir(D) // up, down, left, right 
+ 
+Event alarm           : alarm(X)
+Dispatch nextmove     : nextmove(M)
+Dispatch nomoremove   : nomoremove(M)
+//-----------------------------------------------------------------------------------------
+
+//PROVE PER LED
+Dispatch ledOff: ledOff(NO_PARAM)		//OFF in HOME
+Dispatch inmoto : inmoto(NO_PARAM)	//BLINKS se inmoto
+Dispatch ledOn : ledOn(NO_PARAM)		//ON se fermo
+
+//----contesti-----------------------------------------------------------------------------
+Context ctxservicearea ip [host="localhost" port=8040]
+Context ctxbasicrobot ip [host="127.0.0.1" port=8020]
+Context ctxled ip [host="127.0.0.1" port=8044] 
+//-----------------------------------------------------------------------------------------
+//attore
+
+QActor coldstorageservice context ctxservicearea{
+	
+	[#
+		var TICKETTIME =10;  //timer del ticket
+		var Token= "_" 
+		var InitialToken ="T"
+		var Ticket =""
+		var T_acc=0
+		
+		var busy = false 	//variabile che indica se il trolley è libero o occupato
+		var valido = false	//variabile che indica la validità del ticket
+	#]
+	
+	State s0 initial {
+		println("COLDSTORAGE: attivo") color magenta 
+	}Goto s1 
+		
+	State s1 {//attesa messaggio
+		println("COLDSTORAGE: attendo un messaggio.") color magenta
+	}Transition t0 whenRequest depositRequest -> check
+				whenRequest checkmyticket -> checktheticket
+				whenMsg liberoTT-> libera 
+				whenRequest quit -> esci
+				
+	State checktheticket {			//controlla se il ticket è valido in base al timer
+			onMsg(checkmyticket : checkmyticket(TICKET)){
+				[#
+					valido = false
+					var Ticket =payloadArg(0)
+					var Ticketvalid= false ;
+					var StartTime= Ticket.split( Token, ignoreCase= true, limit=0).get(1).toInt()
+					var Now = java.util.Date().getTime()/1000
+					if(Now<StartTime +TICKETTIME){ 					//se è valido
+						Ticketvalid = true
+						valido = true
+					}	
+				#]
+				println("COLDSTORAGE : controllo il ticket di SAGUI, ticket valido? $Ticketvalid") color red 
+				println("COLDSTORAGE : now $Now < StartTime $StartTime + $TICKETTIME = $Ticketvalid") color red 
+				replyTo checkmyticket with ticketcheck : $Ticketvalid
+			}
+		} Goto svuotaAlloc if [# !valido#] else taking //se valido si va in taking se non valido si elimina la prenotazione dello spazio in frigo
+		
+		State svuotaAlloc{
+			//chiedere a coldRoom di eliminare la prenotazione
+			request coldroom -m delete_Reservation : delete_Reservation(NO_PARAM)
+			
+			println("COLDSTORAGE : chiedo a coldroom di togliere la prenotazione.") color magenta			
+		}Goto s1
+		
+	State check{		//controlla ci sia spazio in frigo per accettare o rifiutare la richiesta di un ticket
+		onMsg(depositRequest : depositRequest(NO_PARAM)){
+		
+		println("COLDSTORAGE : chiedo a coldroom se c'è spazio.") color magenta
+		request coldroom -m fwrequest : fwrequest(NO_PARAM)
+		
+		}
+	}Transition t1 whenReply fwYES -> returnticket
+					whenReply fwNO -> reject
+	State reject {
+		println("COLDSTORAGE : non c'è spazio, richiesta rifiutata") color red
+		
+		replyTo depositRequest with reject : reject( NO_PARAM )
+		
+	} Goto s1
+	
+	State returnticket { //crea ticket quando è stato controllato lo spazio in frigo
+		
+		[#  Ticket = "T".plus(Token)
+			var Now = java.util.Date().getTime()/1000
+			
+			Ticket = Ticket.plus( Now ).plus(Token).plus( T_acc)
+			T_acc++
+			
+			#]
+			println("COLDSTORAGE : Consegno ticket, numero $T_acc") color green
+            replyTo depositRequest with accept : accept( $Ticket )
+	} Goto s1 
+	
+	State taking {		//chiede al trolley di venire a prendere la richiesta e lo indica occupato
+		[#  busy=true #]
+		println("COLDSTORAGE: chiamo transporttrolley in INDOOR, busy= $busy") color magenta     
+		request transporttrolley -m takecharge : takecharge(NO_PARAM)
+					
+	}Transition t2 whenReply chargetaken -> viaDriver
+	
+	State viaDriver{	//indicare la fine della transazione col driver
+		println("COLDSTORAGE: truck driver può andare.") color magenta
+		
+	}Transition t2 whenTime 3000 -> riempi
+	
+	State riempi{ 		//conferma lo spazio prenotato in frigo
+	request coldroom -m load_CR : load_CR(NO_PARAM)
+	println("COLDSTORAGE: ColdRoom deve togliere l'allocazione e confermare lo spazio.") color magenta
+	
+	
+	} Transition t4 whenTime 4000 -> s1 
+	
+	State libera {//aspetta di sapere che TT ha caricato CR e poi lo manda a casa indicandolo libero
+		
+		onMsg (liberoTT : liberoTT(NO_PARAM)){
+			[# if(busy==true) busy=false #]
+			println("COLDSTORAGE: transporttrolley deve andare in HOME. busy= $busy") color magenta
+			forward transporttrolley -m goHome : goHome(NO_PARAM)
+		}
+	}Transition t4 whenTime 6000 -> s1
+	
+	State esci{
+		println("COLDSTORAGE: transporttrolley chiudiamo.") color magenta
+		request transporttrolley -m quit : quit(NO_PARAM)
+	}		
+}
+
+//attore coldroom
+QActor coldroom context ctxservicearea {
+	
+	[#
+		var Peso = 0 	//spazio occupato dentro frigo
+		var MAXW = 60	//peso massimo in frigo
+		var FW= 15		//peso di ogni richiesta
+		var P_alloc=0	//spazio prenotato
+	#]
+	
+	State s0 initial {
+		println("COLDROOM:  attivo, peso iniziale in frigo = $Peso") color cyan
+	}Goto s1
+	
+	State s1{
+		//attesa
+		println("COLDROOM: aspetto richieste da CStorage.") color cyan
+		
+	}Transition t0 whenRequest fwrequest -> controllaPeso  //per avere ticket
+					whenRequest load_CR -> s2
+					whenRequest delete_Reservation -> delete_Reservation
+					//whenRequest getCurrentWeight -> sendWeight
+              
+//	State sendWeight {
+//	    onMsg(getCurrentWeight : getCurrentWeight(NO_PARAM)) {
+//	        println("COLDROOM: invio peso corrente a SpringBoot $Peso") color cyan
+//	        replyTo getCurrentWeight with currentWeight : currentWeight($Peso)
+//	    }
+//	} Goto s1
+					
+	State delete_Reservation{	//cancella lo spazio prenotato quando il ticket risulta invalido
+		[# P_alloc-=FW  #]
+		println("COLDROOM : Elimino prenotazione. Peso allocato in frigo: $P_alloc") color green 		
+	}Goto s0
+	
+	State controllaPeso {		//controlla la disponibilità in frigo
+		onMsg(fwrequest : fwrequest(NO_PARAM)){
+			
+			if  [#Peso+ FW <= MAXW#] {	//se c'è spazio
+				[#P_alloc+=FW #]		//prenota lo spazio e invia risposta positiva
+				println("COLDROOM : Spazio disponibile! Prenotazione avvenuta. Peso allocato in frigo: $P_alloc") color green 
+				replyTo fwrequest with fwYES : fwYES (NO_PARAM)
+			}
+			if[#Peso+ FW > MAXW#]{		//non c'è spazio invia risposta negativa
+			println("COLDROOM: non c'è spazio, rifiuta.")  color red 
+			replyTo fwrequest with fwNO : fwNO( NO_PARAM )
+			}
+			
+			println("COLDROOM : il Peso totale in frigo è: $Peso") color cyan    // ad ogni interazione controlliamo lo spazio in frigo
+		}
+	}Goto s1
+	
+	State s2 {		//quando una prenotazione risulta valida si riaggiornano le variabili 
+		[# 
+			P_alloc-=FW  
+			Peso= Peso+FW 
+		#]
+		updateResource[# "$Peso" #]
+		println("COLDROOM: Peso aggiornato a $Peso")
+		
+	}Goto s1
+}
+
+//attore transporttrolley
+QActor transporttrolley context ctxservicearea {
+	[# var StatoRobo = "" #]
+	
+	State s0 initial {		//attiva e engage il basicrobot
+		println("TRANSPORTTROLLEY:  attivo!") color blue
+		println("TRANSPORTTROLLEY:  engage basicrobot") color blue  
+		request basicrobot -m engage : engage(transporttrolley,305)	
+	} Goto s1 
+	
+	State s1{	//attesa richieste
+		[# StatoRobo = "Home" #]
+		forward led -m ledOff : ledOff (NO_PARAM) //in Home il led è spento
+		println("TRANSPORTTROLLEY: sono in HOME, attendo messaggi da CStorage.") color blue
+		
+	} Transition t0 whenRequest takecharge -> goIndoor
+					whenRequest quit -> quit
+					whenEvent stop -> stopping 
+					
+					
+	State goIndoor{	//va a prendere il carico quando viene accettato e validato un ticket
+		onMsg(takecharge : takecharge(NO_PARAM)) {
+			
+		println("TRANSPORTTROLLEY: vado in INDOOR e prendo il carico. ") color blue
+		replyTo takecharge with chargetaken : chargetaken( NO_PARAM )
+		}
+		[# StatoRobo= "goIndoor" #]
+		forward led -m inmoto : inmoto (NO_PARAM)			//informa il led del movimento
+		request basicrobot -m moverobot : moverobot (0,4)
+	}
+	Transition t1 whenReply moverobotdone-> carica
+				  whenEvent stop -> stopping 
+				
+	State carica {		//carica la consegna sul trolley e poi si dirige in coldroom
+		
+		[# StatoRobo= "caricando" #]
+		[#
+		println("TRANSPORTTROLLEY: sto prendendo il carico.")
+	    var  Duration= Math.floor(Math.random() *200).toLong()
+	    delay(Duration)
+	    #]
+		println("TRANSPORTTROLLEY:dico al led di essere ON. ") color blue			
+		forward led -m ledOn : ledOn(NO_PARAM)
+	}Goto caricando
+	
+	State caricando {	
+		[#
+		println("TRANSPORTTROLLEY: sto prendendo il carico.")
+	    var  Duration= Math.floor(Math.random() *2500).toLong()
+	    delay(Duration)
+	    #]
+	}Goto caricato 
+	
+	State caricato{
+		forward led -m inmoto : inmoto (NO_PARAM)
+		[# StatoRobo= "goCR" #]
+		println("TRANSPORTTROLLEY: vado verso COLDROOM") color blue
+		request basicrobot -m moverobot : moverobot (4,3) 
+		
+	}Transition t2 whenReply moverobotdone -> raggiuntoCR 
+					whenEvent stop -> stopping 
+				
+	State raggiuntoCR {
+		//informare CStorage-- vedere se tornare a casa o prendere altra consegna 
+		[# StatoRobo= "inCR" #]
+		println("TRANSPORTTROLLEY: dico al led di essere On.") color blue
+		forward led -m ledOn : ledOn (NO_PARAM)
+	}Goto caricafrigo
+	
+	State caricafrigo{
+		[#
+		println("TRANSPORTTROLLEY: sto caricando il frigo.")
+	    var  Duration= Math.floor(Math.random() *2500).toLong()
+	    delay(Duration)			//tempo randomico per caricare il frigorifero
+	    #]
+	    
+		println("TRANSPORTTROLLEY: ho caricato il frigo.") color blue
+		forward coldstorageservice -m liberoTT : liberoTT(NO_PARAM)	//è libero o ci sono altre richieste?
+		
+	}Transition t3 whenRequest takecharge -> goIndoor
+				   whenMsg goHome -> vaiCasa
+				   whenRequest quit -> quit
+				   whenEvent stop -> stopping 	
+						
+	State vaiCasa {		//se non ci sono altre consegne al momento allora va a casa
+		onMsg(goHome: goHome(NO_PARAM)){
+			println("TRANSPORTTROLLEY: vado in HOME.") color blue
+		}
+		forward led -m inmoto : inmoto (NO_PARAM)
+		[# StatoRobo= "goHome" #]
+		request basicrobot -m moverobot : moverobot (0,0)
+		forward basicrobot -m setdirection : dir(down)
+	}Transition t4 whenReply moverobotdone -> s1 
+				whenRequest quit -> quit
+				whenEvent stop -> stopping 
+	
+	State stopping{
+		discardMsg On
+		[#delay(500) #] //the transport trolley should not be stopped if some prefixed amount of time (MINT msecs) is not passed from the previous stop
+		forward led -m ledOn : ledOn (NO_PARAM)
+		
+		//forward basicrobot -m cmd : cmd(h)
+		emit alarm: alarm(X)
+		println("TRANSPORTTROLLEY: basicrobot ha incontrato un ostacolo") color blue  
+		
+	}Transition t5 whenMsg resume and [# StatoRobo== "Home" #] 	-> s1
+					whenMsg resume and [# StatoRobo== "goIndoor" #] 	-> goIndoor
+					whenMsg resume and [# StatoRobo== "caricando" #] 	-> carica
+					whenMsg resume and [# StatoRobo== "goCR" #] 	-> caricato
+					whenMsg resume and [# StatoRobo== "inCR" #] 	-> caricafrigo
+					whenMsg resume and [# StatoRobo== "goHome" #] 	-> vaiCasa
+					
+	State quit {		//uscita dal sistema 
+		[#
+		    var  Duration= Math.floor(Math.random() *6000).toLong()
+		    delay(Duration)
+		    #]
+		forward led -m inmoto : inmoto (NO_PARAM)
+		request basicrobot -m moverobot : moverobot (0,0)
+		forward basicrobot -m setdirection : dir(down)
+		
+		forward basicrobot -m disengage : disengage(transporttrolley)
+		forward led -m ledOff : ledOff (NO_PARAM)
+		println("TRANSPORTTROLLEY:  disengage basicrobot") color blue  
+		
+		[# System.exit(0) #]
+	}	
+}
+
+//indicare BasicRobot e Led come Attore esterno
+ExternalQActor basicrobot context ctxbasicrobot
+ExternalQActor led context ctxled

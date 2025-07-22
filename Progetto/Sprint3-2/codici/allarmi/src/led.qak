@@ -1,0 +1,58 @@
+System led //led 
+
+Dispatch ledOff: ledOff(NO_PARAM)
+Dispatch inmoto :	inmoto(NO_PARAM)
+Dispatch ledOn : ledOn(NO_PARAM)
+
+//----contesto----
+Context ctxled ip [host="localhost" port=8044]
+Context ctxservicearea ip [host="127.0.0.1" port=8040]
+
+//----------------
+QActor led context ctxled withobj ledgui using "main.java.Led()"{
+	
+	State s0 initial{
+		println("LED in s0 ") color yellow
+		[# 
+           ledgui.createGUI()
+		#]
+			
+	} Goto s1
+	
+	State s1{
+		println(" led attende messaggi ") color yellow
+	}Transition t0 whenMsg inmoto ->blinks
+					whenMsg ledOn -> accendi
+					whenMsg ledOff -> spegni
+					
+	State accendi{
+		//dire alla gui di accendere il led 
+		
+        println("LED : Ricevuto ledOn! Cambio stato") color green
+        [#
+			ledgui.changeLed(2)
+		#]
+	}Transition t1 whenMsg inmoto ->blinks
+				whenMsg ledOff -> spegni 
+	
+	State blinks{
+		//dire alla gui di lampeggiare
+        println("LED : Ricevuto inmoto! Cambio stato") color green
+        [#
+			ledgui.changeLed(3)
+		#]
+        
+	}Transition t2  whenMsg ledOn -> accendi
+					whenMsg ledOff -> spegni
+	
+	State spegni{
+		//dire alla gui di spegnere 
+        println("LED : Ricevuto ledOff! Spengo") color green
+        [#
+			ledgui.changeLed(1)
+		#]
+            
+	} Transition t3 whenMsg inmoto ->blinks
+					whenMsg ledOn -> accendi
+}
+ExternalQActor transporttrolley context ctxservicearea

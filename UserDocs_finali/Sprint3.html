@@ -1,0 +1,504 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <!--
+<link rel="stylesheet" type="text/css" href="../css/issStyle1.css">
+<script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+<style type="text/css">
+body
+{
+    margin-left:  30px;
+    margin-right: 30px;
+};
+
+P
+{
+    font-family: Tahoma;
+    font-size: 10pt;
+};
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+	font-size: 93%;
+}
+
+a:hover {
+    background-color: #cccccc;
+}
+
+
+hr {
+    clear: both;
+    height: 1px;
+    color: #242424;
+    background-color: transparent;
+}
+
+h1, h2, h3 {
+    color: #242424;
+    clear: left;
+    font: 100% Tahoma, Helvetica, Arial, sans-serif;
+    margin-bottom: 0.5em;
+    padding-top: 0.5em;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+top {
+	width: 100%;
+}
+
+
+#i {
+    color: #ff1010;
+}
+tt{
+	font-family: "Arial";
+    font-size: 90%;
+	color: #006600;
+}
+em{
+	font-family: "Arial";
+    font-size: 80%;
+	font-weight: bold;
+	border-style:solid;
+	border-color: #abe876;
+    color: #1632cc;
+}
+bc{
+	font-family: "Arial";
+	font-size: 90%;
+	font-weight: bold;
+    color: #990000;
+	background-color: #fcf8c7;
+}
+ks{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #0000CD	;
+	font-size: 90%;
+}
+kc{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #008000	;
+	font-size: 90%;
+}
+pre{
+	font-family: "Consolas";
+	font-size: 85%;
+	background-color: #f5f5f5;
+	border: 1.5px solid silver;
+	padding: 5px;
+}
+m{
+	font-family: "Helvetica";
+	line-height: 100%;
+ 	font-size: 75%;
+}
+div.body{
+	 
+    font-size: 18px;
+}
+k{
+    color: #990000;
+	font-weight: bold;
+	font-size: 90%;
+}
+h1 {
+    font-size: 150%;
+    background-color: #b2c0ff;
+	padding: 10px;
+}
+
+h2 {
+    background-color: #9ed8ff;
+    font-size: 130%;
+}
+
+h3 {
+	background-color: #e6ccff;
+    font-size: 100%;
+}
+h4 {
+    background-color: #ccffcc;
+    font-size: 100%;
+	width: 95%;
+	border-radius: 5px;
+	padding: 2px;
+}
+h5 {
+    background-color: #d5ffb0;
+    font-size: 100%;
+
+}
+div.req{
+	background-color: #d9ffb3;
+    font-size: 18px;
+	width: 700px;
+    border: 3px solid green;
+    padding: 15px;
+    margin: 10px;
+}
+div.remark{
+	background-color: #E3F2FD;
+    border: 1.5px solid #d5f2ed;
+    padding: 15px;
+    margin: 10px;
+	border-radius: 25px;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+ol, ul, li {
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+  padding-bottom: 5px;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+img {
+	border: 1.5px solid #d5f2ed
+
+}
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+}
+
+div.wrapdesc{
+	width: 90%;
+	margin: auto;
+}
+
+div.imagedesc{
+	width: 85%;
+	margin: auto;
+}
+</style>
+    
+<head><title>Sprint3</title></head>
+    
+<body>
+<div id="top">
+<h1>COLD STORAGE SERVICE SPRINT3 - Cristina Napoli<font size="5"></font> </h1>
+</div>  
+
+<div class="body"> 
+<h2>Introduction</h2>
+ <p>Con rifemento allo sprint precedente, <a href="../Progetto/Sprint2/UserDocs/sprint2.html" target="_blank">Sprint2</a> ora introduciamo lo Sprint3.</p>
+
+ <p>Lo Sprint3 mira a creare la <strong>ServiceAccessGUI</strong>, ovvero creare un Server utilizzando SpringBoot, alla pagina seguente <a href="https://start.spring.io/" target="_blank">start.spring.io</a> 
+   per poter comunicare con la nostra applicazione ColdStorageService. 
+   </p>
+   <p>Per la realizzazione ci confrontiamo con queste fonti <a href="https://github.com/anatali/issLab23/blob/main/iss23Material/html/SpringBootIntro.html" target="_blank">SpringIntro</a> e
+    creeremo quindi un backend interamente in Java e un frontend utilizzando Javascript e HTML.
+</p>
+
+<h2>Requirement analysis</h2>
+ <p>Già discussi nello <a href="../Progetto/Sprint0/UserDocs/sprint0.html" target="_blank">Sprint0</a>.</p>
+</div>
+
+<h2>Problem analysis</h2>
+
+<p>Abbiamo deciso di gestire l'interazione tra ColdStorageService e utente umano tramite un server Web in Spring per:
+    <lu>
+        <li>Permentte ad un numero n di utenti di usare lo stesso browser.</li>
+        <li>Possiamo gestire la comunicazione sia in maniera sincrona che asincrona tra backend e frontend e tra server ed applicazione ColdStorageService. </li>
+        <li>Ci concentriamo sulla vista dell'utente utilizzatore finale.</li>
+    </lu>
+</p>
+<h2>Project</h2>
+<p>Come già detto utilizziamo per lo sviluppo del Server Web, SpringBoot che crea applicazioni Web utilizzando Spring MVC, nonché Apache Tomcat come contenitore incorporato predefinito, 
+    ed anche Thymeleaf, motore di template Java lato server per ambienti web e standalone, che fornisce un modo gestibile per creare modelli, e per le motivazioni seguenti:
+    <lu>
+        <li>Semplicità di sviluppo, data la natura Java-based dei framework, che si prestano molto bene all'integrazione con la nostra applicazione.</li>
+        <li>Riduzione di tempi e costi per lo sviluppo.</li>
+        <li>Mantenere indipendenza e funzionalità tra i diversi componenti creati, rendendo chiara la separazione tra i livelli.</li>
+        <li>Concentrarsi sul livello superiore, più vicino all'utilizzatore finale.</li>
+        <li>Thymeleaf consente di visualizzare l’HTML nei browser e come prototipi statici.</li>
+    
+    </lu>
+</p>
+
+<p>Con il server Web ci colleghiamo alla pagina HTML alla <cite>porta 8080</cite> per visualizzare la pagina utente, e alla <cite>porta 8090</cite> per vedere la scena WebGL della ServiceArea. 
+    Inoltre il server si collegherà alla <cite>porta 8040</cite>, dove lavora la nostra applicazione ColdStorageService, stabilendo una connessione TCP.</p>
+<p>L'architettura del Server è pensata nel modo seguente: </p>
+
+    <p><a href="./img/ArchServer.png"><img alt="./img/ArchServer.png"class="align-center" src="./img/ArchServer.png" style="width: 50%;" /></a></p> 
+   <p>I 3 componenti all'interno del <cite>Server</cite> sono delle classi java che gestiscono la connessione con il ColdStorageService, che implementa una connessioe sincrona, e con il frontend Javascript e HTML che si implementa tramite WebSocket in maniera asincrona.
+    Il compito di ServiceAGUI sarà quindi quello di tradurre ed instradare i messaggi nelle due direzioni.</p>
+
+    <p>La pagina proposta all'utente umano è la seguente: </p>
+    <p><a href="./img/coldStoragePage.png"><img alt="./img/coldStoragePage.png"class="align-center" src="./img/coldStoragePage.png" style="width: 70%;" /></a></p> 
+  
+    <p>I messaggi di richiesta dei ticket vengono scatenati dal click sul bottone <cite>Request ticket</cite> rilevato tramite gli <cite>EventListener</cite>:</p>
+    <div class="code-container">
+        <pre><code class="language-javascript">
+             function init() {
+
+                resetUI();
+                
+                // event listeners
+                elements.requestBtn?.addEventListener('click', requestTicket);
+                elements.checkBtn?.addEventListener('click', checkSingleTicket);
+                elements.checkAllBtn?.addEventListener('click', checkAllTickets);
+
+                // connessione WebSocket
+                initWebSocket();
+            }
+
+            .....
+            ..
+             // Richiesta ticket
+            function requestTicket() {
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send("depositRequest/");
+                }
+            }
+        </code></pre>
+    </div>
+
+    che verrà poi inviato alla classe <cite>ServiceAGUI</cite> che identifica il messaggio col seguente metodo: 
+    <div class="code-container">
+        <pre><code class="language-java">
+             public void requestFromClient(String msg, String requestId) {
+        
+                String[] parts = msg.split("/");
+                
+                switch (parts[0]) {
+                    case "depositRequest": 
+                        this.serviceConnector.depositRequest(requestId);
+                        break;
+                    case "checkmyticket": 
+                        String ticket = parts.length > 1 ? parts[1] : "";
+                        this.serviceConnector.checkMyTicket(ticket, requestId);
+                        break;
+                    case "getCurrentWeight":
+                        this.serviceConnector.getCurrentWeight(requestId);
+                        break;
+                    default:
+                        System.out.println("Unknown request type: " + parts[0]);
+                }
+            }
+        </code></pre>
+    </div>
+    <p>La classe comunica con il <cite>Connector.java</cite> che invia il messaggio tramite TCP al coldStorageService: </p>
+    <div class="code-container">
+        <pre><code class="language-java">
+             protected IApplMessage depositRequest(String requestId) {
+                IApplMessage message = CommUtils.buildRequest(
+                        sender, 
+                        "depositRequest", 
+                        "depositRequest(NO_PARAM)", 
+                        destination);
+                
+                sentAtCStorage(message, requestId);
+                return message;
+            }
+        </code></pre>
+    </div>
+    <p>Come già visto negli sprint precedenti il ColdStorageService risponderà alla richiesta con un ticket, che seguirà il percorso inverso a quello appena descritto e mostrerà il ticket in un campo che apparirà sotto il bottone <cite>Request Ticket</cite>.</p>
+    
+    <p>Successivamente in maniera simile, si richiederà la verifica del ticket (o singolo o di una serie di ticket che sono stati richiesti) e i risultati della richiesta appariranno nel campo <cite>Risultati Validazione</cite>.</p>
+
+    <p>Per quanto riguarda lo stato della <cite>ColdRoom</cite> vediamo nel codice che verranno fatte delle richieste di aggiornamento del peso all'avvio della pagina, ad ogni suo refresh, e ogni volta che un ticket verrà sottoposto a richiesta di validazione.</p>
+    <p>Tramite la funzione: </p>
+    <div class="code-container">
+        <pre><code class="language-java">
+            // Richiesta peso 
+            function requestCurrentWeight() {
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send("getCurrentWeight/");
+                }
+            }
+        </code></pre>
+    </div>
+    <p>che andrà a scatenare il caso <cite>getCurrentWeight</cite> </p> 
+
+    <div class="code-container">
+        <pre><code class="language-java">
+            public void requestFromClient(String msg, String requestId) {
+        
+        String[] parts = msg.split("/");
+        
+        switch (parts[0]) {
+            case "depositRequest": 
+                this.serviceConnector.depositRequest(requestId);
+                break;
+            case "checkmyticket": 
+                String ticket = parts.length > 1 ? parts[1] : "";
+                this.serviceConnector.checkMyTicket(ticket, requestId);
+                break;
+	        case "getCurrentWeight":
+	            this.serviceConnector.getCurrentWeight(requestId);
+	            break;
+            default:
+                System.out.println("Unknown request type: " + parts[0]);
+        }
+    }
+        </code></pre>
+    </div>
+
+
+    che arrivato in <cite>Connector.java</cite>
+     <div class="code-container">
+        <pre><code class="language-java">
+            protected void getCurrentWeight(String requestId) {
+                IApplMessage message = CommUtils.buildRequest(
+                    sender, 
+                    "getCurrentWeight", 
+                    "getCurrentWeight(NO_PARAM)", 
+                    "coldroom"
+                );
+                sentAtCStorage(message, requestId);
+                System.out.println("Sending weight request to coldroom: " + message);
+            }
+        </code></pre>
+    </div>
+
+    che verrà mandata all'Attore <cite>ColdRoom</cite> che manderà una risposta <cite>currentWeight</cite>:
+    <div class="code-container">
+        <pre><code class="language-java">
+    public void responseFromCStorage(String msg, String requestId) {
+        
+        if (msg.contains("accept")) {
+            String ticket = takeBool(msg);
+            ticketMap.put(ticket, true);
+            SessionManager.sendToClient("ticket/" + ticket, requestId);
+            this.serviceConnector.getCurrentWeight(""); //chiedi informazione sul peso
+        } 
+        else if (msg.equals("true") || msg.equals("false")) {
+            // Risposta CStorage per ticketcheck validation
+            String ticketId = extractTicketIdFromOriginalRequest(requestId);
+            String response = "ticketcheck/" + ticketId + "|" + msg;
+            System.out.println("Transformed response: " + response); // Debug
+            SessionManager.sendToClient(response, requestId);
+            pendingTicketChecks.remove(requestId);
+        }
+        else if (msg.contains("reject")) {
+            SessionManager.sendToClient("ticket_rejected", requestId);
+            this.serviceConnector.getCurrentWeight("");
+        }
+        else if (msg.contains("currentWeight(")) {
+            String pesoStr = msg.replace("currentWeight(", "").replace(")", "");
+            float peso = Float.parseFloat(pesoStr);
+            updateColdRoomWeight(peso);
+        }
+    
+    }
+    </code></pre>
+    </div>
+    <p>contenente l'aggiornamento del peso quando necessario averlo. </p>
+
+    <p>Si è deciso di implementare in questo modo la gestione delle richieste del peso per semplicità di sviluppo e per avere un numero più contenuto di richieste inviate all'applicazione o ricevute dal Server.</p>
+
+<h2>Test plans</h2> 
+<p>Ci dovremmo curare di verificare che il server Spring comunichi correttamente con la nostra applicazione ColdStorageService nel modo seguente: 
+    <lu>
+        <li>
+            Assicurandoci che un Client possa richiedere un ticket e riceverlo correttamente nell'apposito campo.
+        </li>
+        <li>
+           Una volta ricevuto il ticket si dovrà inserirlo nella apposita casella per richiederne la validazione e il risultato di questa dovrà apparire nel campo apposito.
+        </li> 
+        <li>
+            Che il peso corrente all'interno di <cite>ColdRoom</cite> venga mostrato tramite una barra di visualizzazione, e venga aggiornato con regolarità.
+        </li>
+            
+    </lu>
+</p>
+
+<h2>Testing</h2> 
+
+<p>Testiamo di seguito il comportamento delle richieste dei ticket: </p>
+ <p>Quando richiediamo un ticket vedremo questo tipo di risposta: </p>
+ <p><a href="./img/provaRIchiestaTicket.png"><img alt="../img/provaRIchiestaTicket.png"class="align-center" src="./img/provaRIchiestaTicket.png" style="width: 50%;" /></a></p> 
+ <p>e da terminale noteremo qualcosa di simile a questo: </p>     
+ <div class="code-container">
+            <pre><code class="language-qak">
+            msg received: depositRequest/
+            newRequest: reqe218a758f051
+            sentAtCStorage, msg sent: msg(depositRequest,request,springServer,coldstorageservice,depositRequest(NO_PARAM),2)
+            response arrived: msg(accept,reply,coldstorageservice,springServer,accept(T_1753037323_1),29)
+            response=accept(T_1753037323_1)
+            message to client: ticket/T_1753037323_1
+        </code></pre>
+        </div>
+<p>vediamo anche la possibilità di richiedere più ticket insieme:</p>
+<p><a href="./img/richiestaMultipla.png"><img alt="../img/richiestaMultipla.png"class="align-center" src="./img/richiestaMultipla.png" style="width: 50%;" /></a></p> 
+
+ <p>notiamo anche che se cerchiamo di validare senza aver inserito nessun ticket ci viene mostrato un toast di errore:  </p>
+ <p><a href="./img/ticketAssente.png"><img alt="../img/ticketAssente.png"class="align-center" src="./img/ticketAssente.png" style="width: 50%;" /></a></p> 
+
+ <p>quando chiediamo la vaidazione di un ticket o di una serie di ticket possiamo ricevere una risposta positiva o negativa: </p>
+  <p><a href="./img/ticketValido.png"><img alt="../img/ticketValido.png"class="align-center" src="./img/ticketValido.png" style="width: 50%;" /></a></p> 
+<p><a href="./img/ticketInvalido.png"><img alt="../img/ticketInvalido.png"class="align-center" src="./img/ticketInvalido.png" style="width: 50%;" /></a></p> 
+<p>
+        <div class="code-container">
+            <pre><code class="language-qak">
+                msg received: checkmyticket/T_1753086237_2
+                newRequest: reqf5adc3d59267
+                sentAtCStorage, msg sent: msg(checkmyticket,request,springServer,coldstorageservice,checkmyticket(T_1753086237_2),20)
+                response arrived: msg(ticketcheck,reply,coldstorageservice,springServer,true,82)
+                response=true       //MESSAGGIO VALIDO
+                Transformed response: ticketcheck/T_1753086237_2|true
+                message to client: ticketcheck/T_1753086237_2|true
+                msg received: checkmyticket/T_1753086238_3
+                newRequest: reqf5adc3d59267
+                sentAtCStorage, msg sent: msg(checkmyticket,request,springServer,coldstorageservice,checkmyticket(T_1753086238_3),21)
+                response arrived: msg(ticketcheck,reply,coldstorageservice,springServer,false,96)
+                response=false      //MESSAGGIO NON VALIDO
+                Transformed response: ticketcheck/T_1753086238_3|false
+                message to client: ticketcheck/T_1753086238_3|false
+            </code></pre>
+        </div>
+    </p>
+<p> Inoltre validando i nostri ticket possiamo vedere la barra della ColdRoom che si riempie: </p>
+<p><a href="./img/provaCaricamentoColdRoom.png"><img alt="../img/provaCaricamentoColdRoom.png"class="align-center" src="./img/provaCaricamentoColdRoom.png" style="width: 50%;" /></a></p> 
+<p>E nel momento in cui la coldRoom risulta piena non sarà possibile richiedere altri ticket: </p>
+<p><a href="./img/richiestaRifiutataColdRoomPiena.png"><img alt="../img/richiestaRifiutataColdRoomPiena.png"class="align-center" src="./img/richiestaRifiutataColdRoomPiena.png" style="width: 50%;" /></a></p> 
+
+</p>
+    <p>Esempio risposta caricamento peso:
+        <div class="code-container">
+            <pre><code class="language-qak">
+                sentAtCStorage, msg sent: msg(getCurrentWeight,request,springServer,coldroom,getCurrentWeight(NO_PARAM),8)
+                response arrived: msg(currentWeight,reply,coldroom,springServer,currentWeight(15),55)
+                response=currentWeight(15)
+                message to all clients: weight/15.0
+                Updated weight to: 15.0
+            </code></pre>
+        </div>
+    </p>
+<p>Di conseguenza notiamo che il Server funziona correttamente, ricevendo e inviando le informazioni necessarie.</p>
+<h2>Deployment</h2> 
+    <p>
+        Per poter generare i test o provare il sistema è necessario prima far partire <a href="../unibo.basicrobot23" target="_blank">basicrobot23</a>
+        con il comando: <strong>docker compose -f basicrobot23.yaml  up </strong>
+    </p>
+    <p>
+        Successivamente far partire <a href="../Progetto/Sprint3/codici/coldStorageService/src/coldstorage.qak" target="_blank">coldstorage.qak</a> ed in un altro terminale far partire  <a href="../Progetto/Sprint3/codici/allarmi/src/led.qak" target="_blank">led.qak</a> da eclipse col comando: <strong>./gradlew run </strong>
+    </p>
+    <p> In un altro terminale far partire la classe <a href="../Progetto/Sprint3/codici/led/src/main/java/sonar.java" target="_blank">sonar.java</a> con il comando <strong>./gradlew runSonar </strong> per poter simulare il comportamento del Sonar,</p>
+    <p> e nell'Editor Eclipse fare partire il Server SpringBoot, aprendo la cartella <a href="../Progetto/Sprint3/codici/spring/" target="_blank">spring</a> e inviando il coomando <strong>./gradlew bootrun</strong> .</p>
+
+	      	
+</div>  
+
+<div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
+    By Cristina Napoli email: cristinaanna.napoli@studio.unibo.it,
+    <p><td><img width="180" alt="io.jpg" src="../io.jpg" class="internal-embed"></td></p>
+    <p>GIT repo: <a href="https://github.com/kuri0317/issLab23Mio" target="_blank">https://github.com/kuri0317/issLab23Mio</a> </p>
+</body>
+</html>

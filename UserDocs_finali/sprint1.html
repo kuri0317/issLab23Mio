@@ -1,0 +1,546 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <!--
+<link rel="stylesheet" type="text/css" href="../css/issStyle1.css">
+<script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+<style type="text/css">
+body
+{
+    margin-left:  30px;
+    margin-right: 30px;
+};
+
+P
+{
+    font-family: Tahoma;
+    font-size: 10pt;
+};
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+	font-size: 93%;
+}
+
+a:hover {
+    background-color: #cccccc;
+}
+
+
+hr {
+    clear: both;
+    height: 1px;
+    color: #242424;
+    background-color: transparent;
+}
+
+h1, h2, h3 {
+    color: #242424;
+    clear: left;
+    font: 100% Tahoma, Helvetica, Arial, sans-serif;
+    margin-bottom: 0.5em;
+    padding-top: 0.5em;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+top {
+	width: 100%;
+}
+
+
+#i {
+    color: #ff1010;
+}
+tt{
+	font-family: "Arial";
+    font-size: 90%;
+	color: #006600;
+}
+em{
+	font-family: "Arial";
+    font-size: 80%;
+	font-weight: bold;
+	border-style:solid;
+	border-color: #abe876;
+    color: #1632cc;
+}
+bc{
+	font-family: "Arial";
+	font-size: 90%;
+	font-weight: bold;
+    color: #990000;
+	background-color: #fcf8c7;
+}
+ks{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #0000CD	;
+	font-size: 90%;
+}
+kc{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #008000	;
+	font-size: 90%;
+}
+pre{
+	font-family: "Consolas";
+	font-size: 85%;
+	background-color: #f5f5f5;
+	border: 1.5px solid silver;
+	padding: 5px;
+}
+m{
+	font-family: "Helvetica";
+	line-height: 100%;
+ 	font-size: 75%;
+}
+div.body{
+	 
+    font-size: 18px;
+}
+k{
+    color: #990000;
+	font-weight: bold;
+	font-size: 90%;
+}
+h1 {
+    font-size: 150%;
+    background-color: #b2c0ff;
+	padding: 10px;
+}
+
+h2 {
+    background-color: #9ed8ff;
+    font-size: 130%;
+}
+
+h3 {
+	background-color: #e6ccff;
+    font-size: 100%;
+}
+h4 {
+    background-color: #ccffcc;
+    font-size: 100%;
+	width: 95%;
+	border-radius: 5px;
+	padding: 2px;
+}
+h5 {
+    background-color: #d5ffb0;
+    font-size: 100%;
+
+}
+div.req{
+	background-color: #d9ffb3;
+    font-size: 18px;
+	width: 700px;
+    border: 3px solid green;
+    padding: 15px;
+    margin: 10px;
+}
+div.remark{
+	background-color: #E3F2FD;
+    border: 1.5px solid #d5f2ed;
+    padding: 15px;
+    margin: 10px;
+	border-radius: 25px;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+ol, ul, li {
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+  padding-bottom: 5px;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+img {
+	border: 1.5px solid #d5f2ed
+
+}
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+}
+
+div.wrapdesc{
+	width: 90%;
+	margin: auto;
+}
+
+div.imagedesc{
+	width: 85%;
+	margin: auto;
+}
+</style>
+    
+<head>
+   
+<title>Sprint1</title></head>
+    
+<body>
+<div id="top">
+<h1>COLD STORAGE SERVICE SPRINT1 - Cristina Napoli<font size="5"></font> </h1>
+</div>  
+
+<div class="body"> 
+<h2>Introduction</h2>
+ <p>Dopo aver chiarito la consegna del committente procediamo col realizzare uno Sprint1 seguendo le linee guida di  <a href="https://github.com/anatali/issLab23/blob/main/iss23Material/html/Appl1-HTTPSprint1.html" target="_blank">Appl1-HTTPSprint1.html</a> 
+ e prendendo in considerazione ciò che è stato discusso nello <a href="../Progetto/Sprint0/UserDocs/sprint0.html" target="_blank">Sprint0</a> .</p>
+
+ <p>Lo Sprint1 mira a produrre una prima versione del core applicativo funzionante, il <strong> goal</strong> di questo Sprint1 sarà:
+    <lu>
+        <li>la creazione del componente <strong>ColdStorage</strong>,
+        che gestirà la generazione e validazione dei ticket, con una logica funzionante.
+        </li>
+        <li>la creazione di una versione <cite>mockObj</cite> di <strong>ServiceAccessGUI</strong>, che dovrà essere in grado di inviare e ricevere le richieste da/verso il <strong>ColdStorageService</strong>.
+        </li>
+        <li>la creazione del <strong>TransportTrolley</strong> funzionante, che dovrà essere in grado di muoversi nella ServiceArea.
+        </li>
+        <li>la creazione della <strong>ColdRoom</strong>, per implementare la logica della gestione dello spazio nel frigorifero.
+        </li>
+    </lu>
+    </p>
+</p>
+ 
+
+<h2>Requirement analysis</h2>
+ <p>Già discussi nello <a href="../Progetto/Sprint0/UserDocs/sprint0.html" target="_blank">Sprint0</a>.</p>
+
+</div>
+
+<h2>Problem analysis</h2>
+
+ <p>
+    L'architettura dello Sprint1, è la seguente:
+    <p><a href="./img/sprint1arch.png"><img alt="./img/sprint1arch.png" class="align-center" src="./img/sprint1arch.png"  style="width: 50%;" /></a></p> 
+   
+ <p>Analizziamo i vari componenti di seguito.</p>
+    <p>
+        <li>
+            <strong>ColdStorageService</strong>: sarà un <cite>QActor</cite> che deve essere in grado di comunicare con <cite>ServiceAccessGUI</cite> e con <cite>ColdRoom </cite>per conoscere lo spazio disponibile.
+            Deve gestire e generare i ticket.
+            Inoltre dovrà anche comunicare con il <cite>TransportTrolley</cite> per chiamarlo presso l'INDOOR quando si necessita di effettuare una consegna, o mandarlo in HOME se non ci sono consegne,
+            per capire se è libero o occupato. 
+        </li>
+        <li>
+            <strong>TransportTrolley</strong>: sarà un <cite>QActor </cite>che deve gestire una richiesta di scarico alla volta, seguendo degli step ben precisi:
+            <ul>
+                <li>
+                   Quando riceve una richiesta entra in stato 'occupato' e si sposta da HOME a INDOOR.
+                </li>
+                <li>
+                    Arrivato in INDOOR preleva il carico FW impiegando un tempo casuale.
+                </li>
+                <li>
+                    Ottenuto il carico deve spostarsi da INDOOR a <cite>ColdRoom</cite>.
+                </li>
+                <li>
+                    Effettua lo scarico di FW nel <cite>ColdRoom</cite> in un tempo casuale. Quindi informa  <cite>ColdStorageService </cite>di aver terminato la consegna.
+                </li>
+                <li>
+                    Infine terminato il compito si ritira in HOME ed esce dallo stato 'occupato'.
+                </li>
+            </ul>
+            <p>L'attore <strong>TransportTrolley</strong> usa il <strong>BasicRobot</strong> fornito dal committente per muoversi nella <cite>ServiceArea</cite>, segue una serie di step definiti per le sue azioni, e informa il 
+                <strong>ServiceAccessGUI</strong> dell'avvenuto scarico in <strong>ColdRoom</strong> per liberare il <cite>Truck Driver</cite>.
+            </p>
+        </li>
+        <li>
+            <strong>ColdRoom</strong>: sarà un <cite>QActor</cite> che deve tenere aggiornata l'informazione dello spazio disponibile nel frigorifero e controllare che non superi la soglia MAXW.
+            Comunica con <cite>ColdStorageService</cite> per informarlo dello spazio disponibile al momento della richiesta e permettergli di validare i ticket, allocando lo spazio.
+        
+        </li>
+        <li> 
+            <strong>ServiceAccessGUI MockObj</strong>: contrariamente a come indicavamo nel precedente Sprint, adesso questo componente sarà un <cite>mockObj</cite> che comunica con <cite>ColdStorageService</cite> per ottenere i ticket, la sua funzione di attore si riduce al ricevere l'informazione di successo
+            della consegna, per liberare il <cite>Truck Driver</cite>.
+        </li>
+    </p>
+
+<h2>Test plans</h2> 
+
+    <p>Dividiamo i passi dello Sprint1 in sezioni: 
+        
+        <ul>
+            <li>
+                primo:<p> testare il funzionamento della logica della consegna e validazione dei ticket 
+                da parte di <cite>ColdStorageService</cite>, e quindi avere anche una logica della gestione del peso nella <cite>ColdRoom</cite> funzionante. 
+                </p> 
+            </li>
+            <li>
+                secondo: <p>
+                            il trolley dovrà comunicare effettivamente con <strong>BasicRobot </strong>e produrre nella <cite>ScenaWebGL</cite> il movimento dello stesso, 
+                            da HOME a INDOOR, da INDOOR a COLDROOM e da COLDROOM a HOME.
+                        </p>
+            </li>
+            <li>
+                terzo: <p>
+                       aggiungere la gestione dei casi in cui si hanno più richieste mentre il <strong>TransportTrolley</strong> è 'occupato'.
+                      </p>
+            </li>
+        </ul>
+
+    </p>
+     <p>
+        <h5>Spiegazione Messaggi</h5>
+        <ul>
+            <li>
+                <strong>depositRequest</strong>: tra <cite>ServiceAccessGUI</cite> e <cite>ColdStorageService</cite> per richiedere un ticket, riceverà in risposta accept o reject.
+            </li>
+            <li>
+                <strong>fwrequest</strong>: tra <cite>ColdStorageService</cite> e <cite>ColdRoom </cite>per sapere se c'è lo spazio necessario a poter accettare la richiesta. A questa riceverà in risposta fwYES o fwNO.
+            </li>
+            <li>
+                <strong>checkmyticket</strong>:  tra <cite>ServiceAccessGUI</cite> e <cite>ColdStorageService</cite> usando il ticket generato in precedenza. 
+                <cite>ColdStorageService</cite> controllerà il timer del ticket, rispondendo con ticketcheck.
+            </li>
+            <li>
+                <strong>delete_Reservation</strong>:  tra <cite>ColdStorageService</cite> e <cite>ColdRoom </cite> nel caso in cui il ticket di <cite>ServiceAccessGUI </cite>risulta scaduto.
+                Cancella la prenotazione liberando lo spazio allocato in frigo.
+            </li>
+            <li>
+                <strong>truckDriver</strong>: un Dispatch che indica al <cite>truckDriver</cite> che può andare via.
+            </li>
+            <li>
+                <strong>load_CR</strong>: Quando il ticket viene accettato <cite>ColdStorageService</cite> informa <cite>ColdRoom </cite>, così lo spazio prenotato viene caricato in spazio effettivo in frigo.
+            </li>
+            <li>
+                <strong>takecharge</strong>: tra  <cite>ColdStorageService</cite> e <cite>TransportTrolley</cite> per chiamare questo in INDOOR a prendere il carico consegnato, 
+                . <cite>TransportTrolley </cite> risponderà con chargetaken quando sarà in INDOOR e avrà preso il carico.
+            </li>
+            <li>
+                <strong>liberoTT</strong>: tra  <cite>TransportTrolley</cite> e <cite>ColdStorageService</cite> per indicare di aver effettivamente caricato<cite> ColdRoom</cite> e sapere se 
+                deve prendere altre consegne. 
+            </li>
+            <li>
+                <strong>goHome</strong>: è il Dispatch tra <cite>ColdStorageService</cite> e <cite>TransportTrolley</cite> indica che non ci sono altre consegne e può andare in HOME.
+            </li>
+            
+        </ul>
+    </p>
+    
+    
+<h2>Testing</h2> 
+ 
+    <h4>Gestione Ticket e Peso - primo passo</h4>
+    
+    <p>Il seguente link <a href="../Progetto/Sprint1/codici/sprint1-logica/src/sprint.qak" target="_blank">sprint.qak</a> porta al codice della progettazione del primo punto,
+        che ha prodotto questi risultati: 
+        
+        <div class="code-container">
+            <pre><code class="language-qak">
+            // copia esempio run codice sprint.qak
+
+            Starting a Gradle Daemon (subsequent builds will be faster)
+
+            > Configure project :
+            .......
+            > Task :run
+            ............   
+            COLDSTORAGE: attivo
+            COLDSTORAGE: attendo un messaggio.
+                        %%%   %%% ActorBasicFsm |   INIT coldroom
+            sysUtil  | createActor class for it.unibo.transporttrolley.Transporttrolley   class it.unibo.transporttrolley.Transporttrolley
+            COLDROOM:  attivo, peso attuale in frigo = 0
+            COLDROOM: aspetto richieste da CStorage.
+                        %%%   %%% ActorBasicFsm |   INIT transporttrolley
+            sysUtil  | createActor class for it.unibo.serviceaccessgui.Serviceaccessgui   class it.unibo.serviceaccessgui.Serviceaccessgui
+            TRANSPORTTROLLEY:  attivo!
+            TRANSPORTTROLLEY:  attendo messaggi da CStorage.
+                        %%%   %%% ActorBasicFsm |   INIT serviceaccessgui
+            ACCESSGUI : attivo.
+            ACCESSGUI : chiedo un ticket.
+            COLDSTORAGE : chiedo a coldroom se c'è spazio.
+            COLDROOM : Spazio disponibile! Prenotazione avvenuta. Peso allocato in frigo: 15
+            COLDROOM : il Peso totale in frigo è: 0
+            COLDROOM: aspetto richieste da CStorage.
+            COLDSTORAGE : Consegno ticket, numero 1
+            COLDSTORAGE: attendo un messaggio.
+            ACCESSGUI: ticket accettato, Ticket : T_1749464354_0 
+            ACCESSGUI: consegno ticket T_1749464354_0
+            COLDSTORAGE : controllo il ticket di SAGUI, ticket valido? false
+            COLDSTORAGE : now 1749464364 < StartTime 1749464354 + 10 = false
+            COLDSTORAGE : chiedo a coldroom di togliere la prenotazione.
+            COLDSTORAGE: attendo un messaggio.
+            ACCESSGUI: ticket accettato? false
+            COLDROOM : Elimino prenotazione. Peso allocato in frigo: 0
+
+            ACCESSGUI : chiedo un ticket.
+            COLDROOM:  attivo, peso attuale in frigo = 0
+            COLDSTORAGE : chiedo a coldroom se c'è spazio.
+            COLDROOM : Spazio disponibile! Prenotazione avvenuta. Peso allocato in frigo: 15
+            COLDROOM : il Peso totale in frigo è: 0
+            COLDSTORAGE : Consegno ticket, numero 2
+            ....
+            ACCESSGUI: ticket accettato, Ticket : T_1749464364_1 
+            ACCESSGUI: consegno ticket T_1749464364_1
+            COLDSTORAGE : controllo il ticket di SAGUI, ticket valido? true
+            COLDSTORAGE : now 1749464371 < StartTime 1749464364 + 10 = true
+            ACCESSGUI: ticket accettato? true
+            ACCESSGUI: effettua scarico!
+            COLDSTORAGE: chiamo transporttrolley in INDOOR, busy= true
+            COLDSTORAGE: truck driver può andare.
+            TRANSPORTTROLLEY: Prendo il carico. Vado in COLDROOM. 
+            COLDSTORAGE: coldRoom deve togliere l'allocazione e confermare lo spazio.
+            ACCESSGUI: ho finito vado via!
+            COLDSTORAGE: attendo un messaggio.
+            COLDROOM s2: Peso totale in frigo: 15 e lo spazio allocato ora è: 0
+            ...
+            TRANSPORTTROLLEY: ho caricato il frigo.
+            COLDSTORAGE: transporttrolley deve andare in HOME. busy= false
+            COLDSTORAGE: attendo un messaggio.
+            TRANSPORTTROLLEY: vado in HOME.
+            .......
+            ...
+            TRANSPORTTROLLEY: vado in HOME.
+            TRANSPORTTROLLEY:  attendo messaggi da CStorage.
+            ACCESSGUI: consegno ticket T_1749464381_4
+            COLDSTORAGE : controllo il ticket di SAGUI, ticket valido? false
+            COLDSTORAGE : now 1749464391 < StartTime 1749464381 + 10 = false
+            ACCESSGUI: ticket accettato? false
+            COLDSTORAGE : chiedo a coldroom di togliere la prenotazione.
+            COLDROOM : Elimino prenotazione. Peso allocato in frigo: 0
+            ...
+            ACCESSGUI : chiedo un ticket.
+            COLDSTORAGE: attendo un messaggio.
+            COLDROOM:  attivo, peso attuale in frigo = 45
+            COLDSTORAGE : chiedo a coldroom se c'è spazio.
+            COLDROOM: aspetto richieste da CStorage.
+            COLDROOM : Spazio disponibile! Prenotazione avvenuta. Peso allocato in frigo: 15
+            COLDROOM : il Peso totale in frigo è: 45
+            COLDSTORAGE : Consegno ticket, numero 6
+            COLDROOM: aspetto richieste da CStorage.
+            ACCESSGUI: ticket accettato, Ticket : T_1749464391_5 
+            COLDSTORAGE: attendo un messaggio.
+            ACCESSGUI: consegno ticket T_1749464391_5
+            COLDSTORAGE : controllo il ticket di SAGUI, ticket valido? true
+            COLDSTORAGE : now 1749464399 < StartTime 1749464391 + 10 = true
+            COLDSTORAGE: chiamo transporttrolley in INDOOR, busy= true
+            ACCESSGUI: ticket accettato? true
+            COLDSTORAGE: truck driver può andare.
+            TRANSPORTTROLLEY: Prendo il carico. Vado in COLDROOM. 
+            .....
+            ACCESSGUI : chiedo un ticket. [45s]
+            COLDSTORAGE : chiedo a coldroom se c'è spazio.
+            COLDROOM: non c'è spazio, rifiuta.
+            COLDROOM : il Peso totale in frigo è: 60
+            COLDSTORAGE : non c'è spazio, richiesta rifiutata
+            ACCESSGUI: rifiutato
+            TRANSPORTTROLLEY: ho caricato il frigo.
+            COLDSTORAGE: transporttrolley deve andare in HOME. busy= false
+            COLDSTORAGE: attendo un messaggio.
+            TRANSPORTTROLLEY: vado in HOME.
+            ....
+            </code></pre>
+        </div>
+    </p>
+   
+    <h4>Interazione Trolley e BasicRobot - secondo passo</h4>
+    <p>
+        In questo passo vogliamo gestire il movimento del <strong>BasicRobot</strong> facendolo comunicare con il <strong>TransportTrolley</strong>,
+        creiamo un QActor del <strong>TransportTrolley</strong> con l'unico scopo di comunicare col <strong>BasicRobot</strong>.
+    </p>
+    <p>Decidiamo che conviene vedere il <strong>BasicRobot</strong> come un Attore Esterno, come spiegato in: 
+        <a href="https://github.com/anatali/issLab23/blob/main/iss23Material/html/QakActors23Demo.html#external-caller1" target="_blank">QakActors23Demo.html#external-caller1</a>
+        anche perchè i messaggi con il quale è possibile interagire col <strong>BasicRobot</strong> sono già stati forniti dal committente e li avevamo indicati nello Sprint0.
+        Così facendo possiamo continuare a mantenere una gestione semplice e funzionale del progetto. </p>
+
+    <p>
+        Nel codice a questo link <a href="../Progetto/Sprint1/codici/interazione-robot/src/provaT.qak" target="_blank">qak</a> studiamo come mandare i comandi 
+        di movimento al <strong>BasicRobot</strong>. 
+        <ul>Per muoverlo in ordine:
+            <li>
+                da HOME a INDOOR
+            </li>
+            <li>
+                da INDOOR a COLDROOM 
+            </li>
+            <li>
+                da COLDROOM a HOME 
+            </li>
+        </ul>
+        con le coordinate che avevamo indicato nello Sprint0. (Rispettivamente:(0,0),(0,4),(4,3))
+       
+    </p>
+    <p>
+        Per poter vedere i risultati di questo test è necessario prima far partire <a href="../unibo.basicrobot23" target="_blank">basicrobot23</a>
+        con il comando: <strong>docker compose -f basicrobot23.yaml  up </strong>
+       
+    </p>
+    <p>
+        Successivamente far partire  <a href="../Progetto/Sprint1/codici/interazione-robot/src/provaT.qak" target="_blank">interazione robot</a> da eclipse e osservare il comportamento del robot nella scena.
+    </p>
+
+    <h4>Gestire il movimento del robot in base alla logica dell'applicazione - terzo passo</h4>
+    <p> L'achitettura una volta connessa con il <cite>basicRobot</cite> si mostra nel modo seguente: 
+    <a href="./img/sprint1archRobot.png"><img alt="./img/sprint1archRobot.png" class="align-center" src="./img/sprint1archRobot.png"  style="width: 70%;" /></a></p>
+
+    <p> Qui sono stati aggiunti degli altri messaggi quali: </p>
+
+    <ul>
+            <li>
+                <strong>frigofull</strong>: tra <strong>ColdRoom</strong> e <strong>ColdStorageService</strong> quando non c'è più spazio disponibile.
+            </li>
+            <li>
+                <strong>quit</strong>: tra <strong>ColdStorageService</strong> e <strong>TransportTrolley</strong> per indicare che l'esecuzione è terminata.
+            
+            </li>
+            
+    </ul>
+    
+    <p>Più i messaggi che avvengono tra il <strong>TransportTrolley</strong> ed il <strong>BasicRobot</strong> indicati nello Sprint0.</p>
+<h2>Deployment</h2> 
+    <p>
+         Per vedere i risultati è necessario prima far partire <a href="../unibo.basicrobot23" target="_blank">basicrobot23.yaml</a>
+        con il comando: <strong>docker compose -f basicrobot23.yaml  up </strong>
+    </p>
+    <p> E successivamente far partire <a href="../Progetto/Sprint1/codici/coldstorage/src/provaut.qak" target="_blank">coldstorage.qak</a> da eclipse con il comando: <strong>./gradlew run </strong>.</p>
+
+</div>
+ 
+<h2>Next Steps</h2> 
+ 
+
+    <p>Nello <strong>Sprint2</strong> si pensa di: 
+        <ul>
+            <li>
+                Gestire la creazione e la logica degli Allarmi.
+            </li>
+            <li>
+                Creare i componenti Sonar e Led.
+            </li>
+        </ul>
+    </p>
+<!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+	      	
+<br/><br/> 	
+</div>  
+
+<div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
+    By Cristina Napoli email: cristinaanna.napoli@studio.unibo.it,
+    <!--<img src="./io.jpg" alt="mbot" width="15%" height="15%">-->
+    <p><td><img width="180" alt="io.jpg" src="../io.jpg" class="internal-embed"></td></p>
+    <p>GIT repo: <a href="https://github.com/kuri0317/issLab23Mio" target="_blank">https://github.com/kuri0317/issLab23Mio</a> </p>
+</body>
+</html>
