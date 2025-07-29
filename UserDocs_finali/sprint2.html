@@ -223,12 +223,12 @@ div.imagedesc{
 </p> 
    
     
-<p>Per non andare ad intaccare il codice dell'applicazione ColdStorageService, abbiamo deciso di separare questi componenti, led e sonar, rendendoli più versatili e riutilizzabili, se necessario, anche in altri scenari, per avere una architettura a componenti distribuiti, molto più versatile e sempre Java-based.</p>
+<p>Per non andare ad intaccare il codice dell'applicazione ColdStorageService, abbiamo deciso di separare questi componenti, led e sonar, rendendoli più versatili e riutilizzabili, se necessario, anche in altri scenari, per avere una architettura a componenti distribuiti, molto più versatile ed anche compatibile al nostro ColdStorageService essendo Java-based.</p>
 
 <p>I motivi per i quali abbiamo deciso di creare il led come un QActor sono: </p>
     <lu>
     <li>la semplicità della gestione e della comunicazione coi precedenti componentila gestione in questo modo risulta più versatile e funzionale.</li>
-    <li>necessitiamo di recepire dei comandi dall'attore <strong>TransportTrolley</strong> e rendendo entrambi attori possiamo farli comunicare tramite COAP e TCP. </li>
+    <li>necessitiamo di recepire dei comandi dall'attore <strong>TransportTrolley</strong> e rendendo entrambi attori possiamo farli comunicare tramite COAP e TCP in modo semplice per lo sviluppatore. </li>
     </lu>
 <p>Il Sonar lo abbiamo inteso come uno <cite>Java Object</cite> per:
     <lu>
@@ -319,7 +319,7 @@ del led cambierà stato. Di seguito il codice generato dell'attore led durante l
         ..
             </code></pre>
         </div>
-        sia il led che il sonar rispondono correttamente ai comandi ricevuti dovuti la simulazione.
+        sia il led che il sonar rispondono correttamente ai comandi ricevuti durante la simulazione.
         </p>
 <h2>Deployment</h2> 
 

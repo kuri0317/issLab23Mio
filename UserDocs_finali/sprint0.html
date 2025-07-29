@@ -399,7 +399,7 @@
 
 
     <h4 data-heading="Il problema del load-time lungo">Il problema del load-time lungo</h4>
-    <p>Il problema del load-time lungo è stato affrontato da Arnaudo/Munari con l’idea di inviare due messaggi di ‘risposta’ (una per dire al driver che il ticket inviato è valido e una per inviare chargeTaken.
+    <p>Il problema del load-time lungo è stato affrontato da Arnaudo/Munari con l’idea di inviare due messaggi di ‘risposta’ (una per dire al driver che il ticket inviato è valido e una per inviare chargeTaken).
         A questo scopo hanno fatto uso diretto della connessione TCP stabilita da una versione prototipale dell’accessGui fatta come GUI JAVA.<br>
         Per consentire questa possibilità anche a livello di modellazione qak, in&nbsp;<em>ActorBasicFsm</em>&nbsp;è stato introdotto il metodo&nbsp;storeCurrentRequest()&nbsp;che permette di ricordare la richiesta corrente
         (cancellata da una&nbsp;<strong style="color:#ef7089">replyTo</strong>). Questo però è un trucco/meccanismo che potrebbe risultare pericoloso.<br>
@@ -411,12 +411,12 @@
     </ul>
     <h4 data-heading="Il problema del driver distratto">Il problema del driver distratto</h4>
     <p>Questo problema ha indotto il committente ad affermare che:<br>
-        quando un agente esterno (driver) invia il ticket per indurre il servizio a scaricare il truck, si&nbsp;SUPPPONE GARANTITO&nbsp;che il carico del truck sia UGUALE al carico indicato nella prenotazione.<br>
+        quando un agente esterno (driver) invia il ticket per indurre il servizio a scaricare il truck, si&nbsp;SUPPONE GARANTITO&nbsp;che il carico del truck sia UGUALE al carico indicato nella prenotazione.<br>
         Ciò in quanto non vi sono sensori (bilance , etc) che possano fornire il valore del carico effettivo sul Truck.</p>
     
     <h4 data-heading="Il problema del driver malevolo">Il problema del driver malevolo</h4>
     
-    <p>Per il problema del driver malevolo¶ si fa l’ipotesi che nessun driver cerchi di imbrogliare (rubando ticket, etc.)
+    <p>Per il problema del driver malevolo si fa l’ipotesi che nessun driver cerchi di imbrogliare (rubando ticket, etc.)
     </p>
     
     <h4 data-heading="Il problema dell’allarme ignorato">Il problema dell’allarme ignorato</h4>
@@ -425,8 +425,9 @@
     
     Riguarda il requisito:
     
-    the transport trolley should not be stopped if some prefixed amount of time (MINT msecs) is not passed from the previous stop
-    
+    ''the transport trolley should not be stopped if some prefixed amount of time (MINT msecs) is not passed from the previous stop''.
+    </p>
+    <p>
     Si è concordato che il tempo MINT viene conteggiato dopo che il transport trolley è stato riattivato dallo stato di fermo in cui è stato posto in seguito ad un comando di stop (ricevuto per via di Alarm requirements).
     </p>
     

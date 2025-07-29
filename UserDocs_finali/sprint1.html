@@ -249,7 +249,7 @@ div.imagedesc{
                     Ottenuto il carico deve spostarsi da INDOOR a <cite>ColdRoom</cite>.
                 </li>
                 <li>
-                    Effettua lo scarico di FW nel <cite>ColdRoom</cite> in un tempo casuale. Quindi informa  <cite>ColdStorageService </cite>di aver terminato la consegna.
+                    Effettua lo scarico di FW nel <cite>ColdRoom</cite> in un tempo casuale, quindi informa  <cite>ColdStorageService </cite>di aver terminato la consegna.
                 </li>
                 <li>
                     Infine terminato il compito si ritira in HOME ed esce dallo stato 'occupato'.
@@ -265,7 +265,7 @@ div.imagedesc{
         
         </li>
         <li> 
-            <strong>ServiceAccessGUI MockObj</strong>: contrariamente a come indicavamo nel precedente Sprint, adesso questo componente sarà un <cite>mockObj</cite> che comunica con <cite>ColdStorageService</cite> per ottenere i ticket, la sua funzione di attore si riduce al ricevere l'informazione di successo
+            <strong>ServiceAccessGUI MockObj</strong>: sarà un <cite>mockObj</cite> che comunica con <cite>ColdStorageService</cite> per ottenere i ticket, la sua funzione di attore si riduce al ricevere l'informazione di successo
             della consegna, per liberare il <cite>Truck Driver</cite>.
         </li>
     </p>
@@ -298,31 +298,31 @@ div.imagedesc{
         <h5>Spiegazione Messaggi</h5>
         <ul>
             <li>
-                <strong>depositRequest</strong>: tra <cite>ServiceAccessGUI</cite> e <cite>ColdStorageService</cite> per richiedere un ticket, riceverà in risposta accept o reject.
+                <strong>depositRequest</strong>: Richiesta tra <cite>ServiceAccessGUI</cite> e <cite>ColdStorageService</cite> per richiedere un ticket, riceverà in risposta accept o reject.
             </li>
             <li>
-                <strong>fwrequest</strong>: tra <cite>ColdStorageService</cite> e <cite>ColdRoom </cite>per sapere se c'è lo spazio necessario a poter accettare la richiesta. A questa riceverà in risposta fwYES o fwNO.
+                <strong>fwrequest</strong>: Richiesta tra <cite>ColdStorageService</cite> e <cite>ColdRoom </cite>per sapere se c'è lo spazio necessario a poter accettare la richiesta. A questa riceverà in risposta fwYES o fwNO.
             </li>
             <li>
-                <strong>checkmyticket</strong>:  tra <cite>ServiceAccessGUI</cite> e <cite>ColdStorageService</cite> usando il ticket generato in precedenza. 
+                <strong>checkmyticket</strong>: Richiesta tra <cite>ServiceAccessGUI</cite> e <cite>ColdStorageService</cite> usando il ticket generato in precedenza. 
                 <cite>ColdStorageService</cite> controllerà il timer del ticket, rispondendo con ticketcheck.
             </li>
             <li>
-                <strong>delete_Reservation</strong>:  tra <cite>ColdStorageService</cite> e <cite>ColdRoom </cite> nel caso in cui il ticket di <cite>ServiceAccessGUI </cite>risulta scaduto.
+                <strong>delete_Reservation</strong>: Richiesta tra <cite>ColdStorageService</cite> e <cite>ColdRoom </cite> nel caso in cui il ticket di <cite>ServiceAccessGUI </cite>risulta scaduto.
                 Cancella la prenotazione liberando lo spazio allocato in frigo.
             </li>
             <li>
                 <strong>truckDriver</strong>: un Dispatch che indica al <cite>truckDriver</cite> che può andare via.
             </li>
             <li>
-                <strong>load_CR</strong>: Quando il ticket viene accettato <cite>ColdStorageService</cite> informa <cite>ColdRoom </cite>, così lo spazio prenotato viene caricato in spazio effettivo in frigo.
+                <strong>load_CR</strong>: Richiesta inviata quando il ticket viene accettato <cite>ColdStorageService</cite> informa <cite>ColdRoom </cite>, così lo spazio prenotato viene caricato in spazio effettivo in frigo.
             </li>
             <li>
-                <strong>takecharge</strong>: tra  <cite>ColdStorageService</cite> e <cite>TransportTrolley</cite> per chiamare questo in INDOOR a prendere il carico consegnato, 
-                . <cite>TransportTrolley </cite> risponderà con chargetaken quando sarà in INDOOR e avrà preso il carico.
+                <strong>takecharge</strong>: Richiesta tra <cite>ColdStorageService</cite> e <cite>TransportTrolley</cite> per chiamare questo in INDOOR a prendere il carico consegnato, 
+                <cite>TransportTrolley </cite> risponderà con chargetaken quando sarà in INDOOR e avrà preso il carico.
             </li>
             <li>
-                <strong>liberoTT</strong>: tra  <cite>TransportTrolley</cite> e <cite>ColdStorageService</cite> per indicare di aver effettivamente caricato<cite> ColdRoom</cite> e sapere se 
+                <strong>liberoTT</strong>: Dispatch tra <cite>TransportTrolley</cite> e <cite>ColdStorageService</cite> per indicare di aver effettivamente caricato<cite> ColdRoom</cite> e sapere se 
                 deve prendere altre consegne. 
             </li>
             <li>
