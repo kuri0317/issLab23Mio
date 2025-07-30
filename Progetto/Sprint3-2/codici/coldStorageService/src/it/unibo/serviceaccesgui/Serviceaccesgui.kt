@@ -38,7 +38,7 @@ class Serviceaccesgui ( name: String, scope: CoroutineScope, isconfined: Boolean
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t034",targetState="handleTruckNotification",cond=whenDispatch("truckDriver"))
+					 transition(edgeName="t033",targetState="handleTruckNotification",cond=whenDispatch("truckDriver"))
 				}	 
 				state("handleTruckNotification") { //this:State
 					action { //it:State
